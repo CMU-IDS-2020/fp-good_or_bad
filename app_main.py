@@ -16,11 +16,9 @@ from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 from random import sample
 
-MODEL_PATH = 'https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/models/xentropy_adam_lr0.0001_wd0.0005_bs128.pt' 
-
+MODEL_PATH = 'https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/models/xentropy_adam_lr0.0001_wd0.0005_bs128'
 EMBEDDING_URL = "https://github.com/CMU-IDS-2020/fp-good_or_bad/blob/main/sample_embeddings/sample_words_embeddings"
-# EMBEDDING_URL = "../sample_words_embeddings"
-EPOCH = 30
+EPOCH = 50
 SAMPLE_LIMIT = 5000
 EPOCH_SAMPLE_LIMIT = SAMPLE_LIMIT // EPOCH
 
@@ -136,7 +134,7 @@ def run_predict():
 def run_embedding(user_input=None):
 	@st.cache
 	def load_sample_embedding(url):
-		sample_embeddings = torch.load(url)
+		sample_embeddings = torch.hub.load_state_dict_from_url(url, progress=False)
 		tokens = []
 		labels = []
 		shapes = []
@@ -193,8 +191,7 @@ def run_embedding(user_input=None):
 def run_train():
 	@st.cache
 	def get_content():
-		CONTENT = torch.load("models/xentropy_adam_lr0.0001_wd0.0005_bs128", map_location=torch.device('cpu'))
-		return CONTENT
+		return torch.hub.load_state_dict_from_url(MODEL_PATH, progress=False)
 
 	def get_param_df(content):
 		model_parameters = content['model_parameters']
