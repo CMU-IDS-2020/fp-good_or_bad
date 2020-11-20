@@ -329,9 +329,7 @@ def run_train():
 			title='Train/Validation Accuracy (%)'
 		)
 
-		return (loss_plot | acc_plot).resolve_scale(
-			color='independent'
-		)
+		return loss_plot | acc_plot
 
 	def params_plot(CONTENT):
 		param_df_list, param_df_name = get_param_df(CONTENT)
