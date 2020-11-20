@@ -17,6 +17,17 @@ from nltk.corpus import stopwords
 from random import sample
 import pickle
 from scipy.special import softmax
+import time
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim 
+from torch.nn.functional import pad
+import zipfile
+import os
+from os import listdir
+from zipfile import ZipFile
+from os.path import isfile, join
+from urllib.request import urlopen
 
 MODEL_PATH = 'https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/models/xentropy_adam_lr0.0001_wd0.0005_bs128'
 EMBEDDING_URL = "https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/sample_embeddings/sample_words_embeddings.pt"
@@ -34,24 +45,24 @@ def main():
 	run_predict(preprocessed)
  
 class Network(nn.Module):
-    def __init__(self, input_channel, out_channel, kernel_sizes, output_dim):
-        super().__init__()
-        self.convs = nn.ModuleList([
-                                    nn.Conv1d(in_channels = input_channel, 
-                                              out_channels = out_channel, 
-                                              kernel_size = ks)
-                                    for ks in kernel_sizes
-                                    ])
-        
-        self.linear = nn.Linear(len(kernel_sizes) * out_channel, output_dim)
-        self.dropout = nn.Dropout(0.5)
-        
-    def forward(self, embedded):     
-        embedded = embedded.permute(0, 2, 1)       
-        conved = [F.relu(conv(embedded)) for conv in self.convs]
-        pooled = [F.max_pool1d(conv, conv.shape[2]).squeeze(2) for conv in conved]
-        cat = self.dropout(torch.cat(pooled, dim = 1))
-        return self.linear(cat)
+	def __init__(self, input_channel, out_channel, kernel_sizes, output_dim):
+		super().__init__()
+		self.convs = nn.ModuleList([
+									nn.Conv1d(in_channels = input_channel, 
+											  out_channels = out_channel, 
+											  kernel_size = ks)
+									for ks in kernel_sizes
+									])
+		
+		self.linear = nn.Linear(len(kernel_sizes) * out_channel, output_dim)
+		self.dropout = nn.Dropout(0.5)
+		
+	def forward(self, embedded):     
+		embedded = embedded.permute(0, 2, 1)       
+		conved = [F.relu(conv(embedded)) for conv in self.convs]
+		pooled = [F.max_pool1d(conv, conv.shape[2]).squeeze(2) for conv in conved]
+		cat = self.dropout(torch.cat(pooled, dim = 1))
+		return self.linear(cat)
 input_channel = 300
 out_channel = 100
 kernel_sizes = [3,4,5]
@@ -139,33 +150,33 @@ def run_preprocess():
 	return [token for token in lemmatized if token is not None]
 
 def run_predict(input):
-    def load_word2vec_dict(word2vec_urls, word2vec_dir):
-        word2vec_dict = []
-        for i in range(len(word2vec_urls)):
-            url = word2vec_urls[i]
-            torch.hub.download_url_to_file(url, word2vec_dir)
-            word2vec = pickle.load(open(word2vec_dir+"word2vec_dict"+str(i)+".pt", "rb" ))
-            word2vec = list(word2vec.items())
-            word2vec_dict += word2vec
-        return dict(word2vec_dict)
-    
-    def predict(sentence, model_url = 'https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/models/xentropy_adam_lr0.0001_wd0.0005_bs128.pt', word2vec_urls = ['https://github.com/CMU-IDS-2020/fp-good_or_bad/blob/main/word2vec/word2vec_dict{}.pt'.format(i+1) for i in range(5)],word2vec_dir = "./word2vec",max_seq_length = 29):
-        word2vec_dict = load_word2vec_dict(word2vec_urls,word2vec_dir)
-        embedding = np.array([word2vec_dict[word] for word in sentence])
+	def load_word2vec_dict(word2vec_urls, word2vec_dir):
+		word2vec_dict = []
+		for i in range(len(word2vec_urls)):
+			url = word2vec_urls[i]
+			torch.hub.download_url_to_file(url, word2vec_dir)
+			word2vec = pickle.load(open(word2vec_dir+"word2vec_dict"+str(i)+".pt", "rb" ))
+			word2vec = list(word2vec.items())
+			word2vec_dict += word2vec
+		return dict(word2vec_dict)
+	
+	def predict(sentence, model_url = 'https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/models/xentropy_adam_lr0.0001_wd0.0005_bs128.pt', word2vec_urls = ['https://github.com/CMU-IDS-2020/fp-good_or_bad/blob/main/word2vec/word2vec_dict{}.pt'.format(i+1) for i in range(5)],word2vec_dir = "./word2vec",max_seq_length = 29):
+		word2vec_dict = load_word2vec_dict(word2vec_urls,word2vec_dir)
+		embedding = np.array([word2vec_dict[word] for word in sentence])
 
-        model = Network(input_channel, out_channel, kernel_sizes, output_dim)
-        model.load_state_dict(torch.hub.load_state_dict_from_url(model_url, progress=False))
-        model.eval()
-        
-        embedding = np.expand_dims(embedding,axis=0)
-        embedding = pad(torch.FloatTensor(embedding), (0, 0, 0, max_seq_length - len(embedding)))
-        outputs = model(embedding)
+		model = Network(input_channel, out_channel, kernel_sizes, output_dim)
+		model.load_state_dict(torch.hub.load_state_dict_from_url(model_url, progress=False))
+		model.eval()
+		
+		embedding = np.expand_dims(embedding,axis=0)
+		embedding = pad(torch.FloatTensor(embedding), (0, 0, 0, max_seq_length - len(embedding)))
+		outputs = model(embedding)
   
-        _, predicted = torch.max(outputs.data, 1)
-        return softmax(outputs.data), predicted.item() + 1, embedding
+		_, predicted = torch.max(outputs.data, 1)
+		return softmax(outputs.data), predicted.item() + 1, embedding
 
-    probs = predict(input)
-    
+	probs = predict(input)
+	
 	d = {'Sentiment': ["negative", "somewhat negative", "neutral", "somewhat positive", "positive"], 'Probability': probs}
 	max_sentiment = d["Sentiment"][np.argmax(d["Probability"])]
 	source = pd.DataFrame(d)
