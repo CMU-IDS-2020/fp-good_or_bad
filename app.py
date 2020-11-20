@@ -15,9 +15,10 @@ from nltk.tokenize import RegexpTokenizer
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 from random import sample
+import pickle
 
 MODEL_PATH = 'https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/models/xentropy_adam_lr0.0001_wd0.0005_bs128'
-EMBEDDING_URL = "https://github.com/CMU-IDS-2020/fp-good_or_bad/blob/main/sample_embeddings/sample_words_embeddings"
+EMBEDDING_URL = "https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/sample_embeddings/sample_words_embeddings.pt"
 EPOCH = 50
 SAMPLE_LIMIT = 5000
 EPOCH_SAMPLE_LIMIT = SAMPLE_LIMIT // EPOCH
