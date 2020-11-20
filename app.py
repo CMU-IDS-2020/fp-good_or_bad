@@ -134,9 +134,9 @@ def run_predict():
 def run_embedding(user_input=None):
 	@st.cache
 	def load_sample_embedding(url):
-        embedding_path = "embedding"
-        torch.hub.download_url_to_file(url, embedding_path)
-        sample_embeddings = pickle.load(open(embedding_path, "rb" ))
+		embedding_path = "embedding"
+		torch.hub.download_url_to_file(url, embedding_path)
+		sample_embeddings = pickle.load(open(embedding_path, "rb" ))
 		tokens = []
 		labels = []
 		shapes = []
