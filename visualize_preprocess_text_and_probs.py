@@ -58,21 +58,21 @@ with g.subgraph(name='cluster_1') as c:
     c.attr(label='Original Input')
 
 with g.subgraph(name='cluster_2') as c:
-    c.attr(color='blue')
+    c.attr(color='white')
     c.node_attr['style'] = 'filled'
     for i, token in enumerate(tokens):
         c.node(token+"token"+str(i))
     c.attr(label='Word Tokens')
 
 with g.subgraph(name='cluster_3') as c:
-    c.attr(color='blue')
+    c.attr(color='white')
     c.node_attr['style'] = 'filled'
     for i, token in enumerate(lowercase_tokens):
         c.node(token+"lc_token"+str(i))
     c.attr(label='Lowercase Tokens')
 
 with g.subgraph(name='cluster_4') as c:
-    c.attr(color='blue')
+    c.attr(color='white')
     c.node_attr['style'] = 'filled'
     for i, token in enumerate(removed_stopwords):
         if token:
@@ -80,7 +80,7 @@ with g.subgraph(name='cluster_4') as c:
     c.attr(label='Stopwords Removed')
 
 with g.subgraph(name='cluster_5') as c:
-    c.attr(color='blue')
+    c.attr(color='white')
     c.node_attr['style'] = 'filled'
     for i, token in enumerate(lemmatized):
         if token:
@@ -94,7 +94,7 @@ max_sentiment = d["Sentiment"][np.argmax(d["Probability"])]
 source = pd.DataFrame(d)
 c = alt.Chart(source).mark_bar().encode(
     alt.X('Probability:Q', axis=alt.Axis(format='.0%')),
-    y='Sentiment:N',
+    alt.Y('Sentiment:N', sort = d['Sentiment']),
     color=alt.condition(
         alt.datum.Sentiment == max_sentiment,  # If the year is 1810 this test returns True,
         alt.value('orange'),     # which sets the bar orange.
