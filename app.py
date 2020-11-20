@@ -177,8 +177,8 @@ def run_predict(input):
 
 	probs = predict(input)[0].numpy()
 	d = {'Sentiment': ["negative", "somewhat negative", "neutral", "somewhat positive", "positive"], 'Probability': probs}
-	st.write(probs)
-    max_sentiment = d["Sentiment"][np.argmax(d["Probability"])]
+	st.write(probs[0].shape)
+	max_sentiment = d["Sentiment"][np.argmax(d["Probability"])]
 	source = pd.DataFrame(d)
 	c = alt.Chart(source).mark_bar().encode(
 		alt.X('Probability:Q', axis=alt.Axis(format='.0%')),
