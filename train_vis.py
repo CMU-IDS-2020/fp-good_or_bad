@@ -3,11 +3,12 @@ import altair as alt
 from random import sample
 import torch
 
-EPOCH = 30
+EPOCH = 50
 SAMPLE_LIMIT = 5000
 EPOCH_SAMPLE_LIMIT = SAMPLE_LIMIT // EPOCH
+MODEL_PATH = 'https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/models/xentropy_adam_lr0.0001_wd0.0005_bs128'
 
-CONTENT = torch.load("models/xentropy_adam_lr0.0001_wd0.0005_bs128", map_location=torch.device('cpu'))
+CONTENT = torch.hub.load_state_dict_from_url(MODEL_PATH, progress=False)
 
 
 def get_param_df(content):
