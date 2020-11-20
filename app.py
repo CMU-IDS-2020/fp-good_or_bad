@@ -154,13 +154,13 @@ def run_predict(input):
 		word2vec_dict = []
 		for i in range(len(word2vec_urls)):
 			url = word2vec_urls[i]
-			torch.hub.download_url_to_file(url, word2vec_dir)
+			torch.hub.download_url_to_file(url, word2vec_dir+"word2vec_dict"+str(i)+".pt")
 			word2vec = pickle.load(open(word2vec_dir+"word2vec_dict"+str(i)+".pt", "rb" ))
 			word2vec = list(word2vec.items())
 			word2vec_dict += word2vec
 		return dict(word2vec_dict)
 	
-	def predict(sentence, model_url = 'https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/models/xentropy_adam_lr0.0001_wd0.0005_bs128.pt', word2vec_urls = ['https://github.com/CMU-IDS-2020/fp-good_or_bad/blob/main/word2vec/word2vec_dict{}.pt'.format(i+1) for i in range(5)],word2vec_dir = "./word2vec",max_seq_length = 29):
+	def predict(sentence, model_url = 'https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/models/xentropy_adam_lr0.0001_wd0.0005_bs128.pt', word2vec_urls = ['https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/word2vec/word2vec_dict{}.pt'.format(i+1) for i in range(5)],word2vec_dir = "./word2vec",max_seq_length = 29):
 		word2vec_dict = load_word2vec_dict(word2vec_urls,word2vec_dir)
 		embedding = np.array([word2vec_dict[word] for word in sentence])
 
@@ -175,10 +175,10 @@ def run_predict(input):
 		_, predicted = torch.max(outputs.data, 1)
 		return softmax(outputs.data), predicted.item() + 1, embedding
 
-	probs = predict(input)
-	
+	probs = predict(input)[0].numpy()
 	d = {'Sentiment': ["negative", "somewhat negative", "neutral", "somewhat positive", "positive"], 'Probability': probs}
-	max_sentiment = d["Sentiment"][np.argmax(d["Probability"])]
+	st.write(probs)
+    max_sentiment = d["Sentiment"][np.argmax(d["Probability"])]
 	source = pd.DataFrame(d)
 	c = alt.Chart(source).mark_bar().encode(
 		alt.X('Probability:Q', axis=alt.Axis(format='.0%')),
@@ -378,7 +378,9 @@ def run_train():
 			title='Train/Validation Accuracy (%)'
 		)
 
-		return loss_plot | acc_plot
+		return (loss_plot | acc_plot).resolve_scale(
+			color='independent'
+		)
 
 
 	def params_plot(CONTENT):
