@@ -110,9 +110,7 @@ def run_preprocess():
 		c.attr(label='Lemmatized Tokens')
 
 	st.graphviz_chart(g)
-
-
-return [for token in lemmatized]
+	return [token for token in lemmatized]
 
 
 def run_predict(input):
@@ -121,27 +119,26 @@ def run_predict(input):
 		model = Network(input_channel, out_channel, kernel_sizes, output_dim)
 		model.load_state_dict(
 			torch.hub.load_state_dict_from_url(MODEL_PATH_PT, progress=False, map_location=torch.device('cpu')))
+		return model
 
-	return model
 
-
-model = get_model()
-probs = model()
-d = {'Sentiment': ["negative", "somewhat negative", "neutral", "somewhat positive", "positive"],
-	 'Probability': [0.1, 0.2, 0.3, 0.2, 0.2]}
-max_sentiment = d["Sentiment"][np.argmax(d["Probability"])]
-source = pd.DataFrame(d)
-c = alt.Chart(source).mark_bar().encode(
-	alt.X('Probability:Q', axis=alt.Axis(format='.0%')),
-	alt.Y('Sentiment:N', sort=d['Sentiment']),
-	color=alt.condition(
-		alt.datum.Sentiment == max_sentiment,  # If the year is 1810 this test returns True,
-		alt.value('orange'),  # which sets the bar orange.
-		alt.value('steelblue')  # And if it's not true it sets the bar steelblue.
+	# model = get_model()
+	# probs = model()
+	d = {'Sentiment': ["negative", "somewhat negative", "neutral", "somewhat positive", "positive"],
+		 'Probability': [0.1, 0.2, 0.3, 0.2, 0.2]}
+	max_sentiment = d["Sentiment"][np.argmax(d["Probability"])]
+	source = pd.DataFrame(d)
+	c = alt.Chart(source).mark_bar().encode(
+		alt.X('Probability:Q', axis=alt.Axis(format='.0%')),
+		alt.Y('Sentiment:N', sort=d['Sentiment']),
+		color=alt.condition(
+			alt.datum.Sentiment == max_sentiment,  # If the year is 1810 this test returns True,
+			alt.value('orange'),  # which sets the bar orange.
+			alt.value('steelblue')  # And if it's not true it sets the bar steelblue.
+		)
 	)
-)
-st.write(c)
-st.write("Our model predicts that your input text contains " + max_sentiment + " sentiment!")
+	st.write(c)
+	st.write("Our model predicts that your input text contains " + max_sentiment + " sentiment!")
 
 
 def run_embedding(user_input=None):
