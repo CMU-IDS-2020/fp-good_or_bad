@@ -41,7 +41,6 @@ def main():
 
 	preprocessed = run_preprocess()
 	run_train()
-	run_embedding()
 	run_predict(preprocessed)
  
 class Network(nn.Module):
@@ -82,7 +81,7 @@ def run_preprocess():
 
 	def remove_stopwords(tokens):
 		english_stopwords = stopwords.words('english')
-		return [token if token not in english_stopwords else None for token in tokens]
+		return [token if token not in english_stopwords and token in word2vec_dict else None for token in tokens]
 
 
 	def lemmatize(tokens):
@@ -149,19 +148,32 @@ def run_preprocess():
 	st.graphviz_chart(g)
 	return [token for token in lemmatized if token is not None]
 
+@st.cache(allow_output_mutation=True)
+def load_word2vec_dict(word2vec_urls, word2vec_dir):
+	word2vec_dict = []
+	for i in range(len(word2vec_urls)):
+		url = word2vec_urls[i]
+		torch.hub.download_url_to_file(url, word2vec_dir+"word2vec_dict"+str(i)+".pt")
+		word2vec = pickle.load(open(word2vec_dir+"word2vec_dict"+str(i)+".pt", "rb" ))
+		word2vec = list(word2vec.items())
+		word2vec_dict += word2vec
+	return dict(word2vec_dict)
+
+def tokenize_sentence(sentence, word2vec_dict):
+	tokenizer = RegexpTokenizer(r'\w+')
+	lemmatizer = WordNetLemmatizer() 
+	english_stopwords = stopwords.words('english')
+	sentence = sentence.strip()
+	tokenized_sentence = [lemmatizer.lemmatize(token.lower()) for token in tokenizer.tokenize(sentence) if token.lower() in word2vec_dict and token.lower() not in english_stopwords]
+	return tokenized_sentence
+
 def run_predict(input):
-	def load_word2vec_dict(word2vec_urls, word2vec_dir):
-		word2vec_dict = []
-		for i in range(len(word2vec_urls)):
-			url = word2vec_urls[i]
-			torch.hub.download_url_to_file(url, word2vec_dir+"word2vec_dict"+str(i)+".pt")
-			word2vec = pickle.load(open(word2vec_dir+"word2vec_dict"+str(i)+".pt", "rb" ))
-			word2vec = list(word2vec.items())
-			word2vec_dict += word2vec
-		return dict(word2vec_dict)
 	
-	def predict(sentence, model_url = 'https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/models/xentropy_adam_lr0.0001_wd0.0005_bs128.pt', word2vec_urls = ['https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/word2vec/word2vec_dict{}.pt'.format(i+1) for i in range(5)],word2vec_dir = "./word2vec",max_seq_length = 29):
-		word2vec_dict = load_word2vec_dict(word2vec_urls,word2vec_dir)
+	def predict(sentence, model_url = 'https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/models/xentropy_adam_lr0.0001_wd0.0005_bs128.pt', max_seq_length = 29):
+		#tokenized_sentence = tokenize_sentence(sentence,word2vec_dict)
+		embedding_for_plot = {}
+		for word in sentence:
+			embedding_for_plot[word] = word2vec_dict[word]
 		embedding = np.array([word2vec_dict[word] for word in sentence])
 
 		model = Network(input_channel, out_channel, kernel_sizes, output_dim)
@@ -173,11 +185,12 @@ def run_predict(input):
 		outputs = model(embedding)
   
 		_, predicted = torch.max(outputs.data, 1)
-		return softmax(outputs.data), predicted.item() + 1, embedding
+		return softmax(outputs.data), predicted.item() + 1, embedding_for_plot
 
-	probs = predict(input)[0].numpy()
+	probs, _, embedding = predict(input)
+	probs = probs[0].numpy()
+	run_embedding(embedding)
 	d = {'Sentiment': ["negative", "somewhat negative", "neutral", "somewhat positive", "positive"], 'Probability': probs}
-	st.write(probs[0].shape)
 	max_sentiment = d["Sentiment"][np.argmax(d["Probability"])]
 	source = pd.DataFrame(d)
 	c = alt.Chart(source).mark_bar().encode(
@@ -193,7 +206,7 @@ def run_predict(input):
 	st.write("Our model predicts that your input text contains " + max_sentiment + " sentiment!")
 
 def run_embedding(user_input=None):
-	@st.cache
+	@st.cache(allow_output_mutation=True)
 	def load_sample_embedding(url):
 		embedding_path = "embedding"
 		torch.hub.download_url_to_file(url, embedding_path)
@@ -208,7 +221,7 @@ def run_embedding(user_input=None):
 			shapes.append(0)
 		return tokens, labels, shapes
 
-	@st.cache
+	@st.cache(allow_output_mutation=True)
 	def load_usr_embedding(input_dict, tokens, labels, shapes):
 		for key, val in input_dict.items():
 			tokens.append(val)
@@ -217,12 +230,12 @@ def run_embedding(user_input=None):
 		return tokens, labels, shapes
 
 
-	@st.cache
+	@st.cache(allow_output_mutation=True)
 	def transform_3d(tokens):
 		tsne = TSNE(n_components=3, random_state=1, n_iter=100000, metric="cosine")
 		return tsne.fit_transform(tokens)
 
-	@st.cache
+	@st.cache(allow_output_mutation=True)
 	def get_df(values_3d, labels, shapes):
 		return pd.DataFrame({
 			'x': values_3d[:, 0],
@@ -237,10 +250,9 @@ def run_embedding(user_input=None):
 		  Show text for each point
 		  use different shape for user input
 	'''
-
 	tokens, labels, shapes = load_sample_embedding(EMBEDDING_URL)
 	if user_input is not None:
-		tokens, labels, shapes = load_usr_embedding(input_dict, tokens, labels, shapes)
+		tokens, labels, shapes = load_usr_embedding(user_input, tokens, labels, shapes)
 	values_3d = transform_3d(tokens)
 	source_3d = get_df(values_3d, labels, shapes)
 
@@ -252,7 +264,7 @@ def run_embedding(user_input=None):
 	st.plotly_chart(fig)
 
 def run_train():
-	@st.cache
+	@st.cache(allow_output_mutation=True)
 	def get_content():
 		return torch.hub.load_state_dict_from_url(MODEL_PATH, progress=False, map_location=torch.device('cpu'))
 
@@ -378,9 +390,7 @@ def run_train():
 			title='Train/Validation Accuracy (%)'
 		)
 
-		return (loss_plot | acc_plot).resolve_scale(
-			color='independent'
-		)
+		return (loss_plot | acc_plot)
 
 
 	def params_plot(CONTENT):
@@ -429,4 +439,5 @@ def run_train():
 	st.write(params_plot(CONTENT))
 
 if __name__ == "__main__":
+	word2vec_dict = load_word2vec_dict(word2vec_urls = ['https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/word2vec/word2vec_dict{}.pt'.format(i+1) for i in range(5)], word2vec_dir = "./word2vec")
 	main()
