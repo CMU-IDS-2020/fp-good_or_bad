@@ -38,7 +38,13 @@ EPOCH_SAMPLE_LIMIT = SAMPLE_LIMIT // EPOCH
 
 def main():
 	# we should return an input embedding dict that can be put into the run embedding()
-
+	st.sidebar.header("Adjust Model Parameters")
+	learning_rate = st.sidebar.select_slider("Learning rate", options=[1, 0.1, 0.01, 0.001, 0.0001], value=0.001)
+	st.sidebar.text('learning rate={}'.format(learning_rate))
+	weight_decay = st.sidebar.select_slider("Weight decay", options=[5e-7, 5e-6, 5e-5, 5e-4], value=5e-5)
+	st.sidebar.text('weight decay={}'.format(weight_decay))
+	batch_size = st.sidebar.select_slider("Batch_size", options=[16, 32, 64, 128, 256, 512], value=512)
+	st.sidebar.text('batch size={}'.format(batch_size))
 	preprocessed = run_preprocess()
 	run_train()
 	run_embedding()
@@ -244,10 +250,14 @@ def run_embedding(user_input=None):
 	values_3d = transform_3d(tokens)
 	source_3d = get_df(values_3d, labels, shapes)
 
-	fig = px.scatter_3d(source_3d, x='x', y='y', z='z',color='label', width=1000, height=800, range_x=[-1500,1500], range_y=[-1500,1500], range_z=[-1500,1500])
+	fig = px.scatter_3d(source_3d, x='x', y='y', z='z',
+		color='label', symbol='shapes', text='label',
+		width=1000, height=800, 
+		range_x=[-1500,1500], range_y=[-1500,1500], range_z=[-1500,1500])
 
 	fig.update_traces(marker=dict(size=4), selector=dict(mode='markers'))
-	fig.update_traces(hovertemplate=' ')
+	# fig.update_traces(hovertemplate=' ')
+	fig.update_traces(hoverinfo='skip', hovertemplate=None, selector=dict(type='scatter3d'))
 	fig.update_layout(scene_aspectmode='cube')
 	st.plotly_chart(fig)
 
