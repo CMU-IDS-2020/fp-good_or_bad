@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import torch
+import copy
 
 from sklearn.manifold import TSNE
 import plotly.express as px
@@ -212,7 +213,7 @@ def run_predict(input):
 	st.write("Our model predicts that your input text contains " + max_sentiment + " sentiment!")
 
 def run_embedding(user_input=None):
-	@st.cache(allow_output_mutation=True)
+	@st.cache
 	def load_sample_embedding(url):
 		embedding_path = "embedding"
 		torch.hub.download_url_to_file(url, embedding_path)
@@ -227,8 +228,11 @@ def run_embedding(user_input=None):
 			shapes.append(0)
 		return tokens, labels, shapes
 
-	@st.cache(allow_output_mutation=True)
-	def load_usr_embedding(input_dict, tokens, labels, shapes):
+	@st.cache
+	def load_usr_embedding(input_dict, sample_tokens, sample_labels, sample_shapes):
+		tokens = copy.deepcopy(sample_tokens)
+		labels = copy.deepcopy(sample_labels)
+		shapes = copy.deepcopy(sample_shapes)
 		for key, val in input_dict.items():
 			tokens.append(val)
 			labels.append(key)
@@ -236,12 +240,12 @@ def run_embedding(user_input=None):
 		return tokens, labels, shapes
 
 
-	@st.cache(allow_output_mutation=True)
+	@st.cache
 	def transform_3d(tokens):
 		tsne = TSNE(n_components=3, random_state=1, n_iter=100000, metric="cosine")
 		return tsne.fit_transform(tokens)
 
-	@st.cache(allow_output_mutation=True)
+	@st.cache
 	def get_df(values_3d, labels, shapes):
 		return pd.DataFrame({
 			'x': values_3d[:, 0],
@@ -256,14 +260,19 @@ def run_embedding(user_input=None):
 		  Show text for each point
 		  use different shape for user input
 	'''
-	tokens, labels, shapes = load_sample_embedding(EMBEDDING_URL)
+	sample_tokens, sample_labels, sample_shapes = load_sample_embedding(EMBEDDING_URL)
+
 	if user_input is not None:
-		tokens, labels, shapes = load_usr_embedding(user_input, tokens, labels, shapes)
+		tokens, labels, shapes = load_usr_embedding(user_input, sample_tokens, sample_labels, sample_shapes)
+	else:
+		tokens = sample_tokens
+		labels = sample_labels
+		shapes = sample_shapes
 	values_3d = transform_3d(tokens)
 	source_3d = get_df(values_3d, labels, shapes)
 
 	fig = px.scatter_3d(source_3d, x='x', y='y', z='z',
-		color='label', symbol='shapes', text='label',
+		color='label', symbol='shapes', text='label', labels={'word':'label'},
 		width=1000, height=800, 
 		range_x=[-1500,1500], range_y=[-1500,1500], range_z=[-1500,1500])
 
