@@ -179,9 +179,3 @@ def params_plot(CONTENT):
         ) & (plots[6] | plots[7]).resolve_scale(
           color='independent'
         )
-
-# dataset_path = "amazon_products" or "movie_reviews" or "yelp_restaurants"
-# optimizer_path = "xentropy_adam_all" or "xentropy_sgdmomentum_all"
-CONTENT = get_train_content(dataset_path="amazon_products", optimizer_path="xentropy_adam_all")
-st.write(loss_acc_plot(CONTENT))
-st.write(params_plot(CONTENT))
