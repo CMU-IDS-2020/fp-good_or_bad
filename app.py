@@ -225,7 +225,7 @@ def run_preprocess(dataset, input, visible=True):
 		g = Digraph()
 		i = 0
 		g.node(input)
-		for token, lc_token, r_token, l_token in zip(tokens, lowercase_tokens, removed_stopwords, lemmatized):
+		for token, lc_token, r_token, l_token in zip(reversed(tokens), reversed(lowercase_tokens), reversed(removed_stopwords), reversed(lemmatized)):
 			g.node(token+"token"+str(i), label = token)
 			g.edge(input, token+"token"+str(i))
 			g.node(lc_token+"lc_token"+str(i), label = lc_token)
@@ -246,21 +246,21 @@ def run_preprocess(dataset, input, visible=True):
 		with g.subgraph(name='cluster_2') as c:
 			c.attr(color='white')
 			c.node_attr['style'] = 'filled'
-			for i, token in enumerate(tokens):
+			for i, token in enumerate(reversed(tokens)):
 				c.node(token+"token"+str(i))
 			c.attr(label='Word Tokens')
 
 		with g.subgraph(name='cluster_3') as c:
 			c.attr(color='white')
 			c.node_attr['style'] = 'filled'
-			for i, token in enumerate(lowercase_tokens):
+			for i, token in enumerate(reversed(lowercase_tokens)):
 				c.node(token+"lc_token"+str(i))
 			c.attr(label='Lowercase Tokens')
 
 		with g.subgraph(name='cluster_4') as c:
 			c.attr(color='white')
 			c.node_attr['style'] = 'filled'
-			for i, token in enumerate(removed_stopwords):
+			for i, token in enumerate(reversed(removed_stopwords)):
 				if token:
 					c.node(token+"r_token"+str(i))
 			c.attr(label='Stopwords Removed')
@@ -268,7 +268,7 @@ def run_preprocess(dataset, input, visible=True):
 		with g.subgraph(name='cluster_5') as c:
 			c.attr(color='white')
 			c.node_attr['style'] = 'filled'
-			for i, token in enumerate(lemmatized):
+			for i, token in enumerate(reversed(lemmatized)):
 				if token:
 					c.node(token+"l_token"+str(i))
 			c.attr(label='Lemmatized Tokens')
