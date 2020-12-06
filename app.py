@@ -127,9 +127,9 @@ def main():
 		models = []
 
 		st.sidebar.header("Adjust Model Parameters")
-		learning_rate = st.sidebar.select_slider("Learning rate", options=[1, 0.1, 0.01, 0.001, 0.0001], value=0.001)
+		learning_rate = st.sidebar.select_slider("Learning rate", options=[0.1, 0.01, 0.001, 0.0001], value=0.001)
 		# st.sidebar.text('learning rate={}'.format(learning_rate))
-		weight_decay = st.sidebar.select_slider("Weight decay", options=[5e-7, 5e-6, 5e-5, 5e-4], value=5e-5)
+		weight_decay = st.sidebar.select_slider("Weight decay", options=[0, 5e-7, 5e-6, 5e-5, 5e-4], value=5e-5)
 		# st.sidebar.text('weight decay={}'.format(weight_decay))
 		batch_size = st.sidebar.select_slider("Batch_size", options=[32, 64, 128, 256, 512], value=512)
 		# st.sidebar.text('batch size={}'.format(batch_size))
@@ -139,9 +139,9 @@ def main():
 	 
 		two_models = st.sidebar.checkbox('Compare with another set of model parameters')
 		if two_models:
-			learning_rate2 = st.sidebar.select_slider("Learning rate of second model", options=[1, 0.1, 0.01, 0.001, 0.0001], value=0.001)
+			learning_rate2 = st.sidebar.select_slider("Learning rate of second model", options=[0.1, 0.01, 0.001, 0.0001], value=0.001)
 			# st.sidebar.text('learning rate={}'.format(learning_rate))
-			weight_decay2 = st.sidebar.select_slider("Weight decay of second model", options=[5e-7, 5e-6, 5e-5, 5e-4], value=5e-5)
+			weight_decay2 = st.sidebar.select_slider("Weight decay of second model", options=[0, 5e-7, 5e-6, 5e-5, 5e-4], value=5e-5)
 			# st.sidebar.text('weight decay={}'.format(weight_decay))
 			batch_size2 = st.sidebar.select_slider("Batch_size of second model", options=[32, 64, 128, 256, 512], value=512)
 			# st.sidebar.text('batch size={}'.format(batch_size))
