@@ -1,32 +1,36 @@
 import pandas as pd
 import altair as alt
 from random import sample
+import streamlit as st
 import torch
 
 EPOCH = 50
 SAMPLE_LIMIT = 5000
 EPOCH_SAMPLE_LIMIT = SAMPLE_LIMIT // EPOCH
-MODEL_PATH = 'https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/models/xentropy_adam_lr0.0001_wd0.0005_bs128'
 
-CONTENT = torch.hub.load_state_dict_from_url(MODEL_PATH, progress=False)
-
+@st.cache(allow_output_mutation=True)
+# dataset_path = "amazon_products" or "movie_reviews" or "yelp_restaurants"
+# optimizer_path = "xentropy_adam_all" or "xentropy_sgdmomentum_all"
+def get_train_content(dataset_path, optimizer_path):
+    url = "https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/models/{}/{}".format(dataset_path, optimizer_path)
+    return torch.hub.load_state_dict_from_url(url, progress=False, map_location=torch.device('cpu'))
 
 def get_param_df(content):
-    model_parameters = content['model_parameters']
+    param_df = content['model_parameters']
 
-    param_df = pd.DataFrame({'epoch': [], 'param_type': [], 'value': []},
-                      columns=['epoch', 'param_type', 'value'])
+    # param_df = pd.DataFrame({'epoch': [], 'param_type': [], 'value': []},
+    #                   columns=['epoch', 'param_type', 'value'])
 
-    for i in range(len(model_parameters)):
-        epoch = i+1
-        params = model_parameters[i]
-        for key in params.keys():
-            param_type = key
-            values = params[key].numpy().reshape(-1).tolist()
-            if len(values) > EPOCH_SAMPLE_LIMIT:
-                values = sample(values, EPOCH_SAMPLE_LIMIT)
-            rows = pd.DataFrame({'epoch': [epoch]*len(values), 'param_type': [param_type]*len(values), 'value': values})
-            param_df = param_df.append(rows, ignore_index=True)
+    # for i in range(len(model_parameters)):
+    #     epoch = i+1
+    #     params = model_parameters[i]
+    #     for key in params.keys():
+    #         param_type = key
+    #         values = params[key].numpy().reshape(-1).tolist()
+    #         if len(values) > EPOCH_SAMPLE_LIMIT:
+    #             values = sample(values, EPOCH_SAMPLE_LIMIT)
+    #         rows = pd.DataFrame({'epoch': [epoch]*len(values), 'param_type': [param_type]*len(values), 'value': values})
+    #         param_df = param_df.append(rows, ignore_index=True)
 
     # convs.0.weight
     # convs.0.bias
@@ -73,7 +77,7 @@ def get_loss_acc_df(content):
     return df_loss, df_acc
 
 
-def loss_acc_plot():
+def loss_acc_plot(CONTENT):
     df_loss, df_acc = get_loss_acc_df(CONTENT)
     nearest = alt.selection(type='single', nearest=True, on='mouseover',
                             fields=['epoch'], empty='none')
@@ -133,12 +137,10 @@ def loss_acc_plot():
         title='Train/Validation Accuracy (%)'
     )
 
-    return (loss_plot | acc_plot).resolve_scale(
-        color='independent'
-    )
+    return (loss_plot | acc_plot)
 
 
-def params_plot():
+def params_plot(CONTENT):
     param_df_list, param_df_name = get_param_df(CONTENT)
     index_selector = alt.selection(type="single", on='mouseover', fields=['epoch'])
     plots = []
@@ -166,17 +168,14 @@ def params_plot():
             width=50, height=200,
         )
 
-        plots.append((p | bar).resolve_scale(
-            y='shared'
-        ))
+        plots.append((p | bar))
 
-        return (plots[0] | plots[1]).resolve_scale(
-                  color='independent'
-                ) & (plots[2] | plots[3]).resolve_scale(
-                  color='independent'
-                ) & (plots[4] | plots[5]).resolve_scale(
-                  color='independent'
-                ) & (plots[6] | plots[7]).resolve_scale(
-                  color='independent'
-                )
-
+    return (plots[0] | plots[1]).resolve_scale(
+          color='independent'
+        ) & (plots[2] | plots[3]).resolve_scale(
+          color='independent'
+        ) & (plots[4] | plots[5]).resolve_scale(
+          color='independent'
+        ) & (plots[6] | plots[7]).resolve_scale(
+          color='independent'
+        )

@@ -6,6 +6,38 @@ import pickle
 import streamlit as st
 import json
 
+
+def get_highlight_text(text, dataset_path):
+    with open(dataset_path, "rb") as f:
+        myobj = pickle.load(f)
+    count_dict = dict(myobj)
+    text_list = text.split(" ")
+
+    # st.write(myobj)
+    highlight_list = []
+    for t in text_list:
+        if t.lower() in count_dict:
+            count = count_dict[t.lower()]
+        else:
+            count = 0
+        topic_list = ["movie", "film", "food", "restaurant", "tablet", "kindle", "echo", "alexa", "speaker", "amazon", "wa"]
+        if count > 100:
+            if t.lower() in topic_list:
+                highlight_list.append((t, "somewhat important", "#fff2c9"))
+            else:
+                highlight_list.append((t, "very important", "#fcbbbb"))
+        elif count > 50:
+            if t.lower() in topic_list:
+                highlight_list.append((t, "somewhat important", "#fff2c9"))
+            else:
+                highlight_list.append((t, "important", "#ffdcc2"))
+        elif count > 10:
+            highlight_list.append((t, "somewhat important", "#fff2c9"))
+        else:
+            highlight_list.append(" " + t + " ")
+    annotated_text(*highlight_list)
+
+
 # Copy form https://github.com/tvst/st-annotated-text/blob/master/annotated_text/__init__.py
 def annotation(body, label="", background="#ddd", color="#333", **style):
     """Build an HtmlElement span object with the given body and annotation label.
@@ -115,23 +147,4 @@ def annotated_text(*args, **kwargs):
             raise Exception("Oh noes!")
 
     streamlit.components.v1.html(str(out), **kwargs)
-
-
-def get_highlight_text(text, dataset_path):
-    with open(dataset_path, "rb") as f:
-        myobj = pickle.load(f)
-    count_dict = dict(myobj)
-    text_list = text.split(" ")
-
-    highlight_list = []
-    for t in text_list:
-        if t.lower() in count_dict:
-            count = count_dict[t.lower()]
-        else:
-            count = 0
-        if count > 0:
-            highlight_list.append((t, "important", "#fea"))
-        else:
-            highlight_list.append(" " + t + " ")
-    annotated_text(*highlight_list)
 
