@@ -297,7 +297,7 @@ def tokenize_sentence(sentence, word2vec_dict):
 
 def run_predict(input, models):
 	
-	def predict(sentence, model_url = 'https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/models/xentropy_adam_lr0.0001_wd0.0005_bs128.pt', max_seq_length = 29):
+	def predict(sentence, model_url, max_seq_length = 29):
 		#tokenized_sentence = tokenize_sentence(sentence,word2vec_dict)
 		embedding_for_plot = {}
 		for word in sentence:
@@ -318,7 +318,7 @@ def run_predict(input, models):
 	probs_list = []
 	emb_columns = st.beta_columns(len(models))
 	for i in range(len(models)):
-		probs, _, embedding = predict(input, models[i].model_url)
+		probs, _, embedding = predict(input, models[i].model_url, models[i].max_len)
 		with emb_columns[i]:
 			run_embedding(model.mapped_dataset, embedding)
 
