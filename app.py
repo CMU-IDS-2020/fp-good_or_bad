@@ -319,9 +319,10 @@ def run_predict(input, models):
 	probs_list = []
 	emb_columns = st.beta_columns(len(models))
 	for i in range(len(models)):
+		models[i].model_url
 		probs, _, embedding = predict(input, models[i].model_url, models[i].max_len)
 		with emb_columns[i]:
-			run_embedding(model.mapped_dataset, embedding)
+			run_embedding(models[i].mapped_dataset, embedding)
 
 		probs = probs[0].numpy()
 		probs_list.append(probs)
