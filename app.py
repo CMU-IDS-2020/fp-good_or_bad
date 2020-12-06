@@ -179,9 +179,9 @@ class Network(nn.Module):
 		pooled = [F.max_pool1d(conv, conv.shape[2]).squeeze(2) for conv in conved]
 		cat = self.dropout(torch.cat(pooled, dim = 1))
 		return self.linear(cat)
-input_channel = 300
-out_channel = 100
-kernel_sizes = [3,4,5]
+input_channel = 100
+out_channel = 50
+kernel_sizes = [2,3,4]
 output_dim = 5
 
 def run_preprocess(dataset, input, visible=True):
