@@ -305,10 +305,8 @@ def run_predict(input, models):
 		embedding = np.array([word2vec_dict[word] for word in sentence])
 
 		model = Network(input_channel, out_channel, kernel_sizes, output_dim)
-		torch.hub.download_url_to_file(model_url, "./" + "currmodel" + ".pt")
-		statedict = torch.load("./currmodel.pt",map_location=torch.device('cpu'))
-		model.load_state_dict(statedict)
-		# model.load_state_dict(torch.hub.load_state_dict_from_url(model_url, progress=False, map_location=torch.device('cpu')))
+		model = model.to(torch.device('cpu'))
+		model.load_state_dict(torch.hub.load_state_dict_from_url(model_url, progress=False, map_location=torch.device('cpu')))
 		model.eval()
 		
 		embedding = np.expand_dims(embedding,axis=0)
@@ -321,7 +319,6 @@ def run_predict(input, models):
 	probs_list = []
 	emb_columns = st.beta_columns(len(models))
 	for i in range(len(models)):
-		models[i].model_url
 		probs, _, embedding = predict(input, models[i].model_url, models[i].max_len)
 		with emb_columns[i]:
 			run_embedding(models[i].mapped_dataset, embedding)
@@ -393,7 +390,7 @@ def run_embedding(mapped_dataset, user_input=None):
 		})
 	
 	url = 'https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/sample_embeddings/100d/{}_sample_embeddings.pt'.format(mapped_dataset)
-	sample_tokens, sample_labels, sample_shapes = load_sample_embedding(EMBEDDING_URL)
+	sample_tokens, sample_labels, sample_shapes = load_sample_embedding(url)
 
 	if user_input is not None:
 		tokens, labels, shapes = load_usr_embedding(user_input, sample_tokens, sample_labels, sample_shapes)
