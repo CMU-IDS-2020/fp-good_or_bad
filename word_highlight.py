@@ -13,7 +13,7 @@ def get_highlight_text(text, dataset_path):
     count_dict = dict(myobj)
     text_list = text.split(" ")
 
-    st.write(myobj)
+    # st.write(myobj)
     highlight_list = []
     for t in text_list:
         if t.lower() in count_dict:
