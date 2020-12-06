@@ -97,7 +97,31 @@ def main():
 	st.sidebar.header('Navigation')
 	page = st.sidebar.radio('', (OVERVIEW, PREPROCESS, TRAIN, PREDICT))
 
-	if page != OVERVIEW:
+	if page == OVERVIEW:
+		st.title("Overview")
+		st.write("In this age of social media, personal opinions are expressed ubiquitously in the public. \
+		Behind these opinions are sentiments and emotions. \
+		Gaining an understanding into sentiments regarding a topic can be beneficial in many ways, be it in the case of a business trying to know its customers or the case of a politician trying to know the electorate. \
+		This age has also witnessed a rise of artificial intelligence and machine learning, which enables a quick capture of the sentiments behind numerous opinions existing on social media.")
+		st.image('https://www.kdnuggets.com/images/sentiment-fig-1-689.jpg', caption = 'Sentiment Analysis', use_column_width=True)
+		st.write('''Machine learning methods can be highly accurate and efficient for various tasks. \
+		However, machine learning models, especially neural networks, are still a “black box” for many people, even experienced experts in the field (for example, considering the poorly understood nature of generalization of neural networks). \
+		Given this problem, we built this visualization application to help people understand internal mechanisms of a neural network. \
+		We use the task of sentiment analysis as a case study in our application to walk users through the neural network’s training and decision making process.''')
+		st.image('https://miro.medium.com/max/726/1*Y4aATgaQ8OO_gxLFTy3rQg.png', caption = 'Neural Networks for Sentiment Analysis', use_column_width = True)
+		st.write('''To effectively capture, classify and predict sentiments, we design, utilize and demonstrate a convolutional neural network (CNN), which is known for its excellent performance in computer vision tasks, as well as natural language processing tasks recently [1]. \
+		Specifically, CNNs have been shown to be able to model inherent syntactic and semantic features of sentimental expressions [2]. \
+		Finally, another advantage of using CNNs (and neural networks in general) is no requirement of deep domain knowledge, in this case linguistics [2]. ''')
+		st.write("Our model has the following architecture: ")
+		st.write("- 1-Dimensional CNN Layer for extracting features")
+		st.write("- Max Pooling Layer for retaining prominent features")
+		st.write("- Dropout Layer for better model generalization")
+		st.write("- Linear Layer for sentiment classification")
+		st.write("We trained our model on three relevant datasets, including Rotten Tomato movie reviews, Yelp restaurant reviews and Amazon product reviews, each with various hyperparameter values. \
+		With our app, you will be able to visualize the full process of sentiment analysis using a neural network, as well as the interaction of training data, hyperparameters and the model itself. \
+		We hope that this app can demystify the magic of neural networks.")
+		st.write("To start using our app, first select a specific training dataset, then adjust hyparameter values using the sidebar!")
+	elif page != OVERVIEW:
 		st.title("Predict Sentiment")
 		dataset = st.selectbox('Choose a dataset', (AMAZON_DATASET, MOVIE_DATASET, YELP_DATASET))
 		models = []
