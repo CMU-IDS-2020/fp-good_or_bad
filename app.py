@@ -305,8 +305,10 @@ def run_predict(input, models):
 		embedding = np.array([word2vec_dict[word] for word in sentence])
 
 		model = Network(input_channel, out_channel, kernel_sizes, output_dim)
-		model = model.to(torch.device('cpu'))
-		model.load_state_dict(torch.hub.load_state_dict_from_url(model_url, progress=False, map_location=torch.device('cpu')))
+		torch.hub.download_url_to_file(model_url, "./" + "currmodel" + ".pt")
+		statedict = torch.load("./currmodel.pt",map_location=torch.device('cpu'))
+		model.load_state_dict(statedict)
+		# model.load_state_dict(torch.hub.load_state_dict_from_url(model_url, progress=False, map_location=torch.device('cpu')))
 		model.eval()
 		
 		embedding = np.expand_dims(embedding,axis=0)
