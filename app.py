@@ -44,8 +44,8 @@ EPOCH = 30
 SAMPLE_LIMIT = 5000
 EPOCH_SAMPLE_LIMIT = SAMPLE_LIMIT // EPOCH
 
-AMAZON_DATASET = 'Amazon products'
 MOVIE_DATASET = 'Movie reviews'
+AMAZON_DATASET = 'Amazon products'
 YELP_DATASET = 'Yelp restaurants'
 
 OVERVIEW = 'Overview'
@@ -73,7 +73,7 @@ class Model:
 		self.mapped_weight_decay = None
 		self.max_length = 0
 
-		dataset_map = {'Amazon products' : "amazon_products", 'Movie reviews':'movie_reviews', 'Yelp restaurants':"yelp_restaurants"}
+		dataset_map = { 'Movie reviews':'movie_reviews','Amazon products' : "amazon_products", 'Yelp restaurants':"yelp_restaurants"}
 		optimizer_map = {'ADAM':"adam",'SGD with Momentum':"sgdmomentum"}
 		self.mapped_dataset = dataset_map[self.dataset]
 		self.mapped_optimizer = optimizer_map[self.optimizer]
@@ -127,7 +127,7 @@ def main():
 		st.write("To start using our app, first select a specific training dataset, then adjust hyparameter values using the sidebar!")
 	elif page != OVERVIEW:
 		st.title("Predict Sentiment")
-		dataset = st.selectbox('Choose a dataset', (AMAZON_DATASET, MOVIE_DATASET, YELP_DATASET))
+		dataset = st.selectbox('Choose a dataset', ( MOVIE_DATASET, AMAZON_DATASET, YELP_DATASET))
 		models = []
 
 		st.sidebar.header("Adjust Model Parameters")
