@@ -13,7 +13,7 @@ def get_highlight_text(text, dataset_path):
         myobj = pickle.load(f)
     count_dict = dict(myobj)
     text_list = text.split(" ")
-    st.write(text_list)
+    # st.write(text_list)
 
     # st.write(myobj)
     highlight_list = []
