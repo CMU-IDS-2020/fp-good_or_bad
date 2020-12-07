@@ -121,7 +121,7 @@ def main():
 		st.write("- Max Pooling Layer for retaining prominent features")
 		st.write("- Dropout Layer for better model generalization")
 		st.write("- Linear Layer for sentiment classification")
-		st.write("We trained our model on three relevant datasets, including Rotten Tomato movie reviews, Yelp restaurant reviews and Amazon product reviews, each with various hyperparameter values. \
+		st.write("We trained our model on three relevant datasets, including [Rotten Tomato movie reviews](https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews/data), [Yelp restaurant reviews](https://www.kaggle.com/omkarsabnis/yelp-reviews-dataset) and [Amazon product reviews](https://www.kaggle.com/datafiniti/consumer-reviews-of-amazon-products?select=Datafiniti_Amazon_Consumer_Reviews_of_Amazon_Products.csv), each with various hyperparameter values. \
 		With our app, you will be able to visualize the full process of sentiment analysis using a neural network, as well as the interaction of training data, hyperparameters and the model itself. \
 		We hope that this app can demystify the magic of neural networks.")
 		st.write("To start using our app, first select a specific training dataset, then adjust hyparameter values using the sidebar!")
@@ -153,7 +153,7 @@ def main():
 			models.append(Model(dataset, learning_rate2, batch_size2, weight_decay2, optimizer2))
 
 		
-		user_input = st.text_input('Write something emotional and hit enter!', 'I absolutely love it!')
+		user_input = st.text_input('Write something emotional and hit enter!', "I absolutely love the movie! It's really good!")
 
 
 	if page == PREPROCESS:
