@@ -4,7 +4,7 @@ from random import sample
 import streamlit as st
 import torch
 
-EPOCH = 50
+EPOCH = 30
 SAMPLE_LIMIT = 5000
 EPOCH_SAMPLE_LIMIT = SAMPLE_LIMIT // EPOCH
 

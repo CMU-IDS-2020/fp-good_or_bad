@@ -40,7 +40,7 @@ MOVIE_EMBEDDING_URL = 'https://github.com/CMU-IDS-2020/fp-good_or_bad/blob/main/
 YELP_EMBEDDING_URL = 'https://github.com/CMU-IDS-2020/fp-good_or_bad/blob/main/sample_embeddings/100d/yelp_restaurant_sample_embeddings.pt'
 
 MODEL_PATH_PT = 'https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/models/xentropy_adam_lr0.0001_wd0.0005_bs128.pt'
-EPOCH = 50
+EPOCH = 30
 SAMPLE_LIMIT = 5000
 EPOCH_SAMPLE_LIMIT = SAMPLE_LIMIT // EPOCH
 
