@@ -179,22 +179,22 @@ def params_plot(CONTENT, vertical=True):
         plots.append((p | bar))
 
     if vertical:
-        return (plots[0] & plots[1]).resolve_scale(
+        return [(plots[0] & plots[1]).resolve_scale(
               color='independent'
-            ) & (plots[2] & plots[3]).resolve_scale(
+            ), (plots[2] & plots[3]).resolve_scale(
               color='independent'
-            ) & (plots[4] & plots[5]).resolve_scale(
+            ), (plots[4] & plots[5]).resolve_scale(
               color='independent'
-            ) & (plots[6] & plots[7]).resolve_scale(
+            ), (plots[6] & plots[7]).resolve_scale(
               color='independent'
-            )
+            )]
     else:      
-        return (plots[0] | plots[1]).resolve_scale(
+        return [(plots[0] | plots[1]).resolve_scale(
               color='independent'
-            ) & (plots[2] | plots[3]).resolve_scale(
+            ), (plots[2] | plots[3]).resolve_scale(
               color='independent'
-            ) & (plots[4] | plots[5]).resolve_scale(
+            ), (plots[4] | plots[5]).resolve_scale(
               color='independent'
-            ) & (plots[6] | plots[7]).resolve_scale(
+            ), (plots[6] | plots[7]).resolve_scale(
               color='independent'
-            )
+            )]
