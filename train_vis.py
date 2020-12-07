@@ -83,7 +83,7 @@ def get_loss_acc_df(content):
     return df_loss, df_acc
 
 
-def loss_acc_plot(CONTENT):
+def loss_acc_plot(CONTENT, vertical=True):
     df_loss, df_acc = get_loss_acc_df(CONTENT)
     nearest = alt.selection(type='single', nearest=True, on='mouseover',
                             fields=['epoch'], empty='none')
@@ -142,11 +142,13 @@ def loss_acc_plot(CONTENT):
         width=400, height=200,
         title='Train/Validation Accuracy (%)'
     )
+    if vertical:
+        return alt.vconcat(loss_plot, acc_plot)
+    else:
+        return (loss_plot | acc_plot)
 
-    return (loss_plot | acc_plot)
 
-
-def params_plot(CONTENT):
+def params_plot(CONTENT, vertical=True):
     param_df_list, param_df_name = get_param_df(CONTENT)
     index_selector = alt.selection(type="single", on='mouseover', fields=['epoch'])
     plots = []
@@ -176,12 +178,23 @@ def params_plot(CONTENT):
 
         plots.append((p | bar))
 
-    return (plots[0] | plots[1]).resolve_scale(
-          color='independent'
-        ) & (plots[2] | plots[3]).resolve_scale(
-          color='independent'
-        ) & (plots[4] | plots[5]).resolve_scale(
-          color='independent'
-        ) & (plots[6] | plots[7]).resolve_scale(
-          color='independent'
-        )
+    if vertical:
+        return (plots[0] & plots[1]).resolve_scale(
+              color='independent'
+            ) & (plots[2] & plots[3]).resolve_scale(
+              color='independent'
+            ) & (plots[4] & plots[5]).resolve_scale(
+              color='independent'
+            ) & (plots[6] & plots[7]).resolve_scale(
+              color='independent'
+            )
+    else:      
+        return (plots[0] | plots[1]).resolve_scale(
+              color='independent'
+            ) & (plots[2] | plots[3]).resolve_scale(
+              color='independent'
+            ) & (plots[4] | plots[5]).resolve_scale(
+              color='independent'
+            ) & (plots[6] | plots[7]).resolve_scale(
+              color='independent'
+            )

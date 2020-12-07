@@ -466,7 +466,7 @@ def run_train(models):
 	if len(models) == 1: 
 		_, center_col, _ = st.beta_columns([1, 3, 1])
 		with center_col:
-			st.write(loss_acc_plot(param_dfs[0]))
+			st.write(loss_acc_plot(param_dfs[0], False))
 	elif len(models) == 2:
 		col1, col2 = st.beta_columns(2)
 		with col1:
@@ -479,7 +479,7 @@ def run_train(models):
 	if len(models) == 1: 
 		_, center_col, _ = st.beta_columns([1, 3, 1])
 		with center_col:
-			st.write(params_plot(param_dfs[0]))
+			st.write(params_plot(param_dfs[0], False))
 	elif len(models) == 2:
 		col1, col2 = st.beta_columns(2)
 		with col1:
