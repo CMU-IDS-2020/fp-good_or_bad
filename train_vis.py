@@ -13,10 +13,13 @@ EPOCH_SAMPLE_LIMIT = SAMPLE_LIMIT // EPOCH
 # optimizer_path = "xentropy_adam_all" or "xentropy_sgdmomentum_all"
 def get_train_content(dataset_path, optimizer_path):
     url = "https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/models/{}/{}".format(dataset_path, optimizer_path)
-    return torch.hub.load_state_dict_from_url(url, progress=False, map_location=torch.device('cpu'))
+    return torch.load("models/amazon_products/xentropy_adam_all", map_location=torch.device('cpu'))
 
 def get_param_df(content):
-    param_df = content['model_parameters']
+    epoch = content["model_parameters"]["epoch"]
+    param_type = content["model_parameters"]["param_type"]
+    value = content["model_parameters"]["value"]
+    param_df = pd.DataFrame({'epoch': epoch, 'param_type': param_type, 'value': value})
 
     # param_df = pd.DataFrame({'epoch': [], 'param_type': [], 'value': []},
     #                   columns=['epoch', 'param_type', 'value'])
