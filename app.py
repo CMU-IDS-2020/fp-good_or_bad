@@ -123,8 +123,8 @@ def main():
 		st.write("- Dropout Layer for better model generalization")
 		st.write("- Linear Layer for sentiment classification")
 		st.title("Datasets")
-		st.write("We trained our model on three relevant datasets, including [Rotten Tomato movie reviews](https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews/data), [Yelp restaurant reviews](https://www.kaggle.com/omkarsabnis/yelp-reviews-dataset) and [Amazon product reviews](https://www.kaggle.com/datafiniti/consumer-reviews-of-amazon-products?select=Datafiniti_Amazon_Consumer_Reviews_of_Amazon_Products.csv), each with various hyperparameter values. \
-		With our app, you will be able to visualize the full process of sentiment analysis using a neural network, as well as the interaction of training data, hyperparameters and the model itself. \
+		st.write("We trained our model on three relevant datasets, including [Rotten Tomato movie reviews](https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews/data), [Yelp restaurant reviews](https://www.kaggle.com/omkarsabnis/yelp-reviews-dataset) and [Amazon product reviews](https://www.kaggle.com/datafiniti/consumer-reviews-of-amazon-products?select=Datafiniti_Amazon_Consumer_Reviews_of_Amazon_Products.csv), each with various hyperparameter values.")
+		st.write("With our app, you will be able to visualize the full process of sentiment analysis using a neural network, as well as the interaction of training data, hyperparameters and the model itself. \
 		We hope that this app can demystify the magic of neural networks.")
 		st.write("To start using our app, first select a specific training dataset, then adjust hyparameter values using the sidebar!")
 	elif page != OVERVIEW:
@@ -154,8 +154,14 @@ def main():
 			optimizer2 = st.sidebar.radio('Optimizer of second model', (ADAM, SGD))
 			models.append(Model(dataset, learning_rate2, batch_size2, weight_decay2, optimizer2))
 
-		
-		user_input = st.text_input('Write something emotional and hit enter!', "I absolutely love the movie! It's really good!")
+		if dataset == MOVIE_DATASET:
+			user_input = st.text_input('Write something emotional and hit enter!', "I absolutely love this romantic movie! It's such an interesting film!")
+		elif dataset == AMAZON_DATASET:
+			user_input = st.text_input('Write something emotional and hit enter!', "Great device! It's easy to use!")
+		else:
+			user_input = st.text_input('Write something emotional and hit enter!', "Delicious food! Best place to have lunch with a friend!")
+
+
 
 
 	if page == PREPROCESS:
@@ -466,7 +472,7 @@ def run_train(models):
 	if len(models) == 1: 
 		_, center_col, _ = st.beta_columns([1, 3, 1])
 		with center_col:
-			st.write(loss_acc_plot(param_dfs[0]))
+			st.write(loss_acc_plot(param_dfs[0], False))
 	elif len(models) == 2:
 		col1, col2 = st.beta_columns(2)
 		with col1:
@@ -479,7 +485,7 @@ def run_train(models):
 	if len(models) == 1: 
 		_, center_col, _ = st.beta_columns([1, 3, 1])
 		with center_col:
-			st.write(params_plot(param_dfs[0]))
+			st.write(params_plot(param_dfs[0], False))
 	elif len(models) == 2:
 		col1, col2 = st.beta_columns(2)
 		with col1:
