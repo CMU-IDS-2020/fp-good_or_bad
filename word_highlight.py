@@ -5,6 +5,7 @@ from htbuilder.units import px, rem, em
 import pickle
 import streamlit as st
 import json
+import string
 
 
 def get_highlight_text(text, dataset_path):
@@ -12,10 +13,13 @@ def get_highlight_text(text, dataset_path):
         myobj = pickle.load(f)
     count_dict = dict(myobj)
     text_list = text.split(" ")
+    # st.write(text_list)
 
     # st.write(myobj)
     highlight_list = []
     for t in text_list:
+        original_t = t
+        t = t.strip(string.punctuation)
         if t.lower() in count_dict:
             count = count_dict[t.lower()]
         else:
@@ -23,18 +27,18 @@ def get_highlight_text(text, dataset_path):
         topic_list = ["movie", "film", "food", "restaurant", "tablet", "kindle", "echo", "alexa", "speaker", "amazon", "wa"]
         if count > 100:
             if t.lower() in topic_list:
-                highlight_list.append((t, "somewhat important", "#fff2c9"))
+                highlight_list.append((original_t, "somewhat important", "#fff2c9"))
             else:
-                highlight_list.append((t, "very important", "#fcbbbb"))
+                highlight_list.append((original_t, "very important", "#fcbbbb"))
         elif count > 50:
             if t.lower() in topic_list:
-                highlight_list.append((t, "somewhat important", "#fff2c9"))
+                highlight_list.append((original_t, "somewhat important", "#fff2c9"))
             else:
-                highlight_list.append((t, "important", "#ffdcc2"))
+                highlight_list.append((original_t, "important", "#ffdcc2"))
         elif count > 10:
-            highlight_list.append((t, "somewhat important", "#fff2c9"))
+            highlight_list.append((original_t, "somewhat important", "#fff2c9"))
         else:
-            highlight_list.append(" " + t + " ")
+            highlight_list.append(" " + original_t + " ")
     annotated_text(*highlight_list)
 
 
