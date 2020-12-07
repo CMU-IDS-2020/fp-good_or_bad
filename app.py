@@ -74,7 +74,7 @@ class Model:
 		self.max_length = 0
 
 		dataset_map = {'Amazon products' : "amazon_products", 'Movie reviews':'movie_reviews', 'Yelp restaurants':"yelp_restaurants"}
-		optimizer_map = {'ADAM':"adam",'SGD with Momentum':"sgdmomentm"}
+		optimizer_map = {'ADAM':"adam",'SGD with Momentum':"sgdmomentum"}
 		self.mapped_dataset = dataset_map[self.dataset]
 		self.mapped_optimizer = optimizer_map[self.optimizer]
 		if self.weight_decay == "5e-4":
