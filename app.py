@@ -116,11 +116,13 @@ def main():
 		st.write('''To effectively capture, classify and predict sentiments, we design, utilize and demonstrate a convolutional neural network (CNN), which is known for its excellent performance in computer vision tasks, as well as natural language processing tasks recently [1]. \
 		Specifically, CNNs have been shown to be able to model inherent syntactic and semantic features of sentimental expressions [2]. \
 		Finally, another advantage of using CNNs (and neural networks in general) is no requirement of deep domain knowledge, in this case linguistics [2]. ''')
+		st.title("Model Architecture")
 		st.write("Our model has the following architecture: ")
 		st.write("- 1-Dimensional CNN Layer for extracting features")
 		st.write("- Max Pooling Layer for retaining prominent features")
 		st.write("- Dropout Layer for better model generalization")
 		st.write("- Linear Layer for sentiment classification")
+		st.title("Datasets")
 		st.write("We trained our model on three relevant datasets, including [Rotten Tomato movie reviews](https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews/data), [Yelp restaurant reviews](https://www.kaggle.com/omkarsabnis/yelp-reviews-dataset) and [Amazon product reviews](https://www.kaggle.com/datafiniti/consumer-reviews-of-amazon-products?select=Datafiniti_Amazon_Consumer_Reviews_of_Amazon_Products.csv), each with various hyperparameter values. \
 		With our app, you will be able to visualize the full process of sentiment analysis using a neural network, as well as the interaction of training data, hyperparameters and the model itself. \
 		We hope that this app can demystify the magic of neural networks.")
