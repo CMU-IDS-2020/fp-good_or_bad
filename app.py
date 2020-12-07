@@ -103,12 +103,16 @@ def main():
 		Behind these opinions are sentiments and emotions. \
 		Gaining an understanding into sentiments regarding a topic can be beneficial in many ways, be it in the case of a business trying to know its customers or the case of a politician trying to know the electorate. \
 		This age has also witnessed a rise of artificial intelligence and machine learning, which enables a quick capture of the sentiments behind numerous opinions existing on social media.")
-		st.image('https://www.kdnuggets.com/images/sentiment-fig-1-689.jpg', caption = 'Sentiment Analysis', use_column_width=True)
+		_, col_center_sent_image, _ = st.beta_columns([1, 2, 1])
+		with col_center_sent_image:
+			st.image('https://www.kdnuggets.com/images/sentiment-fig-1-689.jpg', caption = 'Sentiment Analysis', use_column_width=True)
 		st.write('''Machine learning methods can be highly accurate and efficient for various tasks. \
 		However, machine learning models, especially neural networks, are still a “black box” for many people, even experienced experts in the field (for example, considering the poorly understood nature of generalization of neural networks). \
 		Given this problem, we built this visualization application to help people understand internal mechanisms of a neural network. \
 		We use the task of sentiment analysis as a case study in our application to walk users through the neural network’s training and decision making process.''')
-		st.image('https://miro.medium.com/max/726/1*Y4aATgaQ8OO_gxLFTy3rQg.png', caption = 'Neural Networks for Sentiment Analysis', use_column_width = True)
+		_, col_center_nn_image, _ = st.beta_columns([1, 2, 1])
+		with col_center_nn_image:
+			st.image('https://miro.medium.com/max/726/1*Y4aATgaQ8OO_gxLFTy3rQg.png', caption = 'Neural Networks for Sentiment Analysis', use_column_width=True)
 		st.write('''To effectively capture, classify and predict sentiments, we design, utilize and demonstrate a convolutional neural network (CNN), which is known for its excellent performance in computer vision tasks, as well as natural language processing tasks recently [1]. \
 		Specifically, CNNs have been shown to be able to model inherent syntactic and semantic features of sentimental expressions [2]. \
 		Finally, another advantage of using CNNs (and neural networks in general) is no requirement of deep domain knowledge, in this case linguistics [2]. ''')
@@ -127,9 +131,9 @@ def main():
 		models = []
 
 		st.sidebar.header("Adjust Model Parameters")
-		learning_rate = st.sidebar.select_slider("Learning rate", options=[1, 0.1, 0.01, 0.001, 0.0001], value=0.001)
+		learning_rate = st.sidebar.select_slider("Learning rate", options=[0.1, 0.01, 0.001, 0.0001], value=0.001)
 		# st.sidebar.text('learning rate={}'.format(learning_rate))
-		weight_decay = st.sidebar.select_slider("Weight decay", options=[5e-7, 5e-6, 5e-5, 5e-4], value=5e-5)
+		weight_decay = st.sidebar.select_slider("Weight decay", options=[0, 5e-7, 5e-6, 5e-5, 5e-4], value=5e-5)
 		# st.sidebar.text('weight decay={}'.format(weight_decay))
 		batch_size = st.sidebar.select_slider("Batch_size", options=[32, 64, 128, 256, 512], value=512)
 		# st.sidebar.text('batch size={}'.format(batch_size))
@@ -139,9 +143,9 @@ def main():
 	 
 		two_models = st.sidebar.checkbox('Compare with another set of model parameters')
 		if two_models:
-			learning_rate2 = st.sidebar.select_slider("Learning rate of second model", options=[1, 0.1, 0.01, 0.001, 0.0001], value=0.001)
+			learning_rate2 = st.sidebar.select_slider("Learning rate of second model", options=[0.1, 0.01, 0.001, 0.0001], value=0.001)
 			# st.sidebar.text('learning rate={}'.format(learning_rate))
-			weight_decay2 = st.sidebar.select_slider("Weight decay of second model", options=[5e-7, 5e-6, 5e-5, 5e-4], value=5e-5)
+			weight_decay2 = st.sidebar.select_slider("Weight decay of second model", options=[0, 5e-7, 5e-6, 5e-5, 5e-4], value=5e-5)
 			# st.sidebar.text('weight decay={}'.format(weight_decay))
 			batch_size2 = st.sidebar.select_slider("Batch_size of second model", options=[32, 64, 128, 256, 512], value=512)
 			# st.sidebar.text('batch size={}'.format(batch_size))
@@ -205,15 +209,20 @@ def run_preprocess(dataset, input, visible=True):
 		lemmatizer = WordNetLemmatizer()
 		return [lemmatizer.lemmatize(token) if token else None for token in tokens]
 
+
 	if visible:
+		_, col_center, _ = st.beta_columns([1, 3, 1])
 		if dataset == AMAZON_DATASET:
-			st.image('https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/static_pictures/amazon_wordcloud.png')
+			with col_center:
+				st.image('https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/static_pictures/amazon_wordcloud.png', use_column_width=True)
 			get_highlight_text(input, "top_frequent_words/amazon_products_top1000.pt")
 		elif dataset == MOVIE_DATASET:
-			st.image('https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/static_pictures/movie_wordcloud.png')
+			with col_center:
+				st.image('https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/static_pictures/movie_wordcloud.png', use_column_width=True)
 			get_highlight_text(input, "top_frequent_words/rotten_tomato_top1000.pt")
 		elif dataset == YELP_DATASET:
-			st.image('https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/static_pictures/yelp_wordcloud.png')
+			with col_center:
+				st.image('https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/static_pictures/yelp_wordcloud.png', use_column_width=True)
 			get_highlight_text(input, "top_frequent_words/yelp_restaurant_top1000.pt")		
 
 	tokens = tokenize_text(input)
@@ -273,7 +282,7 @@ def run_preprocess(dataset, input, visible=True):
 					c.node(token+"l_token"+str(i))
 			c.attr(label='Lemmatized Tokens')
 
-		st.graphviz_chart(g)
+		st.graphviz_chart(g, use_container_width=True)
 	return [token for token in lemmatized if token is not None]
 
 @st.cache(allow_output_mutation=True)
@@ -319,20 +328,46 @@ def run_predict(input, models):
 		return softmax(outputs.data), predicted.item() + 1, embedding_for_plot
 
 	probs_list = []
-	emb_columns = st.beta_columns(len(models))
+
+	if len(models) == 2:
+		emb_columns = st.beta_columns(len(models))
+	else:
+		_, center_emb_col, _ = st.beta_columns([1, 3, 1])
+
 	for i in range(len(models)):
 		probs, _, embedding = predict(input, models[i].model_url, models[i].max_len)
-		with emb_columns[i]:
-			run_embedding(models[i].mapped_dataset, embedding)
+		if len(models) == 2:
+			with emb_columns[i]:
+				run_embedding(models[i].mapped_dataset, embedding)
+		else:
+			with center_emb_col:
+				run_embedding(models[i].mapped_dataset, embedding)
 
 		probs = probs[0].numpy()
 		probs_list.append(probs)
 
 
-	re_columns = st.beta_columns(len(models))
-	for i in range(len(models)):
-
-		d = {'Sentiment': ["negative", "somewhat negative", "neutral", "somewhat positive", "positive"], 'Probability': probs}
+	if len(models) == 2:
+		re_columns = st.beta_columns(len(models))
+		for i in range(len(models)):
+			d = {'Sentiment': ["negative", "somewhat negative", "neutral", "somewhat positive", "positive"], 'Probability': probs_list[i]}
+			max_sentiment = d["Sentiment"][np.argmax(d["Probability"])]
+			source = pd.DataFrame(d)
+			c = alt.Chart(source).mark_bar().encode(
+				alt.X('Probability:Q', axis=alt.Axis(format='.0%')),
+				alt.Y('Sentiment:N', sort = d['Sentiment']),
+				color=alt.condition(
+					alt.datum.Sentiment == max_sentiment,  # If the year is 1810 this test returns True,
+					alt.value('orange'),     # which sets the bar orange.
+					alt.value('steelblue')   # And if it's not true it sets the bar steelblue.
+				)
+			)
+			with re_columns[i]:
+				st.write(c, use_column_width=True)
+				st.write("Our model predicts that your input text contains " + max_sentiment + " sentiment!")
+	else:
+		_, center_result_col, _ = st.beta_columns([1, 2, 1])
+		d = {'Sentiment': ["negative", "somewhat negative", "neutral", "somewhat positive", "positive"], 'Probability': probs_list[0]}
 		max_sentiment = d["Sentiment"][np.argmax(d["Probability"])]
 		source = pd.DataFrame(d)
 		c = alt.Chart(source).mark_bar().encode(
@@ -344,8 +379,8 @@ def run_predict(input, models):
 				alt.value('steelblue')   # And if it's not true it sets the bar steelblue.
 			)
 		)
-		with re_columns[i]:
-			st.write(c)
+		with center_result_col:
+			st.write(c, use_column_width=True)
 			st.write("Our model predicts that your input text contains " + max_sentiment + " sentiment!")
 
 def run_embedding(mapped_dataset, user_input=None):
@@ -405,14 +440,14 @@ def run_embedding(mapped_dataset, user_input=None):
 
 	fig = px.scatter_3d(source_3d, x='x', y='y', z='z',
 		color='label', symbol='shapes', text='label', labels={'word':'label'},
-		width=1000, height=800, 
+		width=800, height=600, 
 		range_x=[-1500,1500], range_y=[-1500,1500], range_z=[-1500,1500])
 
 	fig.update_traces(marker=dict(size=4), selector=dict(mode='markers'))
 	# fig.update_traces(hovertemplate=' ')
 	fig.update_traces(hoverinfo='skip', hovertemplate=None, selector=dict(type='scatter3d'))
-	fig.update_layout(scene_aspectmode='cube')
-	st.plotly_chart(fig)
+	fig.update_layout(scene_aspectmode='cube', showlegend=False)
+	st.plotly_chart(fig, use_column_width=True)
 
 def run_train(models):
 	# dataset_path = "amazon_products" or "movie_reviews" or "yelp_restaurants"
@@ -427,7 +462,9 @@ def run_train(models):
 
 	# get number of models
 	if len(models) == 1: 
-		st.write(loss_acc_plot(param_dfs[0]))
+		_, center_col, _ = st.beta_columns([1, 3, 1])
+		with center_col:
+			st.write(loss_acc_plot(param_dfs[0]))
 	elif len(models) == 2:
 		col1, col2 = st.beta_columns(2)
 		with col1:
@@ -438,7 +475,9 @@ def run_train(models):
 	# add description here 
 
 	if len(models) == 1: 
-		st.write(params_plot(param_dfs[0]))
+		_, center_col, _ = st.beta_columns([1, 3, 1])
+		with center_col:
+			st.write(params_plot(param_dfs[0]))
 	elif len(models) == 2:
 		col1, col2 = st.beta_columns(2)
 		with col1:
@@ -622,5 +661,6 @@ def run_train(models):
 # 	st.write(params_plot(CONTENT))
 
 if __name__ == "__main__":
+	st.set_page_config(layout="wide")
 	word2vec_dict = load_word2vec_dict(word2vec_urls = ['https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/word2vec/100d/word2vec_100d_{}.pt'.format(i+1) for i in range(5)], word2vec_dir = "./word2vec")
 	main()
