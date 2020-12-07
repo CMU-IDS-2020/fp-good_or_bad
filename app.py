@@ -427,6 +427,7 @@ def run_embedding(mapped_dataset, user_input=None):
 		})
 	
 	url = 'https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/sample_embeddings/100d/{}_sample_embeddings.pt'.format(mapped_dataset)
+	st.write(url)
 	sample_tokens, sample_labels, sample_shapes = load_sample_embedding(url)
 
 	if user_input is not None:
