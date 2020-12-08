@@ -120,15 +120,20 @@ def main():
 		Finally, another advantage of using CNNs (and neural networks in general) is no requirement of deep domain knowledge, in this case linguistics [2]. ''')
 		st.title("Model Architecture")
 		st.write("Our model has the following architecture: ")
-		st.write("- 1-Dimensional CNN Layer for extracting features")
+		st.write("- 3 layers of 1-Dimensional CNN with kernel sizes (2,3,4) for extracting features")
 		st.write("- Max Pooling Layer for retaining prominent features")
-		st.write("- Dropout Layer for better model generalization")
-		st.write("- Linear Layer for sentiment classification")
+		st.write("- Dropout Layer with probability 0.5 for better model generalization")
+		st.write("- Linear Layer with output dimension 5 for sentiment classification")
+		st.write("Our model uses [Glove Embeddings](https://nlp.stanford.edu/projects/glove/) with 1.9 million vocabulary to obtain pretrained vector representations of words.")
 		st.title("Datasets")
-		st.write("We trained our model on three relevant datasets, including [Rotten Tomato movie reviews](https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews/data), [Yelp restaurant reviews](https://www.kaggle.com/omkarsabnis/yelp-reviews-dataset) and [Amazon product reviews](https://www.kaggle.com/datafiniti/consumer-reviews-of-amazon-products?select=Datafiniti_Amazon_Consumer_Reviews_of_Amazon_Products.csv), each with various hyperparameter values.")
-		st.write("With our app, you will be able to visualize the full process of sentiment analysis using a neural network, as well as the interaction of training data, hyperparameters and the model itself. \
-		We hope that this app can demystify the magic of neural networks.")
-		st.write("To start using our app, first select a specific training dataset, then adjust hyparameter values using the sidebar!")
+		st.write("We trained our model on three relevant datasets, including Rotten Tomato movie reviews, Yelp restaurant reviews and Amazon product reviews, each with various hyperparameter values such as learning rate and weigth decay.")
+		st.write("[Rotten Tomato movie reviews](https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews/data) contains more than 15,5000 movie reviews and ratings from 1 to 5.")
+		st.write("[Yelp restaurant reviews](https://www.kaggle.com/omkarsabnis/yelp-reviews-dataset) contains more than 11,000 retaurant reviews and ratings from 1 to 5.")
+		st.write("[Amazon product reviews](https://www.kaggle.com/datafiniti/consumer-reviews-of-amazon-products?select=Datafiniti_Amazon_Consumer_Reviews_of_Amazon_Products.csv) contains more than 5,000 electronic product reviews and ratings from 1 to 5.")
+		st.write("**With our app, you will be able to visualize the full process of sentiment analysis using a neural network, as well as the interaction of training data, hyperparameters and the model itself. \
+		We hope that this app can demystify the magic of neural networks.**")
+		st.markdown("**To start using our app, first select a specific training dataset, then adjust hyparameter values using the sidebar!**")
+
 	elif page != OVERVIEW:
 		st.title("Predict Sentiment")
 		dataset = st.selectbox('Choose a dataset', ( MOVIE_DATASET, AMAZON_DATASET, YELP_DATASET))
