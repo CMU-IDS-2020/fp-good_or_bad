@@ -374,10 +374,6 @@ def run_predict(input, models):
 		probs = probs[0].numpy()
 		probs_list.append(probs)
 
-	_, center_emb_col, _ = st.beta_columns([1, 3, 1])
-	with center_emb_col:
-		run_embedding(models[i].mapped_dataset, embedding)
-
 	if len(models) == 2:
 		re_columns = st.beta_columns(len(models))
 		for i in range(len(models)):
@@ -410,6 +406,10 @@ def run_predict(input, models):
 		with center_result_col:
 			st.write(c, use_column_width=True)
 			st.write("Our model predicts that your input text contains " + max_sentiment + " sentiment!")
+
+	_, center_emb_col, _ = st.beta_columns([1, 3, 1])
+	with center_emb_col:
+		run_embedding(models[i].mapped_dataset, embedding)
 
 def run_embedding(mapped_dataset, user_input=None):
 	@st.cache
