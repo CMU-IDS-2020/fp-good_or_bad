@@ -390,7 +390,7 @@ def run_predict(input, models):
 				alt.Y('Sentiment:N', sort=d['Sentiment']),
 				color=alt.condition(~highlight,
 									alt.Color('Probability:Q', scale=alt.Scale(scheme='greens'), legend=None),
-									alt.value('orange'), ), tooltip=['Probability:Q']).add_selection(
+									alt.value('orange'), ), tooltip=['Probability:Q']).properties(width=400, height=200).add_selection(
 				highlight).interactive()
 			with re_columns[i]:
 				st.write(c, use_column_width=True)
@@ -405,7 +405,7 @@ def run_predict(input, models):
 			alt.X('Probability:Q', axis=alt.Axis(format='.0%')),
 			alt.Y('Sentiment:N', sort=d['Sentiment']),
 			color=alt.condition(~highlight, alt.Color('Probability:Q', scale=alt.Scale(scheme='greens'), legend=None),
-								alt.value('orange'), ), tooltip=['Probability:Q']).add_selection(
+								alt.value('orange'), ), tooltip=['Probability:Q']).properties(width=650, height=250).add_selection(
 			highlight).interactive()
 		with center_result_col:
 			st.write(c, use_column_width=True)
