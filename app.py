@@ -133,6 +133,10 @@ def main():
 		st.write("**With our app, you will be able to visualize the full process of sentiment analysis using a neural network, as well as the interaction of training data, hyperparameters and the model itself. We hope that this app can demystify the magic of neural networks.\
 		Our app is especially useful for curious machine learning laymen.**")
 		st.write("**To start using our app, use the sidebar to navigate to a particular section. Then adjust training hyperparameters, and select a specific training dataset. Then write something emotional to check out how a neural net can understand your sentiment!**")
+
+		st.write("")
+		st.write("")
+		st.write("")
 		st.markdown('''
 				### References
 				[1]
