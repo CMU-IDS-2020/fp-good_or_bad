@@ -4,8 +4,10 @@ import pandas as pd
 import torch
 import copy
 
-from sklearn.manifold import TSNE
+from sklearn import decomposition
 import plotly.express as px
+import plotly.graph_objects as go
+
 import altair as alt
 import graphviz
 from graphviz import Digraph
@@ -337,23 +339,14 @@ def run_predict(input, models):
 
 	probs_list = []
 
-	if len(models) == 2:
-		emb_columns = st.beta_columns(len(models))
-	else:
-		_, center_emb_col, _ = st.beta_columns([1, 3, 1])
-
 	for i in range(len(models)):
 		probs, _, embedding = predict(input, models[i].model_url, models[i].max_len)
-		if len(models) == 2:
-			with emb_columns[i]:
-				run_embedding(models[i].mapped_dataset, embedding)
-		else:
-			with center_emb_col:
-				run_embedding(models[i].mapped_dataset, embedding)
-
 		probs = probs[0].numpy()
 		probs_list.append(probs)
 
+	_, center_emb_col, _ = st.beta_columns([1, 3, 1])
+	with center_emb_col:
+		run_embedding(models[i].mapped_dataset, embedding)
 
 	if len(models) == 2:
 		re_columns = st.beta_columns(len(models))
@@ -402,9 +395,11 @@ def run_embedding(mapped_dataset, user_input=None):
 		shapes = []
 
 		for key, val in sample_embeddings.items():
+			if key == 'easy':
+				st.write(val)
 			tokens.append(val)
 			labels.append(key)
-			shapes.append(0)
+			shapes.append('0')
 		return tokens, labels, shapes
 
 	@st.cache
@@ -413,16 +408,20 @@ def run_embedding(mapped_dataset, user_input=None):
 		labels = copy.deepcopy(sample_labels)
 		shapes = copy.deepcopy(sample_shapes)
 		for key, val in input_dict.items():
+			if key == 'easy':
+				st.write(val)
 			tokens.append(val)
 			labels.append(key)
-			shapes.append(1)
+			shapes.append('1')
 		return tokens, labels, shapes
 
 
 	@st.cache
 	def transform_3d(tokens):
-		tsne = TSNE(n_components=3, random_state=1, n_iter=100000, metric="cosine")
-		return tsne.fit_transform(tokens)
+		# tsne = TSNE(n_components=3, random_state=1, n_iter=100000, metric="cosine")
+		pca = decomposition.PCA(n_components=3)
+		pca.fit(tokens)
+		return pca.transform(tokens)
 
 	@st.cache
 	def get_df(values_3d, labels, shapes):
@@ -447,14 +446,17 @@ def run_embedding(mapped_dataset, user_input=None):
 	source_3d = get_df(values_3d, labels, shapes)
 
 	fig = px.scatter_3d(source_3d, x='x', y='y', z='z',
-		color='label', symbol='shapes', text='label', labels={'word':'label'},
-		width=800, height=600, 
-		range_x=[-1500,1500], range_y=[-1500,1500], range_z=[-1500,1500])
+		color='shapes', symbol='shapes', text='label', labels={'word':'label'},
+		width=800, height=600,
+		# range_x=[-1500,1500], range_y=[-1500,1500], range_z=[-1500,1500]
+		)
 
-	fig.update_traces(marker=dict(size=4), selector=dict(mode='markers'))
+	fig.update_traces(marker=dict(size=2), selector=dict(mode='markers'))
 	# fig.update_traces(hovertemplate=' ')
 	fig.update_traces(hoverinfo='skip', hovertemplate=None, selector=dict(type='scatter3d'))
 	fig.update_layout(scene_aspectmode='cube', showlegend=False)
+	# fig.update_scenes(xaxis_visible=False, yaxis_visible=False,zaxis_visible=False )
+
 	st.plotly_chart(fig, use_column_width=True)
 
 def run_train(models):
