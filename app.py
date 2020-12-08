@@ -107,14 +107,14 @@ def main():
 		This age has also witnessed a rise of artificial intelligence and machine learning, which enables a quick capture of the sentiments behind numerous opinions existing on social media.")
 		_, col_center_sent_image, _ = st.beta_columns([1, 2, 1])
 		with col_center_sent_image:
-			st.image('https://www.kdnuggets.com/images/sentiment-fig-1-689.jpg', caption = 'Sentiment Analysis', use_column_width=True)
+			st.image('https://www.kdnuggets.com/images/sentiment-fig-1-689.jpg', caption = 'Sentiment Analysis (reference: https://www.kdnuggets.com/2018/03/5-things-sentiment-analysis-classification.html)', use_column_width=True)
 		st.write('''Machine learning methods can be highly accurate and efficient for various tasks. \
 		However, machine learning models, especially neural networks, are still a “black box” for many people, even experienced experts in the field (for example, considering the poorly understood nature of generalization of neural networks). \
 		Given this problem, we built this visualization application to help people understand internal mechanisms of a neural network. \
 		We use the task of sentiment analysis as a case study in our application to walk users through the neural network’s training and decision making process.''')
 		_, col_center_nn_image, _ = st.beta_columns([1, 2, 1])
 		with col_center_nn_image:
-			st.image('https://miro.medium.com/max/726/1*Y4aATgaQ8OO_gxLFTy3rQg.png', caption = 'Neural Networks for Sentiment Analysis', use_column_width=True)
+			st.image('https://miro.medium.com/max/726/1*Y4aATgaQ8OO_gxLFTy3rQg.png', caption = 'Neural Networks for Sentiment Analysis (reference: https://medium.com/nlpython/sentiment-analysis-analysis-part-3-neural-networks-3768dd088f71)', use_column_width=True)
 		st.write('''To effectively capture, classify and predict sentiments, we design, utilize and demonstrate a convolutional neural network (CNN), which is known for its excellent performance in computer vision tasks, as well as natural language processing tasks recently [1]. \
 		Specifically, CNNs have been shown to be able to model inherent syntactic and semantic features of sentimental expressions [2]. \
 		Finally, another advantage of using CNNs (and neural networks in general) is no requirement of deep domain knowledge, in this case linguistics [2]. ''')
@@ -130,9 +130,17 @@ def main():
 		st.write("[Rotten Tomato movie reviews](https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews/data) contains more than 15,5000 movie reviews and ratings from 1 to 5.")
 		st.write("[Yelp restaurant reviews](https://www.kaggle.com/omkarsabnis/yelp-reviews-dataset) contains more than 11,000 retaurant reviews and ratings from 1 to 5.")
 		st.write("[Amazon product reviews](https://www.kaggle.com/datafiniti/consumer-reviews-of-amazon-products?select=Datafiniti_Amazon_Consumer_Reviews_of_Amazon_Products.csv) contains more than 5,000 electronic product reviews and ratings from 1 to 5.")
-		st.write("**With our app, you will be able to visualize the full process of sentiment analysis using a neural network, as well as the interaction of training data, hyperparameters and the model itself. \
-		We hope that this app can demystify the magic of neural networks.**")
-		st.markdown("**To start using our app, first select a specific training dataset, then adjust hyparameter values using the sidebar!**")
+		st.write("**To start using our app, use the sidebar to navigate to a particular section. Then adjust training hyperparameters, and optionally select another set of hyperparameters for comparison. Then, select a specific training dataset, and write something emotional to check out how a neural net can understand your sentiment!**")
+		st.markdown('''
+				### References
+				[1]
+				Weibo Liu, Zidong Wang, Xiaohui Liu, Nianyin Zeng, Yurong Liu and Fuad E. Alsaadi (2017) - "A Survey of Deep Neural Network Architectures and their Applications."
+				Neurocomputing, 2017, 234, 11-26.
+
+				[2]
+				Hannah Kim and Young-Seob Jeong (2019) - "Sentiment Classification Using Convolutional Neural Networks."
+				Applied Sciences 2019, 9, 2347.
+			''')
 
 	elif page != OVERVIEW:
 		st.title("Predict Sentiment")
