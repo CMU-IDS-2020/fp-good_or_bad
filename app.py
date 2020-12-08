@@ -384,15 +384,14 @@ def run_predict(input, models):
 			d = {'Sentiment': ["negative", "somewhat negative", "neutral", "somewhat positive", "positive"], 'Probability': probs_list[i]}
 			max_sentiment = d["Sentiment"][np.argmax(d["Probability"])]
 			source = pd.DataFrame(d)
+			highlight = alt.selection_single(on='mouseover', fields=['Probability'], nearest=False, clear="mouseout")
 			c = alt.Chart(source).mark_bar().encode(
 				alt.X('Probability:Q', axis=alt.Axis(format='.0%')),
-				alt.Y('Sentiment:N', sort = d['Sentiment']),
-				color=alt.condition(
-					alt.datum.Sentiment == max_sentiment,  # If the year is 1810 this test returns True,
-					alt.value('orange'),     # which sets the bar orange.
-					alt.value('steelblue')   # And if it's not true it sets the bar steelblue.
-				)
-			)
+				alt.Y('Sentiment:N', sort=d['Sentiment']),
+				color=alt.condition(~highlight,
+									alt.Color('Probability:Q', scale=alt.Scale(scheme='greens'), legend=None),
+									alt.value('orange'), ), tooltip=['Probability:Q']).add_selection(
+				highlight).interactive()
 			with re_columns[i]:
 				st.write(c, use_column_width=True)
 				st.write("Our model predicts that your input text contains " + max_sentiment + " sentiment!")
@@ -401,15 +400,13 @@ def run_predict(input, models):
 		d = {'Sentiment': ["negative", "somewhat negative", "neutral", "somewhat positive", "positive"], 'Probability': probs_list[0]}
 		max_sentiment = d["Sentiment"][np.argmax(d["Probability"])]
 		source = pd.DataFrame(d)
+		highlight = alt.selection_single(on='mouseover', fields=['Probability'], nearest=False, clear="mouseout")
 		c = alt.Chart(source).mark_bar().encode(
 			alt.X('Probability:Q', axis=alt.Axis(format='.0%')),
-			alt.Y('Sentiment:N', sort = d['Sentiment']),
-			color=alt.condition(
-				alt.datum.Sentiment == max_sentiment,  # If the year is 1810 this test returns True,
-				alt.value('orange'),     # which sets the bar orange.
-				alt.value('steelblue')   # And if it's not true it sets the bar steelblue.
-			)
-		)
+			alt.Y('Sentiment:N', sort=d['Sentiment']),
+			color=alt.condition(~highlight, alt.Color('Probability:Q', scale=alt.Scale(scheme='greens'), legend=None),
+								alt.value('orange'), ), tooltip=['Probability:Q']).add_selection(
+			highlight).interactive()
 		with center_result_col:
 			st.write(c, use_column_width=True)
 			st.write("Our model predicts that your input text contains " + max_sentiment + " sentiment!")
