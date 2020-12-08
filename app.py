@@ -234,8 +234,12 @@ def run_preprocess(dataset, input, visible=True):
 		lemmatizer = WordNetLemmatizer()
 		return [lemmatizer.lemmatize(token) if token else None for token in tokens]
 
+	st.write("How can neural networks read text like humans? You might wonder. Actually, they cannot; they can only read numbers.\
+				 This section walks you through every step that we must perform **before** we convert text to numbers. You will see the actual \
+				 converting step in the 'Predicting' section.")
 
 	if visible:
+		st.write("Before we head into text preprocessing, let's check out the words that are particularly important, or frequent, in your selected dataset.")
 		_, col_center, _ = st.beta_columns([1, 3, 1])
 		if dataset == AMAZON_DATASET:
 			with col_center:
@@ -250,6 +254,16 @@ def run_preprocess(dataset, input, visible=True):
 				st.image('https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/static_pictures/yelp_wordcloud.png', use_column_width=True)
 			get_highlight_text(input, "top_frequent_words/yelp_restaurant_top1000.pt")		
 
+	st.write('''Let's see all that happens before the step of converting text to numbers, as promised. Now, a very natural question might come to your mind,\
+			 "Do you convert on a sentence/word/character level? Would it be too simplified if we convert a whole sentence into a single number?" Indeed, \
+			 sentence-level mapping could be meaningless, given that we want to read every word or character in a sentence. Thus, what we usually do in practice \
+			 is word or character level mapping. In this app, for the purpose of easy interpretation and demonstration, we choose a word-level mapping for text-to-number conversion.''')
+
+	st.write("Now, the need for breaking sentences into words becomes clear. As you can see in the following figure, our first step is splitting sentences into word tokens by spaces.")
+	st.write('''Is that all? Probably not, as the word tokens need some standardization. Consider the tokens "love" and "LOVE." We want them to be considered as the same word, but due to \
+			 different letter cases, they are understood as different words by a machine. Thus, the next step follows is making all word tokens have a consistent letter case; we choose to convert all to lowercase.''')
+	st.write('''The next step we perform is removing the so-called "stopwords." In English, there are some extremely common yet barely meaningful words, for example, articles. To prevent from diluting, we remove them from our set of word tokens!''')
+	st.write('''One last step before text-to-number conversion is lemmatization, which is a further step of standardization. Consider the tokens "cat" and "cats." We want them to be considered as the same word, don't we? Thus, in this last step, we reduce every word token to its stem form.''')
 	tokens = tokenize_text(input)
 	lowercase_tokens = lowercase_text(tokens)
 	removed_stopwords = remove_stopwords(lowercase_tokens)
@@ -308,6 +322,7 @@ def run_preprocess(dataset, input, visible=True):
 			c.attr(label='Lemmatized Tokens')
 
 		st.graphviz_chart(g, use_container_width=True)
+	st.write('''Now, use the sidebar to navigate to the next section to further explore sentiment analysis via neural nets.''')
 	return [token for token in lemmatized if token is not None]
 
 @st.cache(allow_output_mutation=True)
