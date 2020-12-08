@@ -112,27 +112,38 @@ def main():
 		However, machine learning models, especially neural networks, are still a “black box” for many people, even experienced experts in the field (for example, considering the poorly understood nature of generalization of neural networks). \
 		Given this problem, we built this visualization application to help people understand internal mechanisms of a neural network. \
 		We use the task of sentiment analysis as a case study in our application to walk users through the neural network’s training and decision making process.''')
-		_, col_center_nn_image, _ = st.beta_columns([1, 2, 1])
-		with col_center_nn_image:
-			st.image('https://miro.medium.com/max/726/1*Y4aATgaQ8OO_gxLFTy3rQg.png', caption = 'Neural Networks for Sentiment Analysis (reference: https://medium.com/nlpython/sentiment-analysis-analysis-part-3-neural-networks-3768dd088f71)', use_column_width=True)
+
 		st.write('''To effectively capture, classify and predict sentiments, we design, utilize and demonstrate a convolutional neural network (CNN) [1], which is known for its excellent performance in computer vision tasks, as well as natural language processing tasks recently [1]. \
 		Specifically, CNNs have been shown to be able to model inherent syntactic and semantic features of sentimental expressions [2]. \
 		Finally, another advantage of using CNNs (and neural networks in general) is no requirement of deep domain knowledge, in this case linguistics [3]. ''')
+
+		_, col_center_nn_image, _ = st.beta_columns([1, 2, 1])
+		with col_center_nn_image:
+			st.image('https://miro.medium.com/max/726/1*Y4aATgaQ8OO_gxLFTy3rQg.png', caption = 'Neural Networks for Sentiment Analysis (reference: https://medium.com/nlpython/sentiment-analysis-analysis-part-3-neural-networks-3768dd088f71)', use_column_width=True)
+
+		st.write("")
+		st.write("")
+		st.write("")
+		st.markdown("<font color='orange'> <b>Our app is especially useful for curious machine learning laymen. With our app, you will be able to visualize the full process of sentiment analysis using a neural network, as well as the interaction of training data, hyperparameters and the model itself. We hope that this app can demystify the magic of neural networks.</b></font>", unsafe_allow_html=True)
+		st.write("")
+		st.markdown("<font color='orange'><b>To start using our app, use the sidebar to navigate to a particular section. Then adjust training hyperparameters, and select a specific training dataset. Then write something emotional to check out how a neural net can understand your sentiment!</b></font>", unsafe_allow_html=True)
+		st.write("")
+		st.write("")
+		st.write("")
+
 		st.title("Model Architecture")
 		st.write("Our model has the following architecture: ")
 		st.write("- 3 layers of 1-Dimensional CNN with kernel sizes (2,3,4) for extracting features")
 		st.write("- Max Pooling Layer for retaining prominent features")
 		st.write("- Dropout Layer with probability 0.5 for better model generalization")
 		st.write("- Linear Layer with output dimension 5 for sentiment classification")
+
 		st.write("Our model uses [Glove Embeddings](https://nlp.stanford.edu/projects/glove/) with 1.9 million vocabulary to obtain pretrained vector representations of words.")
 		st.title("Datasets")
 		st.write("We trained our model on three relevant datasets, including Rotten Tomato movie reviews, Yelp restaurant reviews and Amazon product reviews, each with various hyperparameter values such as learning rate and weigth decay.")
 		st.write("[Rotten Tomato movie reviews](https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews/data) contains more than 15,5000 movie reviews and ratings from 1 to 5.")
 		st.write("[Yelp restaurant reviews](https://www.kaggle.com/omkarsabnis/yelp-reviews-dataset) contains more than 11,000 retaurant reviews and ratings from 1 to 5.")
 		st.write("[Amazon product reviews](https://www.kaggle.com/datafiniti/consumer-reviews-of-amazon-products?select=Datafiniti_Amazon_Consumer_Reviews_of_Amazon_Products.csv) contains more than 5,000 electronic product reviews and ratings from 1 to 5.")
-		st.write("**With our app, you will be able to visualize the full process of sentiment analysis using a neural network, as well as the interaction of training data, hyperparameters and the model itself. We hope that this app can demystify the magic of neural networks.\
-		Our app is especially useful for curious machine learning laymen.**")
-		st.write("**To start using our app, use the sidebar to navigate to a particular section. Then adjust training hyperparameters, and select a specific training dataset. Then write something emotional to check out how a neural net can understand your sentiment!**")
 
 		st.write("")
 		st.write("")
