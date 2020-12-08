@@ -130,7 +130,9 @@ def main():
 		st.write("[Rotten Tomato movie reviews](https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews/data) contains more than 15,5000 movie reviews and ratings from 1 to 5.")
 		st.write("[Yelp restaurant reviews](https://www.kaggle.com/omkarsabnis/yelp-reviews-dataset) contains more than 11,000 retaurant reviews and ratings from 1 to 5.")
 		st.write("[Amazon product reviews](https://www.kaggle.com/datafiniti/consumer-reviews-of-amazon-products?select=Datafiniti_Amazon_Consumer_Reviews_of_Amazon_Products.csv) contains more than 5,000 electronic product reviews and ratings from 1 to 5.")
-		st.write("**To start using our app, use the sidebar to navigate to a particular section. Then adjust training hyperparameters, and optionally select another set of hyperparameters for comparison. Then, select a specific training dataset, and write something emotional to check out how a neural net can understand your sentiment!**")
+		st.write("**With our app, you will be able to visualize the full process of sentiment analysis using a neural network, as well as the interaction of training data, hyperparameters and the model itself. We hope that this app can demystify the magic of neural networks.\
+		Our app is especially useful for curious machine learning laymen.**")
+		st.write("**To start using our app, use the sidebar to navigate to a particular section. Then adjust training hyperparameters, and select a specific training dataset. Then write something emotional to check out how a neural net can understand your sentiment!**")
 		st.markdown('''
 				### References
 				[1]
@@ -139,7 +141,7 @@ def main():
 
 				[2]
 				Hannah Kim and Young-Seob Jeong (2019) - "Sentiment Classification Using Convolutional Neural Networks."
-				Applied Sciences 2019, 9, 2347.
+				Applied Sciences, 2019, 9, 2347.
 			''')
 
 	elif page != OVERVIEW:
