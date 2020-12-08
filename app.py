@@ -369,6 +369,9 @@ def run_predict(input, models):
 		_, predicted = torch.max(outputs.data, 1)
 		return softmax(outputs.data), predicted.item() + 1, embedding_for_plot
 
+	st.write("Now let's see what results our neural net gives for your input text. The bar chart below shows the predicted probability that your text contains a certain type of sentiment.\
+			 Move your mouse over the bars to see the exact predicted probabilities.")
+
 	probs_list = []
 
 	for i in range(len(models)):
