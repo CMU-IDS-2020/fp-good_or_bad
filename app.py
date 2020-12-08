@@ -387,8 +387,10 @@ def run_predict(input, models):
 		_, predicted = torch.max(outputs.data, 1)
 		return softmax(outputs.data), predicted.item() + 1, embedding_for_plot
 
-	st.write("Now let's see what results our neural net gives for your input text. The bar chart below shows the predicted probability that your text contains a certain type of sentiment.\
-			 Move your mouse over the bars to see the exact predicted probabilities.")
+	st.write("Now let's see what results our neural net gives for your input text. The bar chart below shows the predicted probability that your text contains a certain type of sentiment.")
+	st.write("_**Tips**_")
+
+	st.write("Move your mouse over the bars to see the exact predicted probabilities.")
 
 	st.write("Also try different hyperparameters in the sidebar and see if they predict the same outcome!")
 
@@ -432,9 +434,38 @@ def run_predict(input, models):
 			st.write(c, use_column_width=True)
 			st.write("Our model predicts that your input text contains " + max_sentiment + " sentiment!")
 
+	st.write('''
+		The prediction is generated based on the weights gotten from training the model and the word embeddings of the input. 
+		You should have already seen how the model is trained in the training section, now let us look at embeddings.
+		''')
+	st.subheader('Word Embeddings')
+	st.markdown('''
+		Word embeddings are dense vector representations of words. Word Embeddings have their dimensional distance correlated to the semantic similarity of the underlying words.
+		We use **word2vec**, developed by Google, to translate each word into a vector of its postion in the embedding space. 
+		
+		To help you visualize how word embeddings are used in this sentiment analysis project, We plot the word embeddings of your
+		input sentence with some common words which has straightforward sentiment tendencies. 
+		
+		Note that although word embeddings are dense, the embedding space is still high dimensional. In our case, the embedding vector of
+		each word is of size 100. We perform dimensionality reduction trick to map the word embeddings to a 3D space while keeping
+		their relative positions.
+		''')
+
+	st.write("_**Tips**_")
+
+	st.markdown('''
+		In the plot above, blue dots represents word embeddings of some common words in this dataset. The red diamonds are
+		word embeddings of words in your input sentense. All data points are labeled with their corresponding words. 
+
+		The distance among points can be deceptive when looking from only one angel. By moving your mouse on a specific data point,
+		lines will be displayed connecting to the axises to show you the exact position.
+		You can click and drag on the plot to rotate it. Use two fingers on your touchpad to zoom in and out; you can also 
+		click on the **zoom** tool on the top right corner of the graph, and then click and drag to zoom the plot.
+		''')
 	_, center_emb_col, _ = st.beta_columns([1, 3, 1])
 	with center_emb_col:
 		run_embedding(models[i].mapped_dataset, embedding)
+
 
 def run_embedding(mapped_dataset, user_input=None):
 	@st.cache
