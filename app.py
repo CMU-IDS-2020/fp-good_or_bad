@@ -115,9 +115,9 @@ def main():
 		_, col_center_nn_image, _ = st.beta_columns([1, 2, 1])
 		with col_center_nn_image:
 			st.image('https://miro.medium.com/max/726/1*Y4aATgaQ8OO_gxLFTy3rQg.png', caption = 'Neural Networks for Sentiment Analysis (reference: https://medium.com/nlpython/sentiment-analysis-analysis-part-3-neural-networks-3768dd088f71)', use_column_width=True)
-		st.write('''To effectively capture, classify and predict sentiments, we design, utilize and demonstrate a convolutional neural network (CNN), which is known for its excellent performance in computer vision tasks, as well as natural language processing tasks recently [1]. \
+		st.write('''To effectively capture, classify and predict sentiments, we design, utilize and demonstrate a convolutional neural network (CNN) [1], which is known for its excellent performance in computer vision tasks, as well as natural language processing tasks recently [1]. \
 		Specifically, CNNs have been shown to be able to model inherent syntactic and semantic features of sentimental expressions [2]. \
-		Finally, another advantage of using CNNs (and neural networks in general) is no requirement of deep domain knowledge, in this case linguistics [2]. ''')
+		Finally, another advantage of using CNNs (and neural networks in general) is no requirement of deep domain knowledge, in this case linguistics [3]. ''')
 		st.title("Model Architecture")
 		st.write("Our model has the following architecture: ")
 		st.write("- 3 layers of 1-Dimensional CNN with kernel sizes (2,3,4) for extracting features")
@@ -136,10 +136,13 @@ def main():
 		st.markdown('''
 				### References
 				[1]
+				O'Shea, Keiron, and Ryan Nash. "An introduction to convolutional neural networks." arXiv preprint arXiv:1511.08458 (2015).
+				
+				[2]
 				Weibo Liu, Zidong Wang, Xiaohui Liu, Nianyin Zeng, Yurong Liu and Fuad E. Alsaadi (2017) - "A Survey of Deep Neural Network Architectures and their Applications."
 				Neurocomputing, 2017, 234, 11-26.
 
-				[2]
+				[3]
 				Hannah Kim and Young-Seob Jeong (2019) - "Sentiment Classification Using Convolutional Neural Networks."
 				Applied Sciences, 2019, 9, 2347.
 			''')
@@ -372,6 +375,8 @@ def run_predict(input, models):
 	st.write("Now let's see what results our neural net gives for your input text. The bar chart below shows the predicted probability that your text contains a certain type of sentiment.\
 			 Move your mouse over the bars to see the exact predicted probabilities.")
 
+	st.write("Also try different hyperparameters in the sidebar and see if they predict the same outcome!")
+
 	probs_list = []
 
 	for i in range(len(models)):
@@ -500,8 +505,8 @@ def run_train(models):
 	st.write("The loss (objective) function we used for our model is cross entropy loss. Here we plot the loss for training and validation sets, which reflect how **well** the model is doing in these two sets. Since we always want to minimize the loss, a good training process usually has decreasing loss values over steps. \
 	The accuracy metric here indicates the percentage of correct predictions, and measures how accurate the model’s predictions are compared to true labels.")
 	st.write("_**Tips**_")
-	st.write("1. Hover your mouse on the plot to compare the value of accuracy/loss and train/validation over steps.")
-	st.write("2. If you notice an increase in validation loss or a decrease in validation accuracy, it’s a bad sign and usually indicates the model is overfitting. **Try to change and tune hyperparameters**!")
+	st.write("1. Hover your mouse on the plot to compare the value of accuracy/loss and train/validation over epochs.")
+	st.write("2. If you notice an increase in validation loss, a decrease in validation accuracy or oscillation of loss and accuracy, it’s a bad sign and usually indicates the model is overfitting. **Try to change and tune hyperparameters**!")
 	param_dfs = []
 
 	for model in models:
@@ -523,8 +528,8 @@ def run_train(models):
 
 	# add description here 
 	st.subheader("Model Paramaters")
-	st.write("The model parameters here are weights and bias . Our model consists of 4 layers (3 convolutional layers and 1 linear layer), so we visualize the distribution of weights and bias for these 4 layers here using heat maps and marginal histograms. \
-	For a good training process, we should see the model parameters are clustered around zero at the first epoch and are become more **dispersed** over steps. ")
+	st.write("The model parameters are usually weights and bias . Our model consists of 4 layers (3 convolutional layers and 1 linear layer), so we visualize the distribution of weights and bias for these 4 layers here using heat maps and marginal histograms. \
+	For a good training process, we should see the model parameters are clustered around zero at the first epoch and are become more **dispersed** over steps, indicating that they are learning different values to coverge to the optimal point! ")
 	st.write("_**Tips**_")
 	st.write("1. Hover over the plot to see the distribution of model parameters in marginal histograms.")
 	st.write("2. If you notice that the distributions of the model parameters are not changing over steps, it’s a bad sign! This usually indicates that the model isn’t learning :( Try different hyperparameters!")
