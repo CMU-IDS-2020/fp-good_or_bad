@@ -296,12 +296,10 @@ def run_preprocess(dataset, input, visible=True):
 	return [token for token in lemmatized if token is not None]
 
 @st.cache(allow_output_mutation=True)
-def load_word2vec_dict(word2vec_urls, word2vec_dir):
+def load_word2vec_dict(word2vec_paths):
 	word2vec_dict = []
-	for i in range(len(word2vec_urls)):
-		url = word2vec_urls[i]
-		torch.hub.download_url_to_file(url, word2vec_dir+"word2vec_dict"+str(i)+".pt")
-		word2vec = pickle.load(open(word2vec_dir+"word2vec_dict"+str(i)+".pt", "rb" ))
+	for i in range(len(word2vec_paths)):
+		word2vec = pickle.load(open(word2vec_paths[i], "rb" ))
 		word2vec = list(word2vec.items())
 		word2vec_dict += word2vec
 	return dict(word2vec_dict)
@@ -395,8 +393,6 @@ def run_embedding(mapped_dataset, user_input=None):
 		shapes = []
 
 		for key, val in sample_embeddings.items():
-			if key == 'easy':
-				st.write(val)
 			tokens.append(val)
 			labels.append(key)
 			shapes.append('0')
@@ -408,8 +404,6 @@ def run_embedding(mapped_dataset, user_input=None):
 		labels = copy.deepcopy(sample_labels)
 		shapes = copy.deepcopy(sample_shapes)
 		for key, val in input_dict.items():
-			if key == 'easy':
-				st.write(val)
 			tokens.append(val)
 			labels.append(key)
 			shapes.append('1')
@@ -505,5 +499,5 @@ def run_train(models):
 
 if __name__ == "__main__":
 	st.set_page_config(layout="wide")
-	word2vec_dict = load_word2vec_dict(word2vec_urls = ['https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/word2vec/100d/word2vec_100d_{}.pt'.format(i+1) for i in range(5)], word2vec_dir = "./word2vec")
+	word2vec_dict = load_word2vec_dict(word2vec_paths = ['word2vec/100d/word2vec_100d_{}.pt'.format(i+1) for i in range(5)])
 	main()
