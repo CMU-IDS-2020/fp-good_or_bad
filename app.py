@@ -495,6 +495,13 @@ def run_train(models):
 	# dataset_path = "amazon_products" or "movie_reviews" or "yelp_restaurants"
 	# optimizer_path = "xentropy_adam_all" or "xentropy_sgdmomentum_all"
 
+	st.header("Let's explore the training process of our CNN network with chosen hyper-parameters!")
+	st.subheader("Accuracy & Loss")
+	st.write("The loss (objective) function we used for our model is cross entropy loss. Here we plot the loss for training and validation sets, which reflect how **well** the model is doing in these two sets. Since we always want to minimize the loss, a good training process usually has decreasing loss values over steps. \
+	The accuracy metric here indicates the percentage of correct predictions, and measures how accurate the model’s predictions are compared to true labels.")
+	st.write("_**Tips**_")
+	st.write("1. Hover your mouse on the plot to compare the value of accuracy/loss and train/validation over steps.")
+	st.write("2. If you notice an increase in validation loss or a decrease in validation accuracy, it’s a bad sign and usually indicates the model is overfitting. **Try to change and tune hyperparameters**!")
 	param_dfs = []
 
 	for model in models:
@@ -515,25 +522,34 @@ def run_train(models):
 			st.write(loss_acc_plot(param_dfs[1]))
 
 	# add description here 
+	st.subheader("Model Paramaters")
+	st.write("The model parameters here are weights and bias . Our model consists of 4 layers (3 convolutional layers and 1 linear layer), so we visualize the distribution of weights and bias for these 4 layers here using heat maps and marginal histograms. \
+	For a good training process, we should see the model parameters are clustered around zero at the first epoch and are become more **dispersed** over steps. ")
+	st.write("_**Tips**_")
+	st.write("1. Hover over the plot to see the distribution of model parameters in marginal histograms.")
+	st.write("2. If you notice that the distributions of the model parameters are not changing over steps, it’s a bad sign! This usually indicates that the model isn’t learning :( Try different hyperparameters!")
 
+	title = ["**_First Layer_: Convolution layer with kernel size 2**", "**_Second Layer_: Convolution layer with kernel size 3**",
+			 "**_Third Layer_: Convolution layer with kernel size 4**", "**_Fourth Layer_: Fully connected layer**"]
 	if len(models) == 1:
 		middle = params_plot(param_dfs[0], False)
-		for p in middle:
+		for i in range(len(middle)):
+			st.write(title[i])
+			p = middle[i]
 			_, center_col, _ = st.beta_columns([1, 3, 1])
 			with center_col:
 				st.write(p)
-			st.write('add description here')
 	elif len(models) == 2:
 		left = params_plot(param_dfs[0])
 		right = params_plot(param_dfs[1])
 		for i in range(len(left)):
+			st.write(title[i])
 			col1, col2 = st.beta_columns(2)
 			with col1:
 				st.write(left[i])
 			with col2:
 				st.write(right[i])
 
-			st.write('add description here')
 
 if __name__ == "__main__":
 	st.set_page_config(layout="wide")

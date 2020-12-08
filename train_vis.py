@@ -153,11 +153,15 @@ def params_plot(CONTENT, vertical=True):
     index_selector = alt.selection(type="single", on='mouseover', fields=['epoch'])
     plots = []
     for i in range(len(param_df_list)):
+        if i <= 5:
+            color = "yellowgreenblue"
+        else:
+            color = "yelloworangebrown"
         p = alt.Chart(param_df_list[i]).mark_rect().encode(
             x=alt.X('epoch:O'),
             y=alt.Y('value:Q', bin=alt.Bin(maxbins=20)),
             # legend=alt.Legend(orient="bottom")
-            color=alt.Color('count()', legend=None),
+            color=alt.Color('count()', legend=None, scale=alt.Scale(scheme=color)),
             opacity=alt.condition(index_selector, alt.value(1.0), alt.value(0.5))
         ).add_selection(
             index_selector
