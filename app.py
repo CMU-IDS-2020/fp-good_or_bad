@@ -219,7 +219,7 @@ def main():
 		dataset = st.selectbox('Choose a dataset', ( MOVIE_DATASET, AMAZON_DATASET, YELP_DATASET))
 		models = []
 
-		st.sidebar.header("Adjust Model Parameters")
+		st.sidebar.header("Adjust Model Hyper-Parameters")
 		learning_rate = st.sidebar.select_slider("Learning rate", options=[0.1, 0.01, 0.001, 0.0001], value=0.001)
 		# st.sidebar.text('learning rate={}'.format(learning_rate))
 		weight_decay = st.sidebar.select_slider("Weight decay", options=[0, 5e-7, 5e-6, 5e-5, 5e-4], value=5e-5)
