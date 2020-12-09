@@ -438,7 +438,7 @@ def load_word2vec_dict(word2vec_urls, word2vec_dir):
 	word2vec_dict = []
 	for i in range(len(word2vec_urls)):
 		url = word2vec_urls[i]
-		torch.hub.download_url_to_file(url, word2vec_dir+"word2vec_dict"+str(i)+".pt")
+		# torch.hub.download_url_to_file(url, word2vec_dir+"word2vec_dict"+str(i)+".pt")
 		word2vec = pickle.load(open(word2vec_dir+"word2vec_dict"+str(i)+".pt", "rb" ))
 		word2vec = list(word2vec.items())
 		word2vec_dict += word2vec
@@ -578,7 +578,7 @@ def run_embedding(mapped_dataset, user_input=None):
 	@st.cache(ttl=60*5)
 	def load_sample_embedding(url):
 		embedding_path = "embedding"
-		torch.hub.download_url_to_file(url, embedding_path)
+		# torch.hub.download_url_to_file(url, embedding_path)
 		sample_embeddings = pickle.load(open(embedding_path, "rb" ))
 		tokens = []
 		labels = []

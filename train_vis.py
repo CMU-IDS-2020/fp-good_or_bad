@@ -14,7 +14,7 @@ EPOCH_SAMPLE_LIMIT = SAMPLE_LIMIT // EPOCH
 def get_train_content(dataset_path, optimizer_path):
     url = "https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/models/{}/{}".format(dataset_path, optimizer_path)
     # return torch.hub.load_state_dict_from_url(url, progress=False, map_location=torch.device('cpu'))
-    torch.hub.download_url_to_file(url, "./train_content")
+    # torch.hub.download_url_to_file(url, "./train_content")
     return torch.load("./train_content", map_location=torch.device('cpu'))
 
 @st.cache(allow_output_mutation=True)
