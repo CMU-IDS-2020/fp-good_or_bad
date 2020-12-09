@@ -101,7 +101,7 @@ def main():
 
 	if page == OVERVIEW:
 
-		st.markdown("<h1 style='text-align: center; color: Black;'>Good or Bad? Visualizing Neural Networks on Sentiment Analysis</h1>", unsafe_allow_html=True)
+		st.markdown("<h1 style='text-align: center; color: Black;'>Good or Bad?  Visualizing Neural Networks on Sentiment Analysis</h1>", unsafe_allow_html=True)
 
 		# st.write("")
 		st.write("")
@@ -186,6 +186,17 @@ def main():
 				[3]
 				Hannah Kim and Young-Seob Jeong (2019) - "Sentiment Classification Using Convolutional Neural Networks."
 				Applied Sciences, 2019, 9, 2347.
+			''')
+
+		st.markdown('''
+				### Authors (ranked by first name):
+				   Hongyuan Zhang
+				
+				   Ling Zhang
+				
+				   Tianyi Lin
+				
+				   Yutian Zhao
 			''')
 
 	elif page == PREPROCESS:
@@ -559,8 +570,9 @@ def run_predict(input, models):
 	with center_emb_col:
 		run_embedding(models[i].mapped_dataset, embedding)
 
-	st.write("Feel free to go back and experiment with different model parameters, datasets, and inputs.")
-
+	st.markdown(
+		"<b><font color='blue'>Feel free to go back and experiment with different model parameters, datasets, and inputs.</font></b>",
+		unsafe_allow_html=True)
 
 def run_embedding(mapped_dataset, user_input=None):
 	@st.cache(ttl=60*5)
