@@ -7,4 +7,3 @@ graphviz
 sklearn
 plotly
 htbuilder
-pytorch
