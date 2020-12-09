@@ -33,7 +33,7 @@ from os.path import isfile, join
 from urllib.request import urlopen
 
 from word_highlight import get_highlight_text
-from train_vis import get_train_content, loss_acc_plot, params_plot
+from train_vis import get_train_content,get_train_content_local, loss_acc_plot, params_plot
 
 MODEL_PATH = 'https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/models/xentropy_adam_lr0.0001_wd0.0005_bs128'
 EMBEDDING_URL = "https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/sample_embeddings/sample_words_embeddings.pt"
@@ -579,7 +579,7 @@ def run_train(models):
 
 	for model in models:
 		opt_path = "xentropy_{}_all".format(model.mapped_optimizer)
-		CONTENT = get_train_content(dataset_path=model.mapped_dataset, optimizer_path=opt_path)
+		CONTENT = get_train_content_local(dataset_path=model.mapped_dataset, optimizer_path=opt_path)
 		param_dfs.append(CONTENT[model.model_name[:-3]])
 
 	# get number of models

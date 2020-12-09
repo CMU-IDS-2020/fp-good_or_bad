@@ -17,6 +17,13 @@ def get_train_content(dataset_path, optimizer_path):
     torch.hub.download_url_to_file(url, "./train_content")
     return torch.load("./train_content", map_location=torch.device('cpu'))
 
+@st.cache(allow_output_mutation=True)
+# dataset_path = "amazon_products" or "movie_reviews" or "yelp_restaurants"
+# optimizer_path = "xentropy_adam_all" or "xentropy_sgdmomentum_all"
+def get_train_content_local(dataset_path, optimizer_path):
+    return torch.load("./models/{}/{}".format(dataset_path,optimizer_path), map_location=torch.device('cpu'))
+
+
 def get_param_df(content):
     # st.write(content["model_parameters"])
     epoch = content["model_parameters"]["epoch"]
