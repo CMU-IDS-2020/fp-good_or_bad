@@ -560,7 +560,7 @@ def run_train(models):
 	st.write("2. Check the checkbox on the sidebar if you want to compare the training and predicting process of two models with different parameters.")
 
 	st.subheader("Accuracy & Loss")
-	st.write("The loss (objective) function we used for our model is cross entropy loss. Here we plot the loss for training and validation sets, which reflect how **well** the model is doing in these two sets. Since we always want to minimize the loss, a good training process usually has decreasing loss values over steps. \
+	st.write("The loss (objective) function we used for our model is [cross entropy loss](https://en.wikipedia.org/wiki/Cross_entropy). Here we plot the loss for training and validation sets, which reflect how **well** the model is doing in these two sets. Since we always want to minimize the loss, a good training process usually has decreasing loss values over steps. \
 	The accuracy metric here indicates the percentage of correct predictions, and measures how accurate the model’s predictions are compared to true labels.")
 	st.write("_**Tips**_")
 	st.write("1. Hover your mouse on the plot to compare the value of accuracy/loss and train/validation over epochs.")
