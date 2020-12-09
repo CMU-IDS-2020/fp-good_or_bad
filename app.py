@@ -357,6 +357,15 @@ def load_word2vec_dict(word2vec_urls, word2vec_dir):
 		word2vec_dict += word2vec
 	return dict(word2vec_dict)
 
+@st.cache(allow_output_mutation=True)
+def load_word2vec_dict_local(word2vec_dir):
+	word2vec_dict = []
+	for f in listdir(word2vec_dir):
+		word2vec = pickle.load(open(f, "rb"))
+		word2vec = list(word2vec.items())
+		word2vec_dict += word2vec
+	return dict(word2vec_dict)
+
 def tokenize_sentence(sentence, word2vec_dict):
 	tokenizer = RegexpTokenizer(r'\w+')
 	lemmatizer = WordNetLemmatizer() 
@@ -617,5 +626,6 @@ def run_train(models):
 
 if __name__ == "__main__":
 	st.set_page_config(layout="wide")
-	word2vec_dict = load_word2vec_dict(word2vec_urls = ['https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/word2vec/100d/word2vec_100d_{}.pt'.format(i+1) for i in range(5)], word2vec_dir = "./word2vec")
+	# word2vec_dict = load_word2vec_dict(word2vec_urls = ['https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/word2vec/100d/word2vec_100d_{}.pt'.format(i+1) for i in range(5)], word2vec_dir = "./word2vec")
+	word2vec_dict = load_word2vec_dict_local(word2vec_dir="./word2vec/100d")
 	main()
