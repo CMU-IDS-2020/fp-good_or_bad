@@ -50,10 +50,10 @@ MOVIE_DATASET = 'Movie reviews'
 AMAZON_DATASET = 'Amazon products'
 YELP_DATASET = 'Yelp restaurants'
 
-OVERVIEW = 'Step1. Overview'
-PREPROCESS = 'Step2. Input & Preprocessing'
-TRAIN = 'Step3. Training'
-PREDICT = 'Step4. Predicting'
+OVERVIEW = '1)    Overview'
+PREPROCESS = '2)    Input & Preprocessing'
+TRAIN = '3)    Training'
+PREDICT = '4)    Predicting'
 
 ADAM = 'ADAM'
 SGD = 'SGD with Momentum'
@@ -101,11 +101,13 @@ def main():
 
 	if page == OVERVIEW:
 		st.title("Overview")
+		st.write("")
+		st.write("")
+		# st.write("")
 		st.markdown("<font color='orange'> <b>Our app is especially useful for curious machine learning laymen. With our app, you will be able to visualize the full process of sentiment analysis using a neural network, as well as the interaction of training data, hyperparameters and the model itself. We hope that this app can demystify the magic of neural networks.</b></font>", unsafe_allow_html=True)
 		st.write("")
 		st.write("")
-		st.write("")
-
+		# st.write("")
 		st.write("In this age of social media, personal opinions are expressed ubiquitously in the public. \
 		Behind these opinions are sentiments and emotions. \
 		Gaining an understanding into sentiments regarding a topic can be beneficial in many ways, be it in the case of a business trying to know its customers or the case of a politician trying to know the electorate. \
@@ -132,9 +134,10 @@ def main():
 
 		st.title("User Instructions")
 		st.markdown("<font color='orange'><b>To start using our app:</b></font>", unsafe_allow_html=True)
-		st.write("      1. Use the sidebar to navigate to a particular section: input & preprocessing, training or predicting.")
-		st.write("      2. Adjust training hyperparameters, and select a specific training dataset to see the entire training process!")
-		st.write("      3. In predicting section, feel free to write something emotional to check out how a neural net can understand your sentiment!")
+		st.write("      1. Use the sidebar on the left to navigate to the next section: **input & preprocessing**, or any section you're interested in.")
+		st.write("      2. Select a specific **dataset** and feel free to **write something emotional**!")
+		st.write("      3. Adjust the **training hyperparameters**, or selection **two different sets of hyperparameters** to see the entire training process!")
+		st.write("      3. In predicting section, check out how a neural net can understand your sentiment!")
 		st.write("")
 		st.write("")
 		st.write("")
