@@ -24,7 +24,7 @@ def get_highlight_text(text, dataset_path):
             count = count_dict[t.lower()]
         else:
             count = 0
-        topic_list = ["movie", "film", "food", "restaurant", "tablet", "kindle", "echo", "alexa", "speaker", "amazon", "wa"]
+        topic_list = [] #["movie", "film", "food", "restaurant", "tablet", "kindle", "echo", "alexa", "speaker", "amazon", "wa"]
         if count > 100:
             if t.lower() in topic_list:
                 highlight_list.append((original_t, "somewhat important", "#fff2c9"))
