@@ -12,8 +12,6 @@ import altair as alt
 import graphviz
 from graphviz import Digraph
 import nltk
-nltk.download('stopwords')
-nltk.download('wordnet')
 from nltk.tokenize import RegexpTokenizer
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
@@ -61,6 +59,14 @@ SGD = 'SGD with Momentum'
 preprocesse_exed = False
 train_exed = False
 
+@st.cache(ttl=60 * 5)
+def download_stopword():
+	nltk.download('stopwords')
+
+@st.cache(ttl=60 * 5)
+def download_wordnet():
+	nltk.download('wordnet')
+
 class Model:
 	def __init__(self, dataset, learning_rate, batch_size, weight_decay, optimizer):
 		self.dataset = dataset
@@ -96,6 +102,8 @@ class Model:
 			self.max_len = 721
 
 def main():
+	download_stopword()
+	download_wordnet()
 	st.sidebar.header('Navigation')
 	page = st.sidebar.radio('', (OVERVIEW, PREPROCESS, TRAIN, PREDICT))
 
