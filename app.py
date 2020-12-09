@@ -617,5 +617,5 @@ def run_train(models):
 
 if __name__ == "__main__":
 	st.set_page_config(layout="wide")
-	word2vec_dict = load_word2vec_dict(word2vec_urls = ['https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/word2vec/100d/word2vec_100d_{}.pt'.format(i+1) for i in range(4)], word2vec_dir = "./word2vec")
+	word2vec_dict = load_word2vec_dict(word2vec_urls = ['https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/word2vec/100d/word2vec_100d_{}.pt'.format(i+1) for i in range(3)], word2vec_dir = "./word2vec")
 	main()
