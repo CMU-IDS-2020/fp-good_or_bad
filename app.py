@@ -142,10 +142,10 @@ def main():
 
 		st.title("User Instructions")
 		st.markdown("<font color='blue'><b>To start using our app:</b></font>", unsafe_allow_html=True)
-		st.write("      1. Use the sidebar on the left to navigate to the next section: **input & preprocessing**, or any section you're interested in.")
+		st.write("      1. Use the sidebar on the left to navigate to the next section: **input & preprocessing**.")
 		st.write("      2. Select a specific **dataset** and feel free to **write something emotional**!")
 		st.write("      3. Adjust the **training hyperparameters**, or selection **two different sets of hyperparameters** to see the entire training process!")
-		st.write("      3. In predicting section, check out how a neural net can understand your sentiment!")
+		st.write("      4. In predicting section, check out how a neural net can understand your sentiment!")
 		st.write("")
 		st.write("")
 		st.write("")
