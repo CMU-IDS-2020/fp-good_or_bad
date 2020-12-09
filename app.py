@@ -101,6 +101,13 @@ def main():
 
 	if page == OVERVIEW:
 		st.title("Overview")
+		st.markdown("<font color='orange'> <b>Our app is especially useful for curious machine learning laymen. With our app, you will be able to visualize the full process of sentiment analysis using a neural network, as well as the interaction of training data, hyperparameters and the model itself. We hope that this app can demystify the magic of neural networks.</b></font>", unsafe_allow_html=True)
+		st.write("")
+		st.markdown("<font color='orange'><b>To start using our app, use the sidebar to navigate to a particular section. Then adjust training hyperparameters, and select a specific training dataset. Then write something emotional to check out how a neural net can understand your sentiment!</b></font>", unsafe_allow_html=True)
+		st.write("")
+		st.write("")
+		st.write("")
+
 		st.write("In this age of social media, personal opinions are expressed ubiquitously in the public. \
 		Behind these opinions are sentiments and emotions. \
 		Gaining an understanding into sentiments regarding a topic can be beneficial in many ways, be it in the case of a business trying to know its customers or the case of a politician trying to know the electorate. \
@@ -124,12 +131,7 @@ def main():
 		st.write("")
 		st.write("")
 		st.write("")
-		st.markdown("<font color='orange'> <b>Our app is especially useful for curious machine learning laymen. With our app, you will be able to visualize the full process of sentiment analysis using a neural network, as well as the interaction of training data, hyperparameters and the model itself. We hope that this app can demystify the magic of neural networks.</b></font>", unsafe_allow_html=True)
-		st.write("")
-		st.markdown("<font color='orange'><b>To start using our app, use the sidebar to navigate to a particular section. Then adjust training hyperparameters, and select a specific training dataset. Then write something emotional to check out how a neural net can understand your sentiment!</b></font>", unsafe_allow_html=True)
-		st.write("")
-		st.write("")
-		st.write("")
+
 
 		st.title("Model Architecture")
 		st.write("Our model has the following architecture: ")
