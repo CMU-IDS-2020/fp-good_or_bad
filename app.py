@@ -379,7 +379,7 @@ def run_preprocess(dataset, input, visible=True):
 		st.write('''Now, use the sidebar to navigate to the next section to further explore sentiment analysis via neural nets.''')
 	return [token for token in lemmatized if token is not None]
 
-@st.cache(allow_output_mutation=True)
+@st.cache(ttl=60*5,allow_output_mutation=True)
 def load_word2vec_dict(word2vec_urls, word2vec_dir):
 	word2vec_dict = []
 	for i in range(len(word2vec_urls)):
@@ -390,7 +390,7 @@ def load_word2vec_dict(word2vec_urls, word2vec_dir):
 		word2vec_dict += word2vec
 	return dict(word2vec_dict)
 
-@st.cache(allow_output_mutation=True)
+@st.cache(ttl=60*5,allow_output_mutation=True)
 def load_word2vec_dict_local(word2vec_dir):
 	word2vec_dict = []
 	for f in listdir(word2vec_dir):
@@ -520,7 +520,7 @@ def run_predict(input, models):
 
 
 def run_embedding(mapped_dataset, user_input=None):
-	@st.cache
+	@st.cache(ttl=60*5)
 	def load_sample_embedding(url):
 		embedding_path = "embedding"
 		torch.hub.download_url_to_file(url, embedding_path)
@@ -537,7 +537,7 @@ def run_embedding(mapped_dataset, user_input=None):
 			shapes.append('0')
 		return tokens, labels, shapes
 
-	@st.cache
+	@st.cache(ttl=60*5)
 	def load_usr_embedding(input_dict, sample_tokens, sample_labels, sample_shapes):
 		tokens = copy.deepcopy(sample_tokens)
 		labels = copy.deepcopy(sample_labels)
@@ -551,14 +551,14 @@ def run_embedding(mapped_dataset, user_input=None):
 		return tokens, labels, shapes
 
 
-	@st.cache
+	@st.cache(ttl=60*5)
 	def transform_3d(tokens):
 		# tsne = TSNE(n_components=3, random_state=1, n_iter=100000, metric="cosine")
 		pca = decomposition.PCA(n_components=3)
 		pca.fit(tokens)
 		return pca.transform(tokens)
 
-	@st.cache
+	@st.cache(ttl=60*5)
 	def get_df(values_3d, labels, shapes):
 		return pd.DataFrame({
 			'x': values_3d[:, 0],
