@@ -376,7 +376,7 @@ def tokenize_sentence(sentence, word2vec_dict):
 
 def run_predict(input, models):
 	
-	def predict(sentence, model_url, max_seq_length = 29):
+	def predict(sentence, self_model, max_seq_length = 29):
 		#tokenized_sentence = tokenize_sentence(sentence,word2vec_dict)
 		embedding_for_plot = {}
 		for word in sentence:
@@ -384,8 +384,9 @@ def run_predict(input, models):
 		embedding = np.array([word2vec_dict[word] for word in sentence])
 
 		model = Network(input_channel, out_channel, kernel_sizes, output_dim)
-		torch.hub.download_url_to_file(model_url, "./cur_model.pt")
-		state_dict = torch.load("./cur_model.pt",map_location=torch.device('cpu'))
+		# torch.hub.download_url_to_file(model_url, "./cur_model.pt")
+		# state_dict = torch.load("./cur_model.pt",map_location=torch.device('cpu'))
+		state_dict = torch.load("./models/" + self_model.mapped_dataset + "/model_state_dict/" + self_model.model_name, map_location=torch.device('cpu'))
 		model.load_state_dict(state_dict)
 		# model.load_state_dict(torch.hub.load_state_dict_from_url(model_url, progress=False, map_location=torch.device('cpu')))
 		model.eval()
@@ -407,7 +408,7 @@ def run_predict(input, models):
 	probs_list = []
 
 	for i in range(len(models)):
-		probs, _, embedding = predict(input, models[i].model_url, models[i].max_len)
+		probs, _, embedding = predict(input, models[i], models[i].max_len)
 		probs = probs[0].numpy()
 		probs_list.append(probs)
 
