@@ -100,14 +100,22 @@ def main():
 	page = st.sidebar.radio('', (OVERVIEW, PREPROCESS, TRAIN, PREDICT))
 
 	if page == OVERVIEW:
+
+		st.markdown("<h1 style='text-align: center; color: Black;'>Visualizing Neural Networks on Sentiment Analysis</h1>", unsafe_allow_html=True)
+
+		# st.write("")
+		st.write("")
+		st.write("")
+		st.write("")
+		st.write("")
+		st.markdown(" <b><font color='blue'>Our app is especially useful for curious machine learning laymen. With our app, you will be able to visualize the full process of sentiment analysis using a neural network, as well as the interaction of training data, hyperparameters and the model itself. </font></b>", unsafe_allow_html=True)
+		st.markdown("<b><font color='blue'>We hope that this app can demystify the magic of neural networks.</font></b>", unsafe_allow_html=True)
+		st.write("")
+		# st.write("")
+		# st.write("")
 		st.title("Overview")
 		st.write("")
 		st.write("")
-		# st.write("")
-		st.markdown("<font color='orange'> <b>Our app is especially useful for curious machine learning laymen. With our app, you will be able to visualize the full process of sentiment analysis using a neural network, as well as the interaction of training data, hyperparameters and the model itself. We hope that this app can demystify the magic of neural networks.</b></font>", unsafe_allow_html=True)
-		st.write("")
-		st.write("")
-		# st.write("")
 		st.write("In this age of social media, personal opinions are expressed ubiquitously in the public. \
 		Behind these opinions are sentiments and emotions. \
 		Gaining an understanding into sentiments regarding a topic can be beneficial in many ways, be it in the case of a business trying to know its customers or the case of a politician trying to know the electorate. \
