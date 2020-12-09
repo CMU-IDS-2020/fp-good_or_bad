@@ -1,9 +1,0 @@
-streamlit
-pandas
-altair
-torch
-nltk
-graphviz
-sklearn
-htbuilder
-plotly
