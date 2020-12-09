@@ -101,13 +101,17 @@ def main():
 
 	if page == OVERVIEW:
 
-		st.markdown("<h1 style='text-align: center; color: Black;'>Visualizing Neural Networks on Sentiment Analysis</h1>", unsafe_allow_html=True)
+		st.markdown("<h1 style='text-align: center; color: Black;'>Good or Bad? Visualizing Neural Networks on Sentiment Analysis</h1>", unsafe_allow_html=True)
 
 		# st.write("")
 		st.write("")
 		st.write("")
 		st.write("")
 		st.write("")
+		st.subheader("Who is this app for?")
+		st.write("")
+		st.write("")
+		# st.write("")
 		st.markdown(" <b><font color='blue'>Our app is especially useful for curious machine learning laymen. With our app, you will be able to visualize the full process of sentiment analysis using a neural network, as well as the interaction of training data, hyperparameters and the model itself. </font></b>", unsafe_allow_html=True)
 		st.markdown("<b><font color='blue'>We hope that this app can demystify the magic of neural networks.</font></b>", unsafe_allow_html=True)
 		st.write("")
@@ -116,14 +120,14 @@ def main():
 		st.title("Overview")
 		st.write("")
 		st.write("")
-		st.write("In this age of social media, personal opinions are expressed ubiquitously in the public. \
+		st.write("In this age of social media, **personal opinions** are expressed ubiquitously in the public. \
 		Behind these opinions are sentiments and emotions. \
 		Gaining an understanding into sentiments regarding a topic can be beneficial in many ways, be it in the case of a business trying to know its customers or the case of a politician trying to know the electorate. \
 		This age has also witnessed a rise of artificial intelligence and machine learning, which enables a quick capture of the sentiments behind numerous opinions existing on social media.")
 		_, col_center_sent_image, _ = st.beta_columns([1, 2, 1])
 		with col_center_sent_image:
 			st.image('https://www.kdnuggets.com/images/sentiment-fig-1-689.jpg', caption = 'Sentiment Analysis (reference: https://www.kdnuggets.com/2018/03/5-things-sentiment-analysis-classification.html)', use_column_width=True)
-		st.write('''Machine learning methods can be highly accurate and efficient for various tasks. \
+		st.write('''**Machine learning** methods can be highly accurate and efficient for various tasks. \
 		However, machine learning models, especially neural networks, are still a “black box” for many people, even experienced experts in the field (for example, considering the poorly understood nature of generalization of neural networks). \
 		Given this problem, we built this visualization application to help people understand internal mechanisms of a neural network. \
 		We use the task of sentiment analysis as a case study in our application to walk users through the neural network’s training and decision making process.''')
@@ -150,7 +154,7 @@ def main():
 		st.write("")
 		st.write("")
 
-		st.title("Model Architecture")
+		st.subheader("Model Architecture")
 		st.write("Our model has the following architecture: ")
 		st.write("- 3 layers of 1-Dimensional CNN with kernel sizes (2,3,4) for extracting features")
 		st.write("- Max Pooling Layer for retaining prominent features")
@@ -158,8 +162,10 @@ def main():
 		st.write("- Linear Layer with output dimension 5 for sentiment classification")
 
 		st.write("Our model uses [Glove Embeddings](https://nlp.stanford.edu/projects/glove/) with 1.9 million vocabulary to obtain pretrained vector representations of words.")
-
-		st.title("Datasets")
+		st.write("")
+		st.write("")
+		st.write("")
+		st.subheader("Dataset Description")
 		st.write("We trained our model on three relevant datasets, including Rotten Tomato movie reviews, Yelp restaurant reviews and Amazon product reviews, each with various hyperparameter values such as [learning rate](https://en.wikipedia.org/wiki/Learning_rate), [weigth decay](https://towardsdatascience.com/this-thing-called-weight-decay-a7cd4bcfccab) and [batch size](https://towardsdatascience.com/epoch-vs-iterations-vs-batch-size-4dfb9c7ce9c9). The model is also trained with [Adam Optimizer](https://towardsdatascience.com/adam-latest-trends-in-deep-learning-optimization-6be9a291375c) and [Stochastic Gradient Descent with Momentum](https://en.wikipedia.org/wiki/Stochastic_gradient_descent).")
 		st.write("[Rotten Tomato movie reviews](https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews/data) contains more than 15,5000 movie reviews and ratings from 1 to 5.")
 		st.write("[Yelp restaurant reviews](https://www.kaggle.com/omkarsabnis/yelp-reviews-dataset) contains more than 11,000 retaurant reviews and ratings from 1 to 5.")
@@ -413,7 +419,7 @@ def run_preprocess(dataset, input, visible=True):
 			c.attr(label='Lemmatized Tokens')
 
 		st.graphviz_chart(g, use_container_width=True)
-		st.write('''Now, use the sidebar to navigate to the next section to further explore sentiment analysis via neural nets.''')
+		st.markdown("<b><font color='blue'>Now, use the sidebar to navigate to the next section: training, to further explore the training process of neural nets.</font></b>", unsafe_allow_html=True)
 	return [token for token in lemmatized if token is not None]
 
 @st.cache(ttl=60*5,allow_output_mutation=True)
@@ -693,8 +699,10 @@ def run_train(models):
 				st.write(left[i])
 			with col2:
 				st.write(right[i])
-	st.write("Now, use the sidebar to navigate to the next section to see how you can use your trained models to predict the sentiment of your input sentence.")
 
+	st.markdown(
+		"<b><font color='blue'>Now, use the sidebar to navigate to the next section: predicting, to see how you can use your trained models to predict the sentiment of your input sentence.</font></b>",
+		unsafe_allow_html=True)
 if __name__ == "__main__":
 	st.set_page_config(layout="wide")
 	# word2vec_dict = load_word2vec_dict(word2vec_urls = ['https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/word2vec/100d/word2vec_100d_{}.pt'.format(i+1) for i in range(5)], word2vec_dir = "./word2vec")
