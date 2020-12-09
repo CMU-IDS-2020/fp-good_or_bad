@@ -361,7 +361,7 @@ def load_word2vec_dict(word2vec_urls, word2vec_dir):
 def load_word2vec_dict_local(word2vec_dir):
 	word2vec_dict = []
 	for f in listdir(word2vec_dir):
-		word2vec = pickle.load(open(f, "rb"))
+		word2vec = pickle.load(open(join(word2vec_dir,f), "rb"))
 		word2vec = list(word2vec.items())
 		word2vec_dict += word2vec
 	return dict(word2vec_dict)
