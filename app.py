@@ -174,7 +174,21 @@ def main():
 				Applied Sciences, 2019, 9, 2347.
 			''')
 
-	elif page != OVERVIEW:
+	elif page == PREPROCESS:
+		st.title("Predict Sentiment")
+		dataset = st.selectbox('Choose a dataset', (MOVIE_DATASET, AMAZON_DATASET, YELP_DATASET))
+
+		if dataset == MOVIE_DATASET:
+			user_input = st.text_input('Write something emotional and hit enter!',
+									   "I absolutely love this romantic movie! It's such an interesting film!")
+		elif dataset == AMAZON_DATASET:
+			user_input = st.text_input('Write something emotional and hit enter!', "Great device! It's easy to use!")
+		else:
+			user_input = st.text_input('Write something emotional and hit enter!',
+									   "Delicious food! Best place to have lunch with a friend!")
+
+
+	else:
 		st.title("Predict Sentiment")
 		dataset = st.selectbox('Choose a dataset', ( MOVIE_DATASET, AMAZON_DATASET, YELP_DATASET))
 		models = []
