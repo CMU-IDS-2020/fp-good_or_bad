@@ -103,8 +103,6 @@ def main():
 		st.title("Overview")
 		st.markdown("<font color='orange'> <b>Our app is especially useful for curious machine learning laymen. With our app, you will be able to visualize the full process of sentiment analysis using a neural network, as well as the interaction of training data, hyperparameters and the model itself. We hope that this app can demystify the magic of neural networks.</b></font>", unsafe_allow_html=True)
 		st.write("")
-		st.markdown("<font color='orange'><b>To start using our app, use the sidebar to navigate to a particular section. Then adjust training hyperparameters, and select a specific training dataset. Then write something emotional to check out how a neural net can understand your sentiment!</b></font>", unsafe_allow_html=True)
-		st.write("")
 		st.write("")
 		st.write("")
 
@@ -132,6 +130,14 @@ def main():
 		st.write("")
 		st.write("")
 
+		st.title("User Instructions")
+		st.markdown("<font color='orange'><b>To start using our app:</b></font>", unsafe_allow_html=True)
+		st.write("      1. Use the sidebar to navigate to a particular section: input & preprocessing, training or predicting.")
+		st.write("      2. Adjust training hyperparameters, and select a specific training dataset to see the entire training process!")
+		st.write("      3. In predicting section, feel free to write something emotional to check out how a neural net can understand your sentiment!")
+		st.write("")
+		st.write("")
+		st.write("")
 
 		st.title("Model Architecture")
 		st.write("Our model has the following architecture: ")
