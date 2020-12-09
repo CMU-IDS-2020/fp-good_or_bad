@@ -1,0 +1,10 @@
+streamlit
+pandas
+altair
+torch
+pytorch
+nltk
+graphviz
+sklearn
+plotly
+htbuilder
