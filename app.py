@@ -59,11 +59,11 @@ SGD = 'SGD with Momentum'
 preprocesse_exed = False
 train_exed = False
 
-@st.cache(ttl=60 * 5)
+@st.cache(ttl=60 * 20)
 def download_stopword():
 	nltk.download('stopwords')
 
-@st.cache(ttl=60 * 5)
+@st.cache(ttl=60 * 20)
 def download_wordnet():
 	nltk.download('wordnet')
 
@@ -352,9 +352,19 @@ def run_preprocess(dataset, input, visible=True):
 		st.write("How can neural networks read text like humans? You might wonder. Actually, they cannot; they can only read numbers.\
 				 This section walks you through every step that we must perform **before** we convert text to numbers. You will see the actual \
 				 converting step in the 'Predicting' section.")
+		st.write("_**Tips**_")
+		st.markdown('''
+						1. Try to change dataset and view different word cloud.
+
+						2. Change your input text as well!
+
+						''')
 
 	if visible:
-		st.write("Before we head into text preprocessing, let's check out the words that are particularly important, or frequent, in your selected dataset.")
+		st.subheader("WordCloud & Word Importance")
+		st.write("Before we head into text preprocessing, let's check out the words that are particularly important, or frequent, in your selected dataset. We highlight your \
+				 input text based on the term frequency in the chosen dataset. ")
+
 		_, col_center, _ = st.beta_columns([1, 3, 1])
 		if dataset == AMAZON_DATASET:
 			with col_center:
@@ -370,6 +380,7 @@ def run_preprocess(dataset, input, visible=True):
 			get_highlight_text(input, "top_frequent_words/yelp_restaurant_top1000.pt")
 
 	if visible:
+		st.subheader("Preprocessing")
 		st.write('''Let's see all that happens before the step of converting text to numbers, as promised. Now, a very natural question might come to your mind,\
 			 "Do you convert on a sentence/word/character level? Would it be too simplified if we convert a whole sentence into a single number?" Indeed, \
 			 sentence-level mapping could be meaningless, given that we want to read every word or character in a sentence. Thus, what we usually do in practice \
@@ -441,7 +452,7 @@ def run_preprocess(dataset, input, visible=True):
 		st.markdown("<b><font color='blue'>Now, use the sidebar to navigate to the next section: training, to further explore the training process of neural nets.</font></b>", unsafe_allow_html=True)
 	return [token for token in lemmatized if token is not None]
 
-@st.cache(ttl=60*5,allow_output_mutation=True)
+@st.cache(ttl=60*10,allow_output_mutation=True)
 def load_word2vec_dict(word2vec_urls, word2vec_dir):
 	word2vec_dict = []
 	for i in range(len(word2vec_urls)):
@@ -452,7 +463,7 @@ def load_word2vec_dict(word2vec_urls, word2vec_dir):
 		word2vec_dict += word2vec
 	return dict(word2vec_dict)
 
-@st.cache(ttl=60*5,allow_output_mutation=True)
+@st.cache(ttl=60*10,allow_output_mutation=True)
 def load_word2vec_dict_local(word2vec_dir):
 	word2vec_dict = []
 	for f in listdir(word2vec_dir):
@@ -493,6 +504,7 @@ def run_predict(input, models):
 		_, predicted = torch.max(outputs.data, 1)
 		return softmax(outputs.data), predicted.item() + 1, embedding_for_plot
 
+	st.subheader('Predicted Result')
 	st.write("Now let's see what results our neural net gives for your input text. The bar chart below shows the predicted probability that your text contains a certain type of sentiment.")
 	st.write("_**Tips**_")
 
@@ -579,7 +591,7 @@ def run_predict(input, models):
 		run_embedding(models[i].mapped_dataset, embedding)
 
 	st.markdown(
-		"<b><font color='blue'>Feel free to go back and experiment with different model parameters, datasets, and inputs.</font></b>",
+		"<b><font color='blue'>Feel free to go back and experiment with different model hyper-parameters, datasets, and inputs.</font></b>",
 		unsafe_allow_html=True)
 
 def run_embedding(mapped_dataset, user_input=None):
@@ -600,7 +612,7 @@ def run_embedding(mapped_dataset, user_input=None):
 			shapes.append('0')
 		return tokens, labels, shapes
 
-	@st.cache(ttl=60*5)
+	@st.cache(ttl=60*5, allow_output_mutation=True)
 	def load_usr_embedding(input_dict, sample_tokens, sample_labels, sample_shapes):
 		tokens = copy.deepcopy(sample_tokens)
 		labels = copy.deepcopy(sample_labels)
@@ -614,14 +626,14 @@ def run_embedding(mapped_dataset, user_input=None):
 		return tokens, labels, shapes
 
 
-	@st.cache(ttl=60*5)
+	@st.cache(ttl=60*5, allow_output_mutation=True)
 	def transform_3d(tokens):
 		# tsne = TSNE(n_components=3, random_state=1, n_iter=100000, metric="cosine")
 		pca = decomposition.PCA(n_components=3)
 		pca.fit(tokens)
 		return pca.transform(tokens)
 
-	@st.cache(ttl=60*5)
+	@st.cache(ttl=60*5, allow_output_mutation=True)
 	def get_df(values_3d, labels, shapes):
 		return pd.DataFrame({
 			'x': values_3d[:, 0],
@@ -667,7 +679,7 @@ def run_train(models):
 	st.write("2. Check the checkbox on the sidebar if you want to compare the training and predicting process of two models with different parameters.")
 
 	st.subheader("Accuracy & Loss")
-	st.write("The loss (objective) function we used for our model is [cross entropy loss](https://en.wikipedia.org/wiki/Cross_entropy). Here we plot the loss for training and validation sets, which reflect how **well** the model is doing in these two sets. Since we always want to minimize the loss, a good training process usually has decreasing loss values over steps. \
+	st.write("The loss (objective) function we used for our model is [cross entropy loss](https://en.wikipedia.org/wiki/Cross_entropy). Here we plot the loss for training and validation sets, which reflect how **well** the model is doing in these two sets. Since we always want to minimize the loss/error, a good training process usually has decreasing loss values over steps. \
 	The accuracy metric here indicates the percentage of correct predictions, and measures how accurate the model’s predictions are compared to true labels.")
 	st.write("_**Tips**_")
 	st.write("1. Hover your mouse on the plot to compare the value of accuracy/loss and train/validation over epochs.")

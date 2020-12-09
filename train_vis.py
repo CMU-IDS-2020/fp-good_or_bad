@@ -8,7 +8,7 @@ EPOCH = 30
 SAMPLE_LIMIT = 5000
 EPOCH_SAMPLE_LIMIT = SAMPLE_LIMIT // EPOCH
 
-@st.cache(ttl=60 * 5, allow_output_mutation=True)
+@st.cache(ttl=60 * 10, allow_output_mutation=True)
 # dataset_path = "amazon_products" or "movie_reviews" or "yelp_restaurants"
 # optimizer_path = "xentropy_adam_all" or "xentropy_sgdmomentum_all"
 def get_train_content(dataset_path, optimizer_path):
@@ -17,7 +17,7 @@ def get_train_content(dataset_path, optimizer_path):
     # torch.hub.download_url_to_file(url, "./train_content")
     return torch.load("./train_content", map_location=torch.device('cpu'))
 
-@st.cache(ttl=60 * 5, allow_output_mutation=True)
+@st.cache(ttl=60 * 10, allow_output_mutation=True)
 # dataset_path = "amazon_products" or "movie_reviews" or "yelp_restaurants"
 # optimizer_path = "xentropy_adam_all" or "xentropy_sgdmomentum_all"
 def get_train_content_local(dataset_path, optimizer_path):
