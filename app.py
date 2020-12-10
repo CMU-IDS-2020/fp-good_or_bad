@@ -412,7 +412,7 @@ def run_preprocess(model, input, visible=True):
 		st.subheader('Word Embeddings')
 		st.markdown('''
 			Word embeddings are dense vector representations of words. Word Embeddings have their dimensional distance correlated to the semantic similarity of the underlying words.
-			We use **word2vec**, developed by Google, to translate each word into a vector of its postion in the embedding space. 
+			We use [Glove Embeddings](https://nlp.stanford.edu/projects/glove/) with 1.9 million vocabulary to translate each word into a vector of its postion in the embedding space. 
 			
 			To help you visualize how word embeddings are used in this sentiment analysis project, We plot the word embeddings of your
 			input sentence with some common words which has straightforward sentiment tendencies. 
@@ -636,15 +636,29 @@ def run_train(models):
 	# dataset_path = "amazon_products" or "movie_reviews" or "yelp_restaurants"
 	# optimizer_path = "xentropy_adam_all" or "xentropy_sgdmomentum_all"
 
-	st.header("Model Architecture [TODO]")
+	st.header("Model Architecture")
+	st.write("Our model uses **convolutional neural networks**, which is the state-of-the-art model architecture for text classification. Convolutional neural networks is a type of neural network that excels at pattern detection.")
+	st.write('''
+	Let's take a look at the basic components in convolutional neural networks:
+	
+	1. A **neuron** is a mathematical function that performs mapping and activation. It contains weights and biases, it takes multiple inputs and output a single value.
+
+	2. A **layer** is simply a group of neurons that take in the same input but generate different outputs.
+	
+	3. A **kernel** is a filter that's used to extract the features from a certain window of inputs.
+	
+	4. **Pooling** is downsampling technique used to summarize the features. Two most common pooling methods are average pooling and max pooling.
+	
+	5. **Dropout** is a popular regularization method used in CNN. It will dropout units with a certain probability. The most commonly used is 0.5.
+
+	''')
+	st.write(" ")
+	st.write(" ")
 	st.write("Our model has the following architecture: ")
 	st.write("- 3 layers of 1-Dimensional CNN with kernel sizes (2,3,4) for extracting features")
 	st.write("- Max Pooling Layer for retaining prominent features")
 	st.write("- Dropout Layer with probability 0.5 for better model generalization")
 	st.write("- Linear Layer with output dimension 5 for sentiment classification")
-
-	st.write(
-		"Our model uses [Glove Embeddings](https://nlp.stanford.edu/projects/glove/) with 1.9 million vocabulary to obtain pretrained vector representations of words.")
 	st.write("")
 	st.write("")
 	st.write("")
@@ -659,18 +673,18 @@ def run_train(models):
 Model hyper-parameters in machine learning are parameters that control the training process, while model parameters are values that are computed during training. Here, on the left side bar
 We defined some model hyer-parameters you can choose from. 
 
-1. Learning rate usually ranges from [0,1] and controls the learning speed of the model or how fast is adapted to the problem.
+1. **[Learning rate](https://en.wikipedia.org/wiki/Learning_rate)** usually ranges from [0,1] and controls the learning speed of the model or how fast is adapted to the problem.
 
-2. Weight decay is a common regularization technique that helps models to generalize better. It applies some “discount” to the weight and prevents the weights from growing too large.
+2. **[Weight decay](https://towardsdatascience.com/this-thing-called-weight-decay-a7cd4bcfccab)** is a common regularization technique that helps models to generalize better. It applies some “discount” to the weight and prevents the weights from growing too large.
 
-3. Batch size refers to the number of training examples fed into the network in one iteration. Batch size will affect model convergence rate and this value should also be determined based on the training dataset size.
+3. **[Batch size]((https://towardsdatascience.com/epoch-vs-iterations-vs-batch-size-4dfb9c7ce9c9))** refers to the number of training examples fed into the network in one iteration. Batch size will affect model convergence rate and this value should also be determined based on the training dataset size.
 ''')
 
 	st.subheader("Optimizer")
 	st.markdown('''
-	Optimizer is used to update the model parameters to minimize the loss (object) function. There are lots of different optimizers. Here we choose the two popular optimizers widely used in neural network training, namely Adam and SGD with momentum.
+	Optimizer is used to update the model parameters to minimize the loss (object) function. There are lots of different optimizers. ''')
+	st.markdown('''Here we choose the two popular optimizers widely used in neural network training, namely **[Adam](https://towardsdatascience.com/adam-latest-trends-in-deep-learning-optimization-6be9a291375c)** and **[Stochastic Gradience Descent with Momentum](https://en.wikipedia.org/wiki/Stochastic_gradient_descent)**.
 	There isn’t a specific rule that which optimizer is always perform better, so try to select different optimizers and explore the difference by yourself when you view the sections below!
-
 	''')
 
 
