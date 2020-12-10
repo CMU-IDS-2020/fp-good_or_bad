@@ -12,8 +12,6 @@ import altair as alt
 import graphviz
 from graphviz import Digraph
 import nltk
-nltk.download('stopwords')
-nltk.download('wordnet')
 from nltk.tokenize import RegexpTokenizer
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
@@ -33,7 +31,7 @@ from os.path import isfile, join
 from urllib.request import urlopen
 
 from word_highlight import get_highlight_text
-from train_vis import get_train_content, loss_acc_plot, params_plot
+from train_vis import get_train_content,get_train_content_local, loss_acc_plot, params_plot
 
 MODEL_PATH = 'https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/models/xentropy_adam_lr0.0001_wd0.0005_bs128'
 EMBEDDING_URL = "https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/sample_embeddings/sample_words_embeddings.pt"
@@ -50,16 +48,24 @@ MOVIE_DATASET = 'Movie reviews'
 AMAZON_DATASET = 'Amazon products'
 YELP_DATASET = 'Yelp restaurants'
 
-OVERVIEW = 'Overview'
-PREPROCESS = 'Input & Preprocessing'
-TRAIN = 'Training'
-PREDICT = 'Predicting'
+OVERVIEW = '1)    Overview'
+PREPROCESS = '2)    Dataset & Input Preprocessing'
+TRAIN = '3)    Training'
+PREDICT = '4)    Predicting'
 
 ADAM = 'ADAM'
 SGD = 'SGD with Momentum'
 
 preprocesse_exed = False
 train_exed = False
+
+@st.cache(ttl=60 * 20)
+def download_stopword():
+	nltk.download('stopwords')
+
+@st.cache(ttl=60 * 20)
+def download_wordnet():
+	nltk.download('wordnet')
 
 class Model:
 	def __init__(self, dataset, learning_rate, batch_size, weight_decay, optimizer):
@@ -96,19 +102,40 @@ class Model:
 			self.max_len = 721
 
 def main():
+	download_stopword()
+	download_wordnet()
 	st.sidebar.header('Navigation')
 	page = st.sidebar.radio('', (OVERVIEW, PREPROCESS, TRAIN, PREDICT))
 
 	if page == OVERVIEW:
+
+		st.markdown("<h1 style='text-align: center; color: Black;'>Good or Bad?  Visualizing Neural Networks on Sentiment Analysis</h1>", unsafe_allow_html=True)
+
+		# st.write("")
+		st.write("")
+		st.write("")
+		st.write("")
+		st.write("")
+		st.subheader("Who is this app for?")
+		st.write("")
+		st.write("")
+		# st.write("")
+		st.markdown(" <b><font color='blue'>Our app is especially useful for curious machine learning laymen. With our app, you will be able to visualize the full process of sentiment analysis using a neural network, as well as the interaction of training data, hyperparameters and the model itself. </font></b>", unsafe_allow_html=True)
+		st.markdown("<b><font color='blue'>We hope that this app can demystify the magic of neural networks.</font></b>", unsafe_allow_html=True)
+		st.write("")
+		# st.write("")
+		# st.write("")
 		st.title("Overview")
-		st.write("In this age of social media, personal opinions are expressed ubiquitously in the public. \
+		st.write("")
+		st.write("")
+		st.write("In this age of social media, **personal opinions** are expressed ubiquitously in the public. \
 		Behind these opinions are sentiments and emotions. \
 		Gaining an understanding into sentiments regarding a topic can be beneficial in many ways, be it in the case of a business trying to know its customers or the case of a politician trying to know the electorate. \
 		This age has also witnessed a rise of artificial intelligence and machine learning, which enables a quick capture of the sentiments behind numerous opinions existing on social media.")
 		_, col_center_sent_image, _ = st.beta_columns([1, 2, 1])
 		with col_center_sent_image:
 			st.image('https://www.kdnuggets.com/images/sentiment-fig-1-689.jpg', caption = 'Sentiment Analysis (reference: https://www.kdnuggets.com/2018/03/5-things-sentiment-analysis-classification.html)', use_column_width=True)
-		st.write('''Machine learning methods can be highly accurate and efficient for various tasks. \
+		st.write('''**Machine learning** methods can be highly accurate and efficient for various tasks. \
 		However, machine learning models, especially neural networks, are still a “black box” for many people, even experienced experts in the field (for example, considering the poorly understood nature of generalization of neural networks). \
 		Given this problem, we built this visualization application to help people understand internal mechanisms of a neural network. \
 		We use the task of sentiment analysis as a case study in our application to walk users through the neural network’s training and decision making process.''')
@@ -124,14 +151,18 @@ def main():
 		st.write("")
 		st.write("")
 		st.write("")
-		st.markdown("<font color='orange'> <b>Our app is especially useful for curious machine learning laymen. With our app, you will be able to visualize the full process of sentiment analysis using a neural network, as well as the interaction of training data, hyperparameters and the model itself. We hope that this app can demystify the magic of neural networks.</b></font>", unsafe_allow_html=True)
-		st.write("")
-		st.markdown("<font color='orange'><b>To start using our app, use the sidebar to navigate to a particular section. Then adjust training hyperparameters, and select a specific training dataset. Then write something emotional to check out how a neural net can understand your sentiment!</b></font>", unsafe_allow_html=True)
+
+		st.title("User Instructions")
+		st.markdown("<font color='blue'><b>To start using our app:</b></font>", unsafe_allow_html=True)
+		st.write("      1. Use the sidebar on the left to navigate to the next section: **input & preprocessing**.")
+		st.write("      2. Select a specific **dataset** and feel free to **write something emotional**!")
+		st.write("      3. In Training section. Adjust the **training hyperparameters**, or selection **two different sets of hyperparameters** to see the entire training process!")
+		st.write("      4. In predicting section, check out how a neural net can understand your sentiment!")
 		st.write("")
 		st.write("")
 		st.write("")
 
-		st.title("Model Architecture")
+		st.subheader("Model Architecture")
 		st.write("Our model has the following architecture: ")
 		st.write("- 3 layers of 1-Dimensional CNN with kernel sizes (2,3,4) for extracting features")
 		st.write("- Max Pooling Layer for retaining prominent features")
@@ -139,8 +170,10 @@ def main():
 		st.write("- Linear Layer with output dimension 5 for sentiment classification")
 
 		st.write("Our model uses [Glove Embeddings](https://nlp.stanford.edu/projects/glove/) with 1.9 million vocabulary to obtain pretrained vector representations of words.")
-
-		st.title("Datasets")
+		st.write("")
+		st.write("")
+		st.write("")
+		st.subheader("Dataset Description")
 		st.write("We trained our model on three relevant datasets, including Rotten Tomato movie reviews, Yelp restaurant reviews and Amazon product reviews, each with various hyperparameter values such as [learning rate](https://en.wikipedia.org/wiki/Learning_rate), [weigth decay](https://towardsdatascience.com/this-thing-called-weight-decay-a7cd4bcfccab) and [batch size](https://towardsdatascience.com/epoch-vs-iterations-vs-batch-size-4dfb9c7ce9c9). The model is also trained with [Adam Optimizer](https://towardsdatascience.com/adam-latest-trends-in-deep-learning-optimization-6be9a291375c) and [Stochastic Gradient Descent with Momentum](https://en.wikipedia.org/wiki/Stochastic_gradient_descent).")
 		st.write("[Rotten Tomato movie reviews](https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews/data) contains more than 15,5000 movie reviews and ratings from 1 to 5.")
 		st.write("[Yelp restaurant reviews](https://www.kaggle.com/omkarsabnis/yelp-reviews-dataset) contains more than 11,000 retaurant reviews and ratings from 1 to 5.")
@@ -163,12 +196,38 @@ def main():
 				Applied Sciences, 2019, 9, 2347.
 			''')
 
-	elif page != OVERVIEW:
-		st.title("Predict Sentiment")
+		st.markdown('''
+				### Authors (ranked by first name):
+				   Hongyuan Zhang
+				
+				   Ling Zhang
+				
+				   Tianyi Lin
+				
+				   Yutian Zhao
+			''')
+
+	elif page == PREPROCESS:
+		st.title("Dataset & Input Preprocessing")
+		dataset = st.selectbox('Choose a dataset', (MOVIE_DATASET, AMAZON_DATASET, YELP_DATASET))
+
+		if dataset == MOVIE_DATASET:
+			user_input = st.text_input('Write something emotional and hit enter!',
+									   "I absolutely love this romantic movie! It's such an interesting film!")
+		elif dataset == AMAZON_DATASET:
+			user_input = st.text_input('Write something emotional and hit enter!', "Great device! It's easy to use!")
+		else:
+			user_input = st.text_input('Write something emotional and hit enter!',
+									   "Delicious food! Best place to have lunch with a friend!")
+
+
+
+	elif page == TRAIN:
+		st.title("Training Neural Network")
 		dataset = st.selectbox('Choose a dataset', ( MOVIE_DATASET, AMAZON_DATASET, YELP_DATASET))
 		models = []
 
-		st.sidebar.header("Adjust Model Parameters")
+		st.sidebar.header("Adjust Model Hyper-Parameters")
 		learning_rate = st.sidebar.select_slider("Learning rate", options=[0.1, 0.01, 0.001, 0.0001], value=0.001)
 		# st.sidebar.text('learning rate={}'.format(learning_rate))
 		weight_decay = st.sidebar.select_slider("Weight decay", options=[0, 5e-7, 5e-6, 5e-5, 5e-4], value=5e-5)
@@ -197,8 +256,44 @@ def main():
 		else:
 			user_input = st.text_input('Write something emotional and hit enter!', "Delicious food! Best place to have lunch with a friend!")
 
+	else:
+		st.title("Predict Sentiment")
+		dataset = st.selectbox('Choose a dataset', (MOVIE_DATASET, AMAZON_DATASET, YELP_DATASET))
+		models = []
 
+		st.sidebar.header("Adjust Model Parameters")
+		learning_rate = st.sidebar.select_slider("Learning rate", options=[0.1, 0.01, 0.001, 0.0001], value=0.001)
+		# st.sidebar.text('learning rate={}'.format(learning_rate))
+		weight_decay = st.sidebar.select_slider("Weight decay", options=[0, 5e-7, 5e-6, 5e-5, 5e-4], value=5e-5)
+		# st.sidebar.text('weight decay={}'.format(weight_decay))
+		batch_size = st.sidebar.select_slider("Batch_size", options=[32, 64, 128, 256, 512], value=512)
+		# st.sidebar.text('batch size={}'.format(batch_size))
+		optimizer = st.sidebar.radio('Optimizer', (ADAM, SGD))
 
+		models.append(Model(dataset, learning_rate, batch_size, weight_decay, optimizer))
+
+		two_models = st.sidebar.checkbox('Compare with another set of model parameters')
+		if two_models:
+			learning_rate2 = st.sidebar.select_slider("Learning rate of second model",
+													  options=[0.1, 0.01, 0.001, 0.0001], value=0.001)
+			# st.sidebar.text('learning rate={}'.format(learning_rate))
+			weight_decay2 = st.sidebar.select_slider("Weight decay of second model",
+													 options=[0, 5e-7, 5e-6, 5e-5, 5e-4], value=5e-5)
+			# st.sidebar.text('weight decay={}'.format(weight_decay))
+			batch_size2 = st.sidebar.select_slider("Batch_size of second model", options=[32, 64, 128, 256, 512],
+												   value=512)
+			# st.sidebar.text('batch size={}'.format(batch_size))
+			optimizer2 = st.sidebar.radio('Optimizer of second model', (ADAM, SGD))
+			models.append(Model(dataset, learning_rate2, batch_size2, weight_decay2, optimizer2))
+
+		if dataset == MOVIE_DATASET:
+			user_input = st.text_input('Write something emotional and hit enter!',
+									   "I absolutely love this romantic movie! It's such an interesting film!")
+		elif dataset == AMAZON_DATASET:
+			user_input = st.text_input('Write something emotional and hit enter!', "Great device! It's easy to use!")
+		else:
+			user_input = st.text_input('Write something emotional and hit enter!',
+									   "Delicious food! Best place to have lunch with a friend!")
 
 	if page == PREPROCESS:
 		preprocessed = run_preprocess(dataset, user_input)
@@ -257,9 +352,19 @@ def run_preprocess(dataset, input, visible=True):
 		st.write("How can neural networks read text like humans? You might wonder. Actually, they cannot; they can only read numbers.\
 				 This section walks you through every step that we must perform **before** we convert text to numbers. You will see the actual \
 				 converting step in the 'Predicting' section.")
+		st.write("_**Tips**_")
+		st.markdown('''
+						1. Try to change dataset and view different word cloud.
+
+						2. Change your input text as well!
+
+						''')
 
 	if visible:
-		st.write("Before we head into text preprocessing, let's check out the words that are particularly important, or frequent, in your selected dataset.")
+		st.subheader("WordCloud & Word Importance")
+		st.write("Before we head into text preprocessing, let's check out the words that are particularly important, or frequent, in your selected dataset. We highlight your \
+				 input text based on the term frequency in the chosen dataset. ")
+
 		_, col_center, _ = st.beta_columns([1, 3, 1])
 		if dataset == AMAZON_DATASET:
 			with col_center:
@@ -275,6 +380,7 @@ def run_preprocess(dataset, input, visible=True):
 			get_highlight_text(input, "top_frequent_words/yelp_restaurant_top1000.pt")
 
 	if visible:
+		st.subheader("Preprocessing")
 		st.write('''Let's see all that happens before the step of converting text to numbers, as promised. Now, a very natural question might come to your mind,\
 			 "Do you convert on a sentence/word/character level? Would it be too simplified if we convert a whole sentence into a single number?" Indeed, \
 			 sentence-level mapping could be meaningless, given that we want to read every word or character in a sentence. Thus, what we usually do in practice \
@@ -343,16 +449,25 @@ def run_preprocess(dataset, input, visible=True):
 			c.attr(label='Lemmatized Tokens')
 
 		st.graphviz_chart(g, use_container_width=True)
-		st.write('''Now, use the sidebar to navigate to the next section to further explore sentiment analysis via neural nets.''')
+		st.markdown("<b><font color='blue'>Now, use the sidebar to navigate to the next section: training, to further explore the training process of neural nets.</font></b>", unsafe_allow_html=True)
 	return [token for token in lemmatized if token is not None]
 
-@st.cache(allow_output_mutation=True)
+@st.cache(ttl=60*10,allow_output_mutation=True)
 def load_word2vec_dict(word2vec_urls, word2vec_dir):
 	word2vec_dict = []
 	for i in range(len(word2vec_urls)):
 		url = word2vec_urls[i]
-		torch.hub.download_url_to_file(url, word2vec_dir+"word2vec_dict"+str(i)+".pt")
+		# torch.hub.download_url_to_file(url, word2vec_dir+"word2vec_dict"+str(i)+".pt")
 		word2vec = pickle.load(open(word2vec_dir+"word2vec_dict"+str(i)+".pt", "rb" ))
+		word2vec = list(word2vec.items())
+		word2vec_dict += word2vec
+	return dict(word2vec_dict)
+
+@st.cache(ttl=60*10,allow_output_mutation=True)
+def load_word2vec_dict_local(word2vec_dir):
+	word2vec_dict = []
+	for f in listdir(word2vec_dir):
+		word2vec = pickle.load(open(join(word2vec_dir,f), "rb"))
 		word2vec = list(word2vec.items())
 		word2vec_dict += word2vec
 	return dict(word2vec_dict)
@@ -367,7 +482,7 @@ def tokenize_sentence(sentence, word2vec_dict):
 
 def run_predict(input, models):
 	
-	def predict(sentence, model_url, max_seq_length = 29):
+	def predict(sentence, self_model, max_seq_length = 29):
 		#tokenized_sentence = tokenize_sentence(sentence,word2vec_dict)
 		embedding_for_plot = {}
 		for word in sentence:
@@ -375,8 +490,9 @@ def run_predict(input, models):
 		embedding = np.array([word2vec_dict[word] for word in sentence])
 
 		model = Network(input_channel, out_channel, kernel_sizes, output_dim)
-		torch.hub.download_url_to_file(model_url, "./cur_model.pt")
-		state_dict = torch.load("./cur_model.pt",map_location=torch.device('cpu'))
+		# torch.hub.download_url_to_file(model_url, "./cur_model.pt")
+		# state_dict = torch.load("./cur_model.pt",map_location=torch.device('cpu'))
+		state_dict = torch.load("./models/" + self_model.mapped_dataset + "/model_state_dict/" + self_model.model_name, map_location=torch.device('cpu'))
 		model.load_state_dict(state_dict)
 		# model.load_state_dict(torch.hub.load_state_dict_from_url(model_url, progress=False, map_location=torch.device('cpu')))
 		model.eval()
@@ -388,6 +504,7 @@ def run_predict(input, models):
 		_, predicted = torch.max(outputs.data, 1)
 		return softmax(outputs.data), predicted.item() + 1, embedding_for_plot
 
+	st.subheader('Predicted Result')
 	st.write("Now let's see what results our neural net gives for your input text. The bar chart below shows the predicted probability that your text contains a certain type of sentiment.")
 	st.write("_**Tips**_")
 
@@ -398,7 +515,7 @@ def run_predict(input, models):
 	probs_list = []
 
 	for i in range(len(models)):
-		probs, _, embedding = predict(input, models[i].model_url, models[i].max_len)
+		probs, _, embedding = predict(input, models[i], models[i].max_len)
 		probs = probs[0].numpy()
 		probs_list.append(probs)
 
@@ -451,8 +568,8 @@ def run_predict(input, models):
 		each word is of size 100. We perform dimensionality reduction trick to map the word embeddings to a 3D space while keeping
 		their relative positions.
 
-		In the plot below, **blue** dots represents word embeddings of some common words in this dataset. The **red** diamonds are
-		word embeddings of words in your input sentense. All data points are labeled with their corresponding words. 
+		In the plot below, **blue dots** represents word embeddings of some common words in this dataset. The **red diamonds** are
+		word embeddings of words in your input sentence. All data points are labeled with their corresponding words. 
 
 		''')
 
@@ -473,14 +590,15 @@ def run_predict(input, models):
 	with center_emb_col:
 		run_embedding(models[i].mapped_dataset, embedding)
 
-	st.write("Feel free to go back and experiment with different model parameters, datasets, and inputs.")
-
+	st.markdown(
+		"<b><font color='blue'>Feel free to go back and experiment with different model hyper-parameters, datasets, and inputs.</font></b>",
+		unsafe_allow_html=True)
 
 def run_embedding(mapped_dataset, user_input=None):
-	@st.cache
+	@st.cache(ttl=60*5)
 	def load_sample_embedding(url):
 		embedding_path = "embedding"
-		torch.hub.download_url_to_file(url, embedding_path)
+		# torch.hub.download_url_to_file(url, embedding_path)
 		sample_embeddings = pickle.load(open(embedding_path, "rb" ))
 		tokens = []
 		labels = []
@@ -494,7 +612,7 @@ def run_embedding(mapped_dataset, user_input=None):
 			shapes.append('0')
 		return tokens, labels, shapes
 
-	@st.cache
+	@st.cache(ttl=60*5, allow_output_mutation=True)
 	def load_usr_embedding(input_dict, sample_tokens, sample_labels, sample_shapes):
 		tokens = copy.deepcopy(sample_tokens)
 		labels = copy.deepcopy(sample_labels)
@@ -508,14 +626,14 @@ def run_embedding(mapped_dataset, user_input=None):
 		return tokens, labels, shapes
 
 
-	@st.cache
+	@st.cache(ttl=60*5, allow_output_mutation=True)
 	def transform_3d(tokens):
 		# tsne = TSNE(n_components=3, random_state=1, n_iter=100000, metric="cosine")
 		pca = decomposition.PCA(n_components=3)
 		pca.fit(tokens)
 		return pca.transform(tokens)
 
-	@st.cache
+	@st.cache(ttl=60*5, allow_output_mutation=True)
 	def get_df(values_3d, labels, shapes):
 		return pd.DataFrame({
 			'x': values_3d[:, 0],
@@ -561,7 +679,7 @@ def run_train(models):
 	st.write("2. Check the checkbox on the sidebar if you want to compare the training and predicting process of two models with different parameters.")
 
 	st.subheader("Accuracy & Loss")
-	st.write("The loss (objective) function we used for our model is [cross entropy loss](https://en.wikipedia.org/wiki/Cross_entropy). Here we plot the loss for training and validation sets, which reflect how **well** the model is doing in these two sets. Since we always want to minimize the loss, a good training process usually has decreasing loss values over steps. \
+	st.write("The loss (objective) function we used for our model is [cross entropy loss](https://en.wikipedia.org/wiki/Cross_entropy). Here we plot the loss for training and validation sets, which reflect how **well** the model is doing in these two sets. Since we always want to minimize the loss/error, a good training process usually has decreasing loss values over steps. \
 	The accuracy metric here indicates the percentage of correct predictions, and measures how accurate the model’s predictions are compared to true labels.")
 	st.write("_**Tips**_")
 	st.write("1. Hover your mouse on the plot to compare the value of accuracy/loss and train/validation over epochs.")
@@ -570,7 +688,7 @@ def run_train(models):
 
 	for model in models:
 		opt_path = "xentropy_{}_all".format(model.mapped_optimizer)
-		CONTENT = get_train_content(dataset_path=model.mapped_dataset, optimizer_path=opt_path)
+		CONTENT = get_train_content_local(dataset_path=model.mapped_dataset, optimizer_path=opt_path)
 		param_dfs.append(CONTENT[model.model_name[:-3]])
 
 	# get number of models
@@ -613,9 +731,12 @@ def run_train(models):
 				st.write(left[i])
 			with col2:
 				st.write(right[i])
-	st.write("Now, use the sidebar to navigate to the next section to see how you can use your trained models to predict the sentiment of your input sentence.")
 
+	st.markdown(
+		"<b><font color='blue'>Now, use the sidebar to navigate to the next section: predicting, to see how you can use your trained models to predict the sentiment of your input sentence.</font></b>",
+		unsafe_allow_html=True)
 if __name__ == "__main__":
 	st.set_page_config(layout="wide")
-	word2vec_dict = load_word2vec_dict(word2vec_urls = ['https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/word2vec/100d/word2vec_100d_{}.pt'.format(i+1) for i in range(5)], word2vec_dir = "./word2vec")
+	# word2vec_dict = load_word2vec_dict(word2vec_urls = ['https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/word2vec/100d/word2vec_100d_{}.pt'.format(i+1) for i in range(5)], word2vec_dir = "./word2vec")
+	word2vec_dict = load_word2vec_dict_local(word2vec_dir="./word2vec/100d")
 	main()
