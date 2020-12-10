@@ -49,7 +49,7 @@ AMAZON_DATASET = 'Amazon products'
 YELP_DATASET = 'Yelp restaurants'
 
 OVERVIEW = '1)    Overview'
-PREPROCESS = '2)    Input & Preprocessing'
+PREPROCESS = '2)    Dataset & Input Preprocessing'
 TRAIN = '3)    Training'
 PREDICT = '4)    Predicting'
 
@@ -208,7 +208,7 @@ def main():
 			''')
 
 	elif page == PREPROCESS:
-		st.title("Input Preprocessing")
+		st.title("Dataset & Input Preprocessing")
 		dataset = st.selectbox('Choose a dataset', (MOVIE_DATASET, AMAZON_DATASET, YELP_DATASET))
 
 		if dataset == MOVIE_DATASET:
