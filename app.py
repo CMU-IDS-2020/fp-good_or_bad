@@ -649,10 +649,30 @@ def run_train(models):
 	st.write("")
 	st.write("")
 
-	st.header("Let's explore the training process of our CNN network with chosen hyper-parameters!")
+	st.header("Chose hyper-parameters and a optimizer to explore the training process of our CNN network!")
 	st.write("_**Tips**_")
-	st.write("1. Adjust model parameters on the sidebar.")
+	st.write("1. Adjust model hyper-parameters on the sidebar.")
 	st.write("2. Check the checkbox on the sidebar if you want to compare the training and predicting process of two models with different parameters.")
+
+	st.subheader("Model hyper-parameters")
+	st.markdown('''
+Model hyper-parameters in machine learning are parameters that control the training process, while model parameters are values that are computed during training. Here, on the left side bar
+We defined some model hyer-parameters you can choose from. 
+
+1. Learning rate usually ranges from [0,1] and controls the learning speed of the model or how fast is adapted to the problem.
+
+2. Weight decay is a common regularization technique that helps models to generalize better. It applies some “discount” to the weight and prevents the weights from growing too large.
+
+3. Batch size refers to the number of training examples fed into the network in one iteration. Batch size will affect model convergence rate and this value should also be determined based on the training dataset size.
+''')
+
+	st.subheader("Optimizer")
+	st.markdown('''
+	Optimizer is used to update the model parameters to minimize the loss (object) function. There are lots of different optimizers. Here we choose the two popular optimizers widely used in neural network training, namely Adam and SGD with momentum.
+	There isn’t a specific rule that which optimizer is always perform better, so try to select different optimizers and explore the difference by yourself when you view the sections below!
+
+	''')
+
 
 	st.subheader("Accuracy & Loss")
 	st.write("The loss (objective) function we used for our model is [cross entropy loss](https://en.wikipedia.org/wiki/Cross_entropy). Here we plot the loss for training and validation sets, which reflect how **well** the model is doing in these two sets. Since we always want to minimize the loss/error, a good training process usually has decreasing loss values over steps. \
