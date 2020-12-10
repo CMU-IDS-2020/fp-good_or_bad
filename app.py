@@ -217,6 +217,7 @@ def main():
 
 	elif page == TRAIN:
 		st.title("Training Neural Network")
+	else:
 		dataset = st.selectbox('Choose a dataset', ( MOVIE_DATASET, AMAZON_DATASET, YELP_DATASET))
 		models = []
 
@@ -242,42 +243,14 @@ def main():
 			optimizer2 = st.sidebar.radio('Optimizer of second model', (ADAM, SGD))
 			models.append(Model(dataset, learning_rate2, batch_size2, weight_decay2, optimizer2))
 
-		if dataset == MOVIE_DATASET:
-			user_input = st.text_input('Write something emotional and hit enter!', "I absolutely love this romantic movie! It's such an interesting film!")
-		elif dataset == AMAZON_DATASET:
-			user_input = st.text_input('Write something emotional and hit enter!', "Great device! It's easy to use!")
-		else:
-			user_input = st.text_input('Write something emotional and hit enter!', "Delicious food! Best place to have lunch with a friend!")
-
-	else:
+	if page == PREPROCESS:
+		st.title("Dataset & Input Preprocessing")
+	elif page == TRAIN:
+		st.title("Training Neural Network")
+	elif page == PREDICT:
 		st.title("Predict Sentiment")
-		dataset = st.selectbox('Choose a dataset', (MOVIE_DATASET, AMAZON_DATASET, YELP_DATASET))
-		models = []
 
-		st.sidebar.header("Adjust Model Parameters")
-		learning_rate = st.sidebar.select_slider("Learning rate", options=[0.1, 0.01, 0.001, 0.0001], value=0.001)
-		# st.sidebar.text('learning rate={}'.format(learning_rate))
-		weight_decay = st.sidebar.select_slider("Weight decay", options=[0, 5e-7, 5e-6, 5e-5, 5e-4], value=5e-5)
-		# st.sidebar.text('weight decay={}'.format(weight_decay))
-		batch_size = st.sidebar.select_slider("Batch_size", options=[32, 64, 128, 256, 512], value=512)
-		# st.sidebar.text('batch size={}'.format(batch_size))
-		optimizer = st.sidebar.radio('Optimizer', (ADAM, SGD))
-
-		models.append(Model(dataset, learning_rate, batch_size, weight_decay, optimizer))
-
-		two_models = st.sidebar.checkbox('Compare with another set of model parameters')
-		if two_models:
-			learning_rate2 = st.sidebar.select_slider("Learning rate of second model",
-													  options=[0.1, 0.01, 0.001, 0.0001], value=0.001)
-			# st.sidebar.text('learning rate={}'.format(learning_rate))
-			weight_decay2 = st.sidebar.select_slider("Weight decay of second model",
-													 options=[0, 5e-7, 5e-6, 5e-5, 5e-4], value=5e-5)
-			# st.sidebar.text('weight decay={}'.format(weight_decay))
-			batch_size2 = st.sidebar.select_slider("Batch_size of second model", options=[32, 64, 128, 256, 512],
-												   value=512)
-			# st.sidebar.text('batch size={}'.format(batch_size))
-			optimizer2 = st.sidebar.radio('Optimizer of second model', (ADAM, SGD))
-			models.append(Model(dataset, learning_rate2, batch_size2, weight_decay2, optimizer2))
+	if page != OVERVIEW:
 
 		if dataset == MOVIE_DATASET:
 			user_input = st.text_input('Write something emotional and hit enter!',
@@ -288,12 +261,14 @@ def main():
 			user_input = st.text_input('Write something emotional and hit enter!',
 									   "Delicious food! Best place to have lunch with a friend!")
 
+
+
 	if page == PREPROCESS:
-		preprocessed = run_preprocess(dataset, user_input)
+		preprocessed = run_preprocess(models[0], user_input)
 	elif page == TRAIN:
 		run_train(models)
 	elif page == PREDICT:
-		preprocessed = run_preprocess(dataset, user_input, False)
+		preprocessed = run_preprocess(models[0], user_input, False)
 		run_predict(preprocessed, models)
 
 class Network(nn.Module):
@@ -320,7 +295,7 @@ out_channel = 50
 kernel_sizes = [2,3,4]
 output_dim = 5
 
-def run_preprocess(dataset, input, visible=True):
+def run_preprocess(model, input, visible=True):
 
 	# tokenize -> lowercase -> remove stopwords -> lemmatize
 	def tokenize_text(text):
@@ -356,6 +331,9 @@ def run_preprocess(dataset, input, visible=True):
 						2. Change your input text as well!
 
 						''')
+	dataset = model.dataset
+	if visible:
+		st.subheader("WordCloud & Word Importance")
 		st.write("Before we head into text preprocessing, let's check out the words that are particularly important, or frequent, in your selected dataset. We highlight your \
 				 input text based on the term frequency in the chosen dataset. ")
 
@@ -443,8 +421,50 @@ def run_preprocess(dataset, input, visible=True):
 			c.attr(label='Lemmatized Tokens')
 
 		st.graphviz_chart(g, use_container_width=True)
+
+		st.subheader('Word Embeddings')
+		st.markdown('''
+			Word embeddings are dense vector representations of words. Word Embeddings have their dimensional distance correlated to the semantic similarity of the underlying words.
+			We use **word2vec**, developed by Google, to translate each word into a vector of its postion in the embedding space. 
+			
+			To help you visualize how word embeddings are used in this sentiment analysis project, We plot the word embeddings of your
+			input sentence with some common words which has straightforward sentiment tendencies. 
+			
+			Note that although word embeddings are dense, the embedding space is still high dimensional. In our case, the embedding vector of
+			each word is of size 100. We perform dimensionality reduction trick to map the word embeddings to a 3D space while keeping
+			their relative positions.
+
+			In the plot below, **blue dots** represents word embeddings of some common words in this dataset. The **red diamonds** are
+			word embeddings of words in your input sentence. All data points are labeled with their corresponding words. 
+
+			''')
+
+		st.write("_**Tips**_")
+
+		st.markdown('''
+			The distances among points can be deceptive when looking from only one angel. 
+
+			1. By moving your mouse on a specific data point,
+			lines will be displayed connecting to the axises to show you the exact position.
+
+			2. You can click and drag on the plot to rotate it. 
+
+			3. Use two fingers on your touchpad to zoom in and out; you can also 
+			click on the **zoom** tool on the top right corner of the graph, and then click and drag to zoom the plot.
+			''')
+
+	sentence = [token for token in lemmatized if token is not None]
+
+	if visible:
+		embedding_for_plot = {}
+		for word in sentence:
+			embedding_for_plot[word] = word2vec_dict[word]
+		_, center_emb_col, _ = st.beta_columns([1, 3, 1])
+		with center_emb_col:
+			run_embedding(model.mapped_dataset, embedding_for_plot)
 		st.markdown("<b><font color='blue'>Now, use the sidebar to navigate to the next section: training, to further explore the training process of neural nets.</font></b>", unsafe_allow_html=True)
-	return [token for token in lemmatized if token is not None]
+
+	return sentence
 
 @st.cache(ttl=60*10,allow_output_mutation=True)
 def load_word2vec_dict(word2vec_urls, word2vec_dir):
@@ -545,44 +565,6 @@ def run_predict(input, models):
 		with center_result_col:
 			st.write(c, use_column_width=True)
 			st.write("Our model predicts that your input text contains " + max_sentiment + " sentiment!")
-
-	st.write('''
-		The prediction is generated based on the trained model and the word embeddings of the input. 
-		You should have already seen how the model is trained in the training section, now let us look at embeddings.
-		''')
-	st.subheader('Word Embeddings')
-	st.markdown('''
-		Word embeddings are dense vector representations of words. Word Embeddings have their dimensional distance correlated to the semantic similarity of the underlying words.
-		We use **word2vec**, developed by Google, to translate each word into a vector of its postion in the embedding space. 
-		
-		To help you visualize how word embeddings are used in this sentiment analysis project, We plot the word embeddings of your
-		input sentence with some common words which has straightforward sentiment tendencies. 
-		
-		Note that although word embeddings are dense, the embedding space is still high dimensional. In our case, the embedding vector of
-		each word is of size 100. We perform dimensionality reduction trick to map the word embeddings to a 3D space while keeping
-		their relative positions.
-
-		In the plot below, **blue dots** represents word embeddings of some common words in this dataset. The **red diamonds** are
-		word embeddings of words in your input sentence. All data points are labeled with their corresponding words. 
-
-		''')
-
-	st.write("_**Tips**_")
-
-	st.markdown('''
-		The distances among points can be deceptive when looking from only one angel. 
-
-		1. By moving your mouse on a specific data point,
-		lines will be displayed connecting to the axises to show you the exact position.
-
-		2. You can click and drag on the plot to rotate it. 
-
-		3. Use two fingers on your touchpad to zoom in and out; you can also 
-		click on the **zoom** tool on the top right corner of the graph, and then click and drag to zoom the plot.
-		''')
-	_, center_emb_col, _ = st.beta_columns([1, 3, 1])
-	with center_emb_col:
-		run_embedding(models[i].mapped_dataset, embedding)
 
 	st.markdown(
 		"<b><font color='blue'>Feel free to go back and experiment with different model hyper-parameters, datasets, and inputs.</font></b>",
