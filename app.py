@@ -162,26 +162,7 @@ def main():
 		st.write("")
 		st.write("")
 
-		st.subheader("Model Architecture")
-		st.write("Our model has the following architecture: ")
-		st.write("- 3 layers of 1-Dimensional CNN with kernel sizes (2,3,4) for extracting features")
-		st.write("- Max Pooling Layer for retaining prominent features")
-		st.write("- Dropout Layer with probability 0.5 for better model generalization")
-		st.write("- Linear Layer with output dimension 5 for sentiment classification")
 
-		st.write("Our model uses [Glove Embeddings](https://nlp.stanford.edu/projects/glove/) with 1.9 million vocabulary to obtain pretrained vector representations of words.")
-		st.write("")
-		st.write("")
-		st.write("")
-		st.subheader("Dataset Description")
-		st.write("We trained our model on three relevant datasets, including Rotten Tomato movie reviews, Yelp restaurant reviews and Amazon product reviews, each with various hyperparameter values such as [learning rate](https://en.wikipedia.org/wiki/Learning_rate), [weigth decay](https://towardsdatascience.com/this-thing-called-weight-decay-a7cd4bcfccab) and [batch size](https://towardsdatascience.com/epoch-vs-iterations-vs-batch-size-4dfb9c7ce9c9). The model is also trained with [Adam Optimizer](https://towardsdatascience.com/adam-latest-trends-in-deep-learning-optimization-6be9a291375c) and [Stochastic Gradient Descent with Momentum](https://en.wikipedia.org/wiki/Stochastic_gradient_descent).")
-		st.write("[Rotten Tomato movie reviews](https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews/data) contains more than 15,5000 movie reviews and ratings from 1 to 5.")
-		st.write("[Yelp restaurant reviews](https://www.kaggle.com/omkarsabnis/yelp-reviews-dataset) contains more than 11,000 retaurant reviews and ratings from 1 to 5.")
-		st.write("[Amazon product reviews](https://www.kaggle.com/datafiniti/consumer-reviews-of-amazon-products?select=Datafiniti_Amazon_Consumer_Reviews_of_Amazon_Products.csv) contains more than 5,000 electronic product reviews and ratings from 1 to 5.")
-
-		st.write("")
-		st.write("")
-		st.write("")
 		st.markdown('''
 				### References
 				[1]
@@ -209,6 +190,18 @@ def main():
 
 	elif page == PREPROCESS:
 		st.title("Dataset & Input Preprocessing")
+		st.write("")
+		st.write("")
+		st.subheader("Dataset Description")
+		st.write("We trained our model on three relevant datasets, including Rotten Tomato movie reviews, Yelp restaurant reviews and Amazon product reviews, each with various hyperparameter values.")
+		st.write("[Rotten Tomato movie reviews](https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews/data) contains more than 15,5000 movie reviews and ratings from 1 to 5.")
+		st.write("[Yelp restaurant reviews](https://www.kaggle.com/omkarsabnis/yelp-reviews-dataset) contains more than 11,000 retaurant reviews and ratings from 1 to 5.")
+		st.write("[Amazon product reviews](https://www.kaggle.com/datafiniti/consumer-reviews-of-amazon-products?select=Datafiniti_Amazon_Consumer_Reviews_of_Amazon_Products.csv) contains more than 5,000 electronic product reviews and ratings from 1 to 5.")
+
+		st.write("")
+		st.write("")
+		st.subheader("Choose a dataset and explore the preprocessing!")
+
 		dataset = st.selectbox('Choose a dataset', (MOVIE_DATASET, AMAZON_DATASET, YELP_DATASET))
 
 		if dataset == MOVIE_DATASET:
@@ -352,6 +345,10 @@ def run_preprocess(dataset, input, visible=True):
 		st.write("How can neural networks read text like humans? You might wonder. Actually, they cannot; they can only read numbers.\
 				 This section walks you through every step that we must perform **before** we convert text to numbers. You will see the actual \
 				 converting step in the 'Predicting' section.")
+
+
+	if visible:
+		st.subheader("WordCloud & Word Importance")
 		st.write("_**Tips**_")
 		st.markdown('''
 						1. Try to change dataset and view different word cloud.
@@ -359,9 +356,6 @@ def run_preprocess(dataset, input, visible=True):
 						2. Change your input text as well!
 
 						''')
-
-	if visible:
-		st.subheader("WordCloud & Word Importance")
 		st.write("Before we head into text preprocessing, let's check out the words that are particularly important, or frequent, in your selected dataset. We highlight your \
 				 input text based on the term frequency in the chosen dataset. ")
 
@@ -672,6 +666,19 @@ def run_embedding(mapped_dataset, user_input=None):
 def run_train(models):
 	# dataset_path = "amazon_products" or "movie_reviews" or "yelp_restaurants"
 	# optimizer_path = "xentropy_adam_all" or "xentropy_sgdmomentum_all"
+
+	st.header("Model Architecture [TODO]")
+	st.write("Our model has the following architecture: ")
+	st.write("- 3 layers of 1-Dimensional CNN with kernel sizes (2,3,4) for extracting features")
+	st.write("- Max Pooling Layer for retaining prominent features")
+	st.write("- Dropout Layer with probability 0.5 for better model generalization")
+	st.write("- Linear Layer with output dimension 5 for sentiment classification")
+
+	st.write(
+		"Our model uses [Glove Embeddings](https://nlp.stanford.edu/projects/glove/) with 1.9 million vocabulary to obtain pretrained vector representations of words.")
+	st.write("")
+	st.write("")
+	st.write("")
 
 	st.header("Let's explore the training process of our CNN network with chosen hyper-parameters!")
 	st.write("_**Tips**_")
