@@ -1,6 +1,6 @@
 # CMU Interactive Data Science Final Project
 
-* **Title**: TBD
+* **Title**: Good or Bad? Visualizing Neural Networks on Sentiment Analysis
 * **Online URL**: https://share.streamlit.io/cmu-ids-2020/fp-good_or_bad/main/app.py
 * **Team members**:
   * Contact person: hongyuaz@andrew.cmu.edu
