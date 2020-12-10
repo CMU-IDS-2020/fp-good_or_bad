@@ -451,7 +451,7 @@ def run_predict(input, models):
 		each word is of size 100. We perform dimensionality reduction trick to map the word embeddings to a 3D space while keeping
 		their relative positions.
 
-		In the plot above, blue dots represents word embeddings of some common words in this dataset. The red diamonds are
+		In the plot below, **blue** dots represents word embeddings of some common words in this dataset. The **red** diamonds are
 		word embeddings of words in your input sentense. All data points are labeled with their corresponding words. 
 
 		''')
