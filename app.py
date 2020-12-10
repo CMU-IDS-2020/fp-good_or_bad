@@ -162,12 +162,6 @@ def main():
 		st.write("")
 		st.write("")
 
-		st.subheader("Model Architecture")
-		st.write("Our model has the following architecture: ")
-		st.write("- 3 layers of 1-Dimensional CNN with kernel sizes (2,3,4) for extracting features")
-		st.write("- Max Pooling Layer for retaining prominent features")
-		st.write("- Dropout Layer with probability 0.5 for better model generalization")
-		st.write("- Linear Layer with output dimension 5 for sentiment classification")
 
 		st.write("Our model uses [Glove Embeddings](https://nlp.stanford.edu/projects/glove/) with 1.9 million vocabulary to obtain pretrained vector representations of words.")
 		st.write("")
@@ -234,6 +228,13 @@ def main():
 
 	if page == PREPROCESS:
 		st.title("Dataset & Input Preprocessing")
+		st.header("Model Description")
+		st.write("Our model has the following architecture: ")
+		st.write("- 3 layers of 1-Dimensional CNN with kernel sizes (2,3,4) for extracting features")
+		st.write("- Max Pooling Layer for retaining prominent features")
+		st.write("- Dropout Layer with probability 0.5 for better model generalization")
+		st.write("- Linear Layer with output dimension 5 for sentiment classification")
+
 	elif page == TRAIN:
 		st.title("Training Neural Network")
 	elif page == PREDICT:
