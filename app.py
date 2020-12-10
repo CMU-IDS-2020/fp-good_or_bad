@@ -190,6 +190,13 @@ def main():
 
 	elif page == PREPROCESS:
 		st.title("Dataset & Input Preprocessing")
+		# st.header("Model Description")
+		# st.write("Our model has the following architecture: ")
+		# st.write("- 3 layers of 1-Dimensional CNN with kernel sizes (2,3,4) for extracting features")
+		# st.write("- Max Pooling Layer for retaining prominent features")
+		# st.write("- Dropout Layer with probability 0.5 for better model generalization")
+		# st.write("- Linear Layer with output dimension 5 for sentiment classification")
+
 		st.write("")
 		st.write("")
 		st.subheader("Dataset Description")
@@ -202,6 +209,12 @@ def main():
 		st.write("")
 		st.subheader("Choose a dataset and explore the preprocessing!")
 
+	elif page == TRAIN:
+		st.title("Training Neural Network")
+	elif page == PREDICT:
+		st.title("Predict Sentiment")
+
+	if page != OVERVIEW:
 		dataset = st.selectbox('Choose a dataset', (MOVIE_DATASET, AMAZON_DATASET, YELP_DATASET))
 
 		if dataset == MOVIE_DATASET:
@@ -213,12 +226,6 @@ def main():
 			user_input = st.text_input('Write something emotional and hit enter!',
 									   "Delicious food! Best place to have lunch with a friend!")
 
-
-
-	elif page == TRAIN:
-		st.title("Training Neural Network")
-	else:
-		dataset = st.selectbox('Choose a dataset', ( MOVIE_DATASET, AMAZON_DATASET, YELP_DATASET))
 		models = []
 
 		st.sidebar.header("Adjust Model Hyper-Parameters")
@@ -242,32 +249,6 @@ def main():
 			# st.sidebar.text('batch size={}'.format(batch_size))
 			optimizer2 = st.sidebar.radio('Optimizer of second model', (ADAM, SGD))
 			models.append(Model(dataset, learning_rate2, batch_size2, weight_decay2, optimizer2))
-
-	if page == PREPROCESS:
-		st.title("Dataset & Input Preprocessing")
-		st.header("Model Description")
-		st.write("Our model has the following architecture: ")
-		st.write("- 3 layers of 1-Dimensional CNN with kernel sizes (2,3,4) for extracting features")
-		st.write("- Max Pooling Layer for retaining prominent features")
-		st.write("- Dropout Layer with probability 0.5 for better model generalization")
-		st.write("- Linear Layer with output dimension 5 for sentiment classification")
-
-	elif page == TRAIN:
-		st.title("Training Neural Network")
-	elif page == PREDICT:
-		st.title("Predict Sentiment")
-
-	if page != OVERVIEW:
-
-		if dataset == MOVIE_DATASET:
-			user_input = st.text_input('Write something emotional and hit enter!',
-									   "I absolutely love this romantic movie! It's such an interesting film!")
-		elif dataset == AMAZON_DATASET:
-			user_input = st.text_input('Write something emotional and hit enter!', "Great device! It's easy to use!")
-		else:
-			user_input = st.text_input('Write something emotional and hit enter!',
-									   "Delicious food! Best place to have lunch with a friend!")
-
 
 
 	if page == PREPROCESS:
