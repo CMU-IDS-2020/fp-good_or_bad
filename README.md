@@ -16,7 +16,6 @@ You can 1) check out the online url above or 2) clone this repository, install a
 
 ## Work distribution & project process
 
-Hongyuan has been responsible for developing visualizations for text preprocessing process, writing narratives in the Overview, Dataset & Input Preprocessing and Predicting sections of the app, as well as writing Methods and Discussion sections of the report.
 
 ## Deliverables
 
