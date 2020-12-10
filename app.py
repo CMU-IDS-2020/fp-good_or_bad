@@ -199,7 +199,7 @@ def main():
 
 		st.write("")
 		st.write("")
-		st.subheader("Dataset Description")
+		st.header("Dataset Description")
 		st.write("We trained our model on three relevant datasets, including Rotten Tomato movie reviews, Yelp restaurant reviews and Amazon product reviews, each with various hyperparameter values.")
 		st.write("[Rotten Tomato movie reviews](https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews/data) contains more than 15,5000 movie reviews and ratings from 1 to 5.")
 		st.write("[Yelp restaurant reviews](https://www.kaggle.com/omkarsabnis/yelp-reviews-dataset) contains more than 11,000 retaurant reviews and ratings from 1 to 5.")
@@ -207,7 +207,7 @@ def main():
 
 		st.write("")
 		st.write("")
-		st.subheader("Choose a dataset and explore the preprocessing!")
+		st.header("Choose a dataset and explore the preprocessing!")
 
 	elif page == TRAIN:
 		st.title("Training Neural Network")
@@ -311,7 +311,6 @@ def run_preprocess(model, input, visible=True):
 
 
 	if visible:
-		st.subheader("WordCloud & Word Importance")
 		st.write("_**Tips**_")
 		st.markdown('''
 						1. Try to change dataset and view different word cloud.
