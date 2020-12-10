@@ -506,6 +506,7 @@ def run_predict(input, models):
 		return softmax(outputs.data), predicted.item() + 1, embedding_for_plot
 
 	st.subheader('Predicted Result')
+	st.write("Our model will generate five probabilities for each rating. This step is accomplished by performing [softmax](https://developers.google.com/machine-learning/crash-course/multi-class-neural-networks/softmax#:~:text=Softmax%20extends%20this%20idea%20into,quickly%20than%20it%20otherwise%20would.) on the outputs of the final linear layer. It assign probabilities to multiple classes and make sure they sum to 1.")
 	st.write("Now let's see what results our neural net gives for your input text. The bar chart below shows the predicted probability that your text contains a certain type of sentiment.")
 	st.write("_**Tips**_")
 
@@ -635,7 +636,8 @@ def run_embedding(mapped_dataset, user_input=None):
 def run_train(models):
 	# dataset_path = "amazon_products" or "movie_reviews" or "yelp_restaurants"
 	# optimizer_path = "xentropy_adam_all" or "xentropy_sgdmomentum_all"
-
+	st.write("")
+	st.write("")
 	st.header("Model Architecture")
 	st.write("Our model uses **convolutional neural networks**, which is the state-of-the-art model architecture for text classification. Convolutional neural networks is a type of neural network that excels at pattern detection.")
 	st.write('''
