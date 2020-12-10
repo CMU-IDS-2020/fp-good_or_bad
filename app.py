@@ -649,7 +649,7 @@ def run_train(models):
 	st.write("")
 	st.write("")
 
-	st.header("Chose hyper-parameters and a optimizer to explore the training process of our CNN network!")
+	st.header("Choose hyper-parameters and a optimizer to explore the training process of our CNN network!")
 	st.write("_**Tips**_")
 	st.write("1. Adjust model hyper-parameters on the sidebar.")
 	st.write("2. Check the checkbox on the sidebar if you want to compare the training and predicting process of two models with different parameters.")
