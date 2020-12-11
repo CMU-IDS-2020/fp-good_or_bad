@@ -12,7 +12,7 @@
 
 ## Running Instructions
 
-You can 1) check out the online url above or 2) clone this repository, install all required packages and run streamlit run app.py in your terminal.
+You can 1) check out the online url above (in the case of streamlit error of "exceeding resource limits," you can reboot the app yourself, and don't hesitate to reach out to us if you have questions) or 2) clone this repository, install all required packages and run streamlit run app.py in your terminal.
 
 ## Work distribution & project process
 
