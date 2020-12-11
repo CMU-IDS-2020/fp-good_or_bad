@@ -25,7 +25,9 @@ Ling is in charge of creating visualization for the word embeddings and construc
 
 ## Project process
 We started this project by deciding the project topic in sentiment analysis, as our team members are all interested in NLP and especially want to learn more about sentiment analysis and neural networks. Then we finalized our proposal by proposing the idea of “Let people have little or no experience in machine learning learn the whole sentiment analysis process using a neural network”. 
+
 For the project development process, we first collected several datasets as well as implemented and trained a CNN model. Then based on the data we collected in the training process, we further developed visualizations around loss/accuracy plot, model parameter visualization, input preprocessing visualization, word embedding, and prediction probability bar plot. However, we are struggling to find the right track for our project before the design review, as our project involves both models and interactive visualizations. After several meetings among group members and design discussion with course staff in the design review, we decided to choose the narrative track as our project track. 
+
 To adjust and modify our project after the design review, we decided to use a combination of text and visualizations to walk users/viewers through the whole sentiment analysis process. Furthermore, we added the options to enable users/viewers to choose different datasets, adjust the model’s hyperparameters, and compare different sets of parameters during training and prediction. So we total trained around 600 models to give the users full experience in sentiment analysis using neural networks. 
  
 
