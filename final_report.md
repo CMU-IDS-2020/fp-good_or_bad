@@ -1,4 +1,5 @@
-# Good or Bad Project
+# Good or Bad? Visualizing Neural Networks
+
 
 ## Introduction
 
