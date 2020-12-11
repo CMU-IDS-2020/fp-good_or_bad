@@ -4,7 +4,7 @@ Team Good-or-Bad
 
 **Project URL**: [https://share.streamlit.io/cmu-ids-2020/fp-good_or_bad/main/app.py](https://share.streamlit.io/cmu-ids-2020/fp-good_or_bad/main/app.py)
 
-In this age of social media, gaining an understanding into sentiments can be beneficial and this age has also witnessed a rise of artificial intelligence, which enables a quick capture of the sentiments behind numerous opinions.  However, neural networks are still a “black box” for many people. Current works on visualizing neural networks mainly focus on a certain component and lack user interactions. Given this problem, we aim to build an interactive visualization application, using the task of sentiment analysis as a case study, to help curious machine learning laymen to understand the internal mechanisms of a neural network.
+In this age of social media, gaining an understanding into sentiments can be beneficial and this age has also witnessed a rise of artificial intelligence, which enables a quick capture of the sentiments behind numerous opinions. However, neural networks, one primary tool in the field of artificial intelligence, are still a “black box” for many people. Current works on visualizing neural networks mainly focus on a certain component and lack user interactions. Given this problem, we aim to build an interactive visualization application, using the task of sentiment analysis as a case study, to help curious machine learning laymen to understand the internal mechanisms of a neural network.
 
 ## Introduction
 
@@ -24,6 +24,8 @@ Neural networks have been considered a black-box algorithm and a rich literature
 Sentiment analysis has been a popular topic nowadays. Lots of papers and visualization applications provide descriptions on its process [13,14,15,16,17]. However, they mainly contain static visualizations, such as heatmaps and barcharts. Plots are generated with the best model parameters and hyperparameters selected by the authors in advance. Descriptions and visualizations on sentiment classification remain on a theoretical level, few of them provide concrete examples and allow users to interact with the training data, hyperparameters and model itself.
 
 ## Methods
+
+We display the input preprocessing, training and predicting processes of one specific neural network architecture to help users understand sentiment analysis with machine learning. 
 
 ### Model and Dataset
 
@@ -69,8 +71,6 @@ It’s worth noting that we ask the participants to rate the visualization compo
 According to these results, we believe that we have achieved our goal for the app, that is, helping users better understand neural networks on the sentiment analysis task.
 
 ## Future Work
-
-Our Good-or-Bad application presents users with a clear illustration of the internal mechanism of sentiment analysis using neural networks. It provides a good variety of model parameters to produce both pragmatic and representative models while keeping the resource usage of the application under control. It also clearly visualized the whole sentiment analysis workflow from preprocessing to predicting, so that users could relate what they have learned about neural networks on a real-life example.
 
 The goal of our application is to present educational visualizations of neural networks on sentiment analysis. Yet there may be patterns in the visualizations themselves that can provide useful insights to the users. The application can be extended to add the functionality that points out any interesting patterns in the visualization when visualization is created using the user inputs. But it is a challenge to balance the amount of guidance to users and the flexibility of interpretation of the visualizations.
 
