@@ -231,7 +231,7 @@ def main():
 			else:
 				user_input = st.text_input('Write something emotional and hit enter!',
 										   "Delicious food! Best place to have lunch with a friend!")
-
+	if page != OVERVIEW and page != PREPROCESS:
 		models = []
 
 		st.sidebar.header("Adjust Model Hyper-Parameters")
@@ -258,6 +258,8 @@ def main():
 
 
 	if page == PREPROCESS:
+		models = []
+		models.append(Model(dataset, 0.001, 512, 5e-5, ADAM))
 		preprocessed = run_preprocess(models[0], user_input)
 	elif page == TRAIN:
 		run_train(models)
