@@ -109,121 +109,128 @@ def main():
 
 	if page == OVERVIEW:
 
-		st.markdown("<h1 style='text-align: center; color: Black;'>Good or Bad?  Visualizing Neural Networks on Sentiment Analysis</h1>", unsafe_allow_html=True)
+		_, center_emb_col, _ = st.beta_columns([1, 3, 1])
+		with center_emb_col:
+			st.markdown("<h1 style='text-align: center; color: Black;'>Good or Bad?  Visualizing Neural Networks on Sentiment Analysis</h1>", unsafe_allow_html=True)
 
-		# st.write("")
-		st.write("")
-		st.write("")
-		st.write("")
-		st.write("")
-		st.subheader("Who is this app for?")
-		st.write("")
-		st.write("")
-		# st.write("")
-		st.markdown(" <b><font color='blue'>Our app is especially useful for curious machine learning laymen. With our app, you will be able to visualize the full process of sentiment analysis using a neural network, as well as the interaction of training data, hyperparameters and the model itself. </font></b>", unsafe_allow_html=True)
-		st.markdown("<b><font color='blue'>We hope that this app can demystify the magic of neural networks.</font></b>", unsafe_allow_html=True)
-		st.write("")
-		# st.write("")
-		# st.write("")
-		st.title("Overview")
-		st.write("")
-		st.write("")
-		st.write("In this age of social media, **personal opinions** are expressed ubiquitously in the public. \
-		Behind these opinions are sentiments and emotions. \
-		Gaining an understanding into sentiments regarding a topic can be beneficial in many ways, be it in the case of a business trying to know its customers or the case of a politician trying to know the electorate. \
-		This age has also witnessed a rise of artificial intelligence and machine learning, which enables a quick capture of the sentiments behind numerous opinions existing on social media.")
-		_, col_center_sent_image, _ = st.beta_columns([1, 2, 1])
-		with col_center_sent_image:
+			# st.write("")
+			st.write("")
+			st.write("")
+			st.write("")
+			st.write("")
+			st.subheader("Who is this app for?")
+			st.write("")
+			st.write("")
+			# st.write("")
+			st.markdown(" <b><font color='blue'>Our app is especially useful for curious machine learning laymen. With our app, you will be able to visualize the full process of sentiment analysis using a neural network, as well as the interaction of training data, hyperparameters and the model itself. </font></b>", unsafe_allow_html=True)
+			st.markdown("<b><font color='blue'>We hope that this app can demystify the magic of neural networks.</font></b>", unsafe_allow_html=True)
+			st.write("")
+			# st.write("")
+			# st.write("")
+			st.title("Overview")
+			st.write("")
+			st.write("")
+			st.write("In this age of social media, **personal opinions** are expressed ubiquitously in the public. \
+			Behind these opinions are sentiments and emotions. \
+			Gaining an understanding into sentiments regarding a topic can be beneficial in many ways, be it in the case of a business trying to know its customers or the case of a politician trying to know the electorate. \
+			This age has also witnessed a rise of artificial intelligence and machine learning, which enables a quick capture of the sentiments behind numerous opinions existing on social media.")
+
 			st.image('https://www.kdnuggets.com/images/sentiment-fig-1-689.jpg', caption = 'Sentiment Analysis (reference: https://www.kdnuggets.com/2018/03/5-things-sentiment-analysis-classification.html)', use_column_width=True)
-		st.write('''**Machine learning** methods can be highly accurate and efficient for various tasks. \
-		However, machine learning models, especially neural networks, are still a “black box” for many people, even experienced experts in the field (for example, considering the poorly understood nature of generalization of neural networks). \
-		Given this problem, we built this visualization application to help people understand internal mechanisms of a neural network. \
-		We use the task of sentiment analysis as a case study in our application to walk users through the neural network’s training and decision making process.''')
+			st.write('''**Machine learning** methods can be highly accurate and efficient for various tasks. \
+			However, machine learning models, especially neural networks, are still a “black box” for many people, even experienced experts in the field (for example, considering the poorly understood nature of generalization of neural networks). \
+			Given this problem, we built this visualization application to help people understand internal mechanisms of a neural network. \
+			We use the task of sentiment analysis as a case study in our application to walk users through the neural network’s training and decision making process.''')
 
-		st.write('''To effectively capture, classify and predict sentiments, we design, utilize and demonstrate a convolutional neural network (CNN) [1], which is known for its excellent performance in computer vision tasks, as well as natural language processing tasks recently. \
-		Specifically, CNNs have been shown to be able to model inherent syntactic and semantic features of sentimental expressions [2]. \
-		Finally, another advantage of using CNNs (and neural networks in general) is no requirement of deep domain knowledge, in this case linguistics [2]. ''')
+			st.write('''To effectively capture, classify and predict sentiments, we design, utilize and demonstrate a convolutional neural network (CNN) [1], which is known for its excellent performance in computer vision tasks, as well as natural language processing tasks recently. \
+			Specifically, CNNs have been shown to be able to model inherent syntactic and semantic features of sentimental expressions [2]. \
+			Finally, another advantage of using CNNs (and neural networks in general) is no requirement of deep domain knowledge, in this case linguistics [2]. ''')
 
-		_, col_center_nn_image, _ = st.beta_columns([1, 2, 1])
-		with col_center_nn_image:
 			st.image('https://miro.medium.com/max/726/1*Y4aATgaQ8OO_gxLFTy3rQg.png', caption = 'Neural Networks for Sentiment Analysis (reference: https://medium.com/nlpython/sentiment-analysis-analysis-part-3-neural-networks-3768dd088f71)', use_column_width=True)
 
-		st.write("")
-		st.write("")
-		st.write("")
+			st.write("")
+			st.write("")
+			st.write("")
 
-		st.title("User Instructions")
-		st.write("Our app would first take into user's input sentences and preprocess into tokens. Tokens are then converted into embedding vectors to pass in to the neural network. See more details in section 'Dataset & Preprocessing'.")
-		st.write("During training, our model would use the target rating to learn the optimal parameters, mainly weights and biases. See more details in section 'Training'.")
-		st.write("During prediction, the same preprocessing process will be applied to the newly input sentence and we'll use the optimal parameters we got from training to map the embedding vectors to the predicted rating. See more details in section 'Predicting'.")
-		st.markdown("<font color='blue'><b>To start using our app:</b></font>", unsafe_allow_html=True)
-		st.write("      1. Use the sidebar on the left to navigate to the next section: **dataset & input preprocessing**.")
-		st.write("      2. Select a specific **dataset** and feel free to **write something emotional**!")
-		st.write("      3. In Training section, adjust the **training hyperparameters**, or selection **two different sets of hyperparameters** to see the entire training process!")
-		st.write("      4. In predicting section, check out how a neural net can understand your sentiment!")
-		st.write("")
-		st.write("")
-		st.write("")
+			st.title("User Instructions")
+			st.write("Our app would first take into user's input sentences and preprocess into tokens. Tokens are then converted into embedding vectors to pass in to the neural network. See more details in section 'Dataset & Preprocessing'.")
+			st.write("During training, our model would use the target rating to learn the optimal parameters, mainly weights and biases. See more details in section 'Training'.")
+			st.write("During prediction, the same preprocessing process will be applied to the newly input sentence and we'll use the optimal parameters we got from training to map the embedding vectors to the predicted rating. See more details in section 'Predicting'.")
+			st.markdown("<font color='blue'><b>To start using our app:</b></font>", unsafe_allow_html=True)
+			st.write("      1. Use the sidebar on the left to navigate to the next section: **dataset & input preprocessing**.")
+			st.write("      2. Select a specific **dataset** and feel free to **write something emotional**!")
+			st.write("      3. In Training section, adjust the **training hyperparameters**, or selection **two different sets of hyperparameters** to see the entire training process!")
+			st.write("      4. In predicting section, check out how a neural net can understand your sentiment!")
+			st.write("")
+			st.write("")
+			st.write("")
 
 
-		st.markdown('''
-				### References
-				[1]
-				Keiron O'Shea and Ryan Nash. "An introduction to convolutional neural networks." arXiv preprint arXiv:1511.08458 (2015).
+			st.markdown('''
+					### References
+					[1]
+					Keiron O'Shea and Ryan Nash. "An introduction to convolutional neural networks." arXiv preprint arXiv:1511.08458 (2015).
 
-				[2]
-				Hannah Kim and Young-Seob Jeong (2019) - "Sentiment Classification Using Convolutional Neural Networks."
-				Applied Sciences, 2019, 9, 2347.
-			''')
+					[2]
+					Hannah Kim and Young-Seob Jeong (2019) - "Sentiment Classification Using Convolutional Neural Networks."
+					Applied Sciences, 2019, 9, 2347.
+				''')
 
-		st.markdown('''
-				### Authors (ranked by first name):
-				   Hongyuan Zhang
-				
-				   Ling Zhang
-				
-				   Tianyi Lin
-				
-				   Yutian Zhao
-			''')
+			st.markdown('''
+					### Authors (ranked by first name):
+					   Hongyuan Zhang
+					
+					   Ling Zhang
+					
+					   Tianyi Lin
+					
+					   Yutian Zhao
+				''')
 
 	elif page == PREPROCESS:
-		st.title("Dataset & Input Preprocessing")
-		# st.header("Model Description")
-		# st.write("Our model has the following architecture: ")
-		# st.write("- 3 layers of 1-Dimensional CNN with kernel sizes (2,3,4) for extracting features")
-		# st.write("- Max Pooling Layer for retaining prominent features")
-		# st.write("- Dropout Layer with probability 0.5 for better model generalization")
-		# st.write("- Linear Layer with output dimension 5 for sentiment classification")
+		_, center_emb_col, _ = st.beta_columns([1, 3, 1])
+		with center_emb_col:
+			st.title("Dataset & Input Preprocessing")
+			# st.header("Model Description")
+			# st.write("Our model has the following architecture: ")
+			# st.write("- 3 layers of 1-Dimensional CNN with kernel sizes (2,3,4) for extracting features")
+			# st.write("- Max Pooling Layer for retaining prominent features")
+			# st.write("- Dropout Layer with probability 0.5 for better model generalization")
+			# st.write("- Linear Layer with output dimension 5 for sentiment classification")
 
-		st.write("")
-		st.write("")
-		st.header("Dataset Description")
-		st.write("We trained our model on three relevant datasets, including Rotten Tomato movie reviews, Yelp restaurant reviews and Amazon product reviews, each with various hyperparameter values.")
-		st.write("[Rotten Tomato movie reviews](https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews/data) contains more than 15,5000 movie reviews and ratings from 1 to 5.")
-		st.write("[Yelp restaurant reviews](https://www.kaggle.com/omkarsabnis/yelp-reviews-dataset) contains more than 11,000 retaurant reviews and ratings from 1 to 5.")
-		st.write("[Amazon product reviews](https://www.kaggle.com/datafiniti/consumer-reviews-of-amazon-products?select=Datafiniti_Amazon_Consumer_Reviews_of_Amazon_Products.csv) contains more than 5,000 electronic product reviews and ratings from 1 to 5.")
+			st.write("")
+			st.write("")
+			st.header("Dataset Description")
+			st.write("We trained our model on three relevant datasets, including Rotten Tomato movie reviews, Yelp restaurant reviews and Amazon product reviews, each with various hyperparameter values.")
+			st.write("[Rotten Tomato movie reviews](https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews/data) contains more than 15,5000 movie reviews and ratings from 1 to 5.")
+			st.write("[Yelp restaurant reviews](https://www.kaggle.com/omkarsabnis/yelp-reviews-dataset) contains more than 11,000 retaurant reviews and ratings from 1 to 5.")
+			st.write("[Amazon product reviews](https://www.kaggle.com/datafiniti/consumer-reviews-of-amazon-products?select=Datafiniti_Amazon_Consumer_Reviews_of_Amazon_Products.csv) contains more than 5,000 electronic product reviews and ratings from 1 to 5.")
 
-		st.write("")
-		st.write("")
-		st.header("Choose a dataset and explore the preprocessing!")
+			st.write("")
+			st.write("")
+			st.header("Choose a dataset and explore the preprocessing!")
 
 	elif page == TRAIN:
-		st.title("Training Neural Network")
+		_, center_emb_col, _ = st.beta_columns([1, 3, 1])
+		with center_emb_col:
+			st.title("Training Neural Network")
 	elif page == PREDICT:
-		st.title("Predict Sentiment")
+		_, center_emb_col, _ = st.beta_columns([1, 3, 1])
+		with center_emb_col:
+			st.title("Predict Sentiment")
 
 	if page != OVERVIEW:
-		dataset = st.selectbox('Choose a dataset', (MOVIE_DATASET, AMAZON_DATASET, YELP_DATASET))
+		_, center_emb_col, _ = st.beta_columns([1, 3, 1])
+		with center_emb_col:
+			dataset = st.selectbox('Choose a dataset', (MOVIE_DATASET, AMAZON_DATASET, YELP_DATASET))
 
-		if dataset == MOVIE_DATASET:
-			user_input = st.text_input('Write something emotional and hit enter!',
-									   "I absolutely love this romantic movie! It's such an interesting film!")
-		elif dataset == AMAZON_DATASET:
-			user_input = st.text_input('Write something emotional and hit enter!', "Great device! It's easy to use!")
-		else:
-			user_input = st.text_input('Write something emotional and hit enter!',
-									   "Delicious food! Best place to have lunch with a friend!")
+			if dataset == MOVIE_DATASET:
+				user_input = st.text_input('Write something emotional and hit enter!',
+										   "I absolutely love this romantic movie! It's such an interesting film!")
+			elif dataset == AMAZON_DATASET:
+				user_input = st.text_input('Write something emotional and hit enter!', "Great device! It's easy to use!")
+			else:
+				user_input = st.text_input('Write something emotional and hit enter!',
+										   "Delicious food! Best place to have lunch with a friend!")
 
 		models = []
 
@@ -303,51 +310,50 @@ def run_preprocess(model, input, visible=True):
 		lemmatizer = WordNetLemmatizer()
 		return [lemmatizer.lemmatize(token) if token else None for token in tokens]
 
-	if visible:
-		st.write("How can neural networks read text like humans? You might wonder. Actually, they cannot; they can only read numbers.\
-				 This section walks you through every step that we must perform up to the conversion of text to numbers.")
 
-
-	if visible:
-		st.write("_**Tips**_")
-		st.markdown('''
-						1. Try to change dataset and view different word cloud.
-
-						2. Change your input text as well!
-
-						''')
 	dataset = model.dataset
-	if visible:
-		st.subheader("WordCloud & Word Importance")
-		st.write("Before we head into text preprocessing, let's check out the words that are particularly important, or frequent, in your selected dataset. We highlight your \
-				 input text based on the term frequency in the chosen dataset. ")
 
-		_, col_center, _ = st.beta_columns([1, 3, 1])
-		if dataset == AMAZON_DATASET:
-			with col_center:
+	if visible:
+		_, center_emb_col, _ = st.beta_columns([1, 3, 1])
+		with center_emb_col:
+			st.write("How can neural networks read text like humans? You might wonder. Actually, they cannot; they can only read numbers.\
+					 This section walks you through every step that we must perform up to the conversion of text to numbers.")
+
+			st.write("_**Tips**_")
+			st.markdown('''
+							1. Try to change dataset and view different word cloud.
+
+							2. Change your input text as well!
+
+							''')
+			st.subheader("WordCloud & Word Importance")
+			st.write("Before we head into text preprocessing, let's check out the words that are particularly important, or frequent, in your selected dataset. We highlight your \
+					 input text based on the term frequency in the chosen dataset. ")
+
+			if dataset == AMAZON_DATASET:
 				st.image('https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/static_pictures/amazon_wordcloud.png', use_column_width=True)
-			get_highlight_text(input, "top_frequent_words/amazon_products_top1000.pt")
-		elif dataset == MOVIE_DATASET:
-			with col_center:
+				get_highlight_text(input, "top_frequent_words/amazon_products_top1000.pt")
+			elif dataset == MOVIE_DATASET:
 				st.image('https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/static_pictures/movie_wordcloud.png', use_column_width=True)
-			get_highlight_text(input, "top_frequent_words/rotten_tomato_top1000.pt")
-		elif dataset == YELP_DATASET:
-			with col_center:
+				get_highlight_text(input, "top_frequent_words/rotten_tomato_top1000.pt")
+			elif dataset == YELP_DATASET:
 				st.image('https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/static_pictures/yelp_wordcloud.png', use_column_width=True)
-			get_highlight_text(input, "top_frequent_words/yelp_restaurant_top1000.pt")
+				get_highlight_text(input, "top_frequent_words/yelp_restaurant_top1000.pt")
 
 	if visible:
-		st.subheader("Preprocessing")
-		st.write('''Let's see all that happens before the step of converting text to numbers, as promised. Now, a very natural question might come to your mind,\
-			 "Do you convert on a sentence/word/character level? Would it be too simplified if we convert a whole sentence into a single number?" Indeed, \
-			 sentence-level mapping could be meaningless, given that we want to read every word or character in a sentence. Thus, what we usually do in practice \
-			 is word or character level mapping. In this app, for the purpose of easy interpretation and demonstration, we choose a word-level mapping for text-to-number conversion.''')
+		_, center_emb_col, _ = st.beta_columns([1, 3, 1])
+		with center_emb_col:
+			st.subheader("Preprocessing")
+			st.write('''Let's see all that happens before the step of converting text to numbers, as promised. Now, a very natural question might come to your mind,\
+				 "Do you convert on a sentence/word/character level? Would it be too simplified if we convert a whole sentence into a single number?" Indeed, \
+				 sentence-level mapping could be meaningless, given that we want to read every word or character in a sentence. Thus, what we usually do in practice \
+				 is word or character level mapping. In this app, for the purpose of easy interpretation and demonstration, we choose a word-level mapping for text-to-number conversion.''')
 
-		st.write("Now, the need for breaking sentences into words becomes clear. As you can see in the following figure, our first step is splitting sentences into word tokens by spaces.")
-		st.write('''Is that all? Probably not, as the word tokens need some standardization. Consider the tokens "love" and "LOVE." We want them to be considered as the same word, but due to \
-			 different letter cases, they are understood as different words by a machine. Thus, the next step that follows is making all word tokens have a consistent letter case; we choose to convert all to lowercase.''')
-		st.write('''The next step we perform is removing the so-called "stopwords." In English, there are some extremely common yet barely meaningful words, for example, articles. To prevent from diluting, we remove them from our set of word tokens!''')
-		st.write('''One last step before text-to-number conversion is lemmatization, which is a further step of standardization. Consider the tokens "cat" and "cats." We want them to be considered as the same word, don't we? Thus, in this last step, we reduce every word token to its stem form.''')
+			st.write("Now, the need for breaking sentences into words becomes clear. As you can see in the following figure, our first step is splitting sentences into word tokens by spaces.")
+			st.write('''Is that all? Probably not, as the word tokens need some standardization. Consider the tokens "love" and "LOVE." We want them to be considered as the same word, but due to \
+				 different letter cases, they are understood as different words by a machine. Thus, the next step that follows is making all word tokens have a consistent letter case; we choose to convert all to lowercase.''')
+			st.write('''The next step we perform is removing the so-called "stopwords." In English, there are some extremely common yet barely meaningful words, for example, articles. To prevent from diluting, we remove them from our set of word tokens!''')
+			st.write('''One last step before text-to-number conversion is lemmatization, which is a further step of standardization. Consider the tokens "cat" and "cats." We want them to be considered as the same word, don't we? Thus, in this last step, we reduce every word token to its stem form.''')
 	tokens = tokenize_text(input)
 	lowercase_tokens = lowercase_text(tokens)
 	removed_stopwords = remove_stopwords(lowercase_tokens)
@@ -406,37 +412,38 @@ def run_preprocess(model, input, visible=True):
 			c.attr(label='Lemmatized Tokens')
 
 		st.graphviz_chart(g, use_container_width=True)
+		_, center_emb_col, _ = st.beta_columns([1, 3, 1])
+		with center_emb_col:
+			st.subheader('Word Embeddings')
+			st.markdown('''
+				Word embeddings are dense vector representations of words. Word Embeddings have their dimensional distance correlated to the semantic similarity of the underlying words.
+				We use [Glove Embeddings](https://nlp.stanford.edu/projects/glove/) with 1.9 million vocabulary to translate each word into a vector of its postion in the embedding space. 
+				
+				To help you visualize how word embeddings are used in this sentiment analysis project, we plot the word embeddings of your
+				input sentence with some common words which has straightforward sentiment tendencies. 
+				
+				Note that although word embeddings are dense, the embedding space is still high dimensional. In our case, the embedding vector of
+				each word is of dimension 100. We perform dimensionality reduction trick to map the word embeddings to a 3D space while keeping
+				their relative positions.
 
-		st.subheader('Word Embeddings')
-		st.markdown('''
-			Word embeddings are dense vector representations of words. Word Embeddings have their dimensional distance correlated to the semantic similarity of the underlying words.
-			We use [Glove Embeddings](https://nlp.stanford.edu/projects/glove/) with 1.9 million vocabulary to translate each word into a vector of its postion in the embedding space. 
-			
-			To help you visualize how word embeddings are used in this sentiment analysis project, we plot the word embeddings of your
-			input sentence with some common words which has straightforward sentiment tendencies. 
-			
-			Note that although word embeddings are dense, the embedding space is still high dimensional. In our case, the embedding vector of
-			each word is of dimension 100. We perform dimensionality reduction trick to map the word embeddings to a 3D space while keeping
-			their relative positions.
+				In the plot below, **blue dots** represents word embeddings of some common words in this dataset. The **red diamonds** are
+				word embeddings of words in your input sentence. All data points are labeled with their corresponding words. 
 
-			In the plot below, **blue dots** represents word embeddings of some common words in this dataset. The **red diamonds** are
-			word embeddings of words in your input sentence. All data points are labeled with their corresponding words. 
+				''')
 
-			''')
+			st.write("_**Tips**_")
 
-		st.write("_**Tips**_")
+			st.markdown('''
+				The distances among points can be deceptive when looking from only one angle. 
 
-		st.markdown('''
-			The distances among points can be deceptive when looking from only one angle. 
+				1. By moving your mouse on a specific data point,
+				lines will be displayed connecting to the axes to show you the exact position.
 
-			1. By moving your mouse on a specific data point,
-			lines will be displayed connecting to the axes to show you the exact position.
+				2. You can click and drag on the plot to rotate it. 
 
-			2. You can click and drag on the plot to rotate it. 
-
-			3. Use two fingers on your touchpad to zoom in and out; you can also 
-			click on the **zoom** tool on the top right corner of the graph, and then click and drag to zoom the plot.
-			''')
+				3. Use two fingers on your touchpad to zoom in and out; you can also 
+				click on the **zoom** tool on the top right corner of the graph, and then click and drag to zoom the plot.
+				''')
 
 	sentence = [token for token in lemmatized if token is not None]
 
@@ -447,7 +454,7 @@ def run_preprocess(model, input, visible=True):
 		_, center_emb_col, _ = st.beta_columns([1, 3, 1])
 		with center_emb_col:
 			run_embedding(model.mapped_dataset, embedding_for_plot)
-		st.markdown("<b><font color='blue'>Now, use the sidebar to navigate to the next section: training, to further explore the training process of neural nets.</font></b>", unsafe_allow_html=True)
+			st.markdown("<b><font color='blue'>Now, use the sidebar to navigate to the next section: training, to further explore the training process of neural nets.</font></b>", unsafe_allow_html=True)
 
 	return sentence
 
@@ -503,14 +510,18 @@ def run_predict(input, models):
 		_, predicted = torch.max(outputs.data, 1)
 		return softmax(outputs.data), predicted.item() + 1, embedding_for_plot
 
-	st.subheader('Predicted Result')
-	st.write("Our model will generate five probabilities for each input. This step is accomplished by performing [softmax](https://developers.google.com/machine-learning/crash-course/multi-class-neural-networks/softmax#:~:text=Softmax%20extends%20this%20idea%20into,quickly%20than%20it%20otherwise%20would.) on the outputs of the final linear layer. It assigns probabilities to multiple classes and makes sure they sum to 1.")
-	st.write("Now let's see what results our neural net gives for your input text. The bar chart below shows the predicted probability that your text contains a certain type of sentiment.")
-	st.write("_**Tips**_")
+	_, center_emb_col, _ = st.beta_columns([1, 3, 1])
+	with center_emb_col:
+		st.subheader('Predicted Result')
+		st.write("Our model will generate five probabilities for each input. This step is accomplished by performing [softmax](https://developers.google.com/machine-learning/crash-course/multi-class-neural-networks/softmax#:~:text=Softmax%20extends%20this%20idea%20into,quickly%20than%20it%20otherwise%20would.) on the outputs of the final linear layer. It assigns probabilities to multiple classes and makes sure they sum to 1.")
+		st.write("Now let's see what results our neural net gives for your input text. The bar chart below shows the predicted probability that your text contains a certain type of sentiment.")
+		st.write("_**Tips**_")
 
-	st.write("1. Move your mouse over the bars to see the exact predicted probabilities.")
+		st.write("1. Move your mouse over the bars to see the exact predicted probabilities.")
 
-	st.write("2. Also try different hyperparameters in the sidebar and see if they predict the same outcome!")
+		st.write("2. Also try different hyperparameters in the sidebar and see if they predict the same outcome!")
+		st.write("")
+		st.write("")
 
 	probs_list = []
 
@@ -552,16 +563,18 @@ def run_predict(input, models):
 			st.write(c, use_column_width=True)
 			st.write("Our model predicts that your input text contains " + max_sentiment + " sentiment!")
 
-	st.markdown(
-		"<b><font color='blue'>Feel free to go back and experiment with different model hyper-parameters, datasets, and inputs.</font></b>",
-		unsafe_allow_html=True)
+	_, center_emb_col, _ = st.beta_columns([1, 3, 1])
+	with center_emb_col:
+		st.markdown(
+			"<b><font color='blue'>Feel free to go back and experiment with different model hyper-parameters, datasets, and inputs.</font></b>",
+			unsafe_allow_html=True)
 
-	st.subheader('Conclusion')
-	st.write('''We hope that our app has helped you gain a better understanding of machine learning (specifically neural networks) and sentiment analysis. 
-			 We also hope that you have derived some unique insights by playing with hyper-parameter values, datasets and input sentences. 
-			 For example, did you notice that although different hyper-parameter values can lead to different training process (in terms of loss), they ultimately lead to similar model performance?''')
-	st.write('''Upon reading our engaging narratives and exploring our comprehensive and interactive visualizations for every step of how a neural net operates for the sentiment analysis task, 
-	you are now not only more curious about neural nets, but also equipped with deeper knowledge that prepares you for the next, more advanced machine learning journey!''')
+		st.subheader('Conclusion')
+		st.write('''We hope that our app has helped you gain a better understanding of machine learning (specifically neural networks) and sentiment analysis. 
+				 We also hope that you have derived some unique insights by playing with hyper-parameter values, datasets and input sentences. 
+				 For example, did you notice that although different hyper-parameter values can lead to different training process (in terms of loss), they ultimately lead to similar model performance?''')
+		st.write('''Upon reading our engaging narratives and exploring our comprehensive and interactive visualizations for every step of how a neural net operates for the sentiment analysis task, 
+		you are now not only more curious about neural nets, but also equipped with deeper knowledge that prepares you for the next, more advanced machine learning journey!''')
 
 
 def run_embedding(mapped_dataset, user_input=None):
@@ -642,68 +655,74 @@ def run_embedding(mapped_dataset, user_input=None):
 def run_train(models):
 	# dataset_path = "amazon_products" or "movie_reviews" or "yelp_restaurants"
 	# optimizer_path = "xentropy_adam_all" or "xentropy_sgdmomentum_all"
-	st.write("")
-	st.write("")
-	st.header("Model Architecture")
-	st.write("Our model uses **convolutional neural networks**, which is the state-of-the-art model architecture for text classification. Convolutional neural networks is a type of neural network that excels at pattern detection.")
-	st.write('''
-	Let's take a look at the basic components in convolutional neural networks:
-	
-	1. A **neuron** is a mathematical function that performs mapping and activation. It contains weights and biases, it takes multiple inputs and output a single value.
 
-	2. A **layer** is simply a group of neurons that take in the same input but generate different outputs.
+	_, center_emb_col, _ = st.beta_columns([1, 3, 1])
+	with center_emb_col:
+		st.write("")
+		st.write("")
+		st.header("Model Architecture")
+		st.write("Our model uses **convolutional neural networks**, which is the state-of-the-art model architecture for text classification. Convolutional neural networks is a type of neural network that excels at pattern detection.")
+		st.write('''
+		Let's take a look at the basic components in convolutional neural networks:
+		
+		1. A **neuron** is a mathematical function that performs mapping and activation. It contains weights and biases, it takes multiple inputs and output a single value.
 
-	3. An **epoch** refers to passing the full training dataset into the model for one cycle.
-	
-	4. A **kernel** is a filter that's used to extract the features from a certain window of inputs.
-	
-	5. **Pooling** is downsampling technique used to summarize the features. Two most common pooling methods are average pooling and max pooling.
-	
-	6. **Dropout** is a popular regularization method used in CNN. It will dropout units with a certain probability. The most commonly used is 0.5.
+		2. A **layer** is simply a group of neurons that take in the same input but generate different outputs.
 
-	''')
-	st.write(" ")
-	st.write(" ")
-	st.write("Our model has the following architecture: ")
-	st.write("- 3 layers of 1-Dimensional CNN with kernel sizes (2,3,4) for extracting features")
-	st.write("- Max Pooling Layer for retaining prominent features")
-	st.write("- Dropout Layer with probability 0.5 for better model generalization")
-	st.write("- Linear Layer with output dimension 5 for sentiment classification")
-	st.write("")
-	st.write("")
-	st.write("")
+		3. An **epoch** refers to passing the full training dataset into the model for one cycle.
+		
+		4. A **kernel** is a filter that's used to extract the features from a certain window of inputs.
+		
+		5. **Pooling** is downsampling technique used to summarize the features. Two most common pooling methods are average pooling and max pooling.
+		
+		6. **Dropout** is a popular regularization method used in CNN. It will dropout units with a certain probability. The most commonly used is 0.5.
 
-	st.header("Choose hyper-parameters and a optimizer to explore the training process of our CNN network!")
-	st.write("_**Tips**_")
-	st.write("1. Adjust model hyper-parameters on the sidebar.")
-	st.write("2. Check the checkbox on the sidebar if you want to compare the training and predicting process of two models with different parameters.")
+		''')
+		st.write(" ")
+		st.write(" ")
+		st.write("Our model has the following architecture: ")
+		st.write("- 3 layers of 1-Dimensional CNN with kernel sizes (2,3,4) for extracting features")
+		st.write("- Max Pooling Layer for retaining prominent features")
+		st.write("- Dropout Layer with probability 0.5 for better model generalization")
+		st.write("- Linear Layer with output dimension 5 for sentiment classification")
+		st.write("")
+		st.write("")
+		st.write("")
 
-	st.subheader("Model hyper-parameters")
-	st.markdown('''
-Model hyper-parameters in machine learning are parameters that control the training process, while model parameters are values that are computed during training and that determine how a neural net handles inputs. Here, on the left side bar
-we defined some model hyer-parameters you can choose from. 
+		st.header("Choose hyper-parameters and a optimizer to explore the training process of our CNN network!")
+		st.write("_**Tips**_")
+		st.write("1. Adjust model hyper-parameters on the sidebar.")
+		st.write("2. Check the checkbox on the sidebar if you want to compare the training and predicting process of two models with different parameters.")
 
-1. **[Learning rate](https://en.wikipedia.org/wiki/Learning_rate)** usually ranges from [0,1] and controls the learning speed of the model or how fast it's adapted to the problem.
+		st.subheader("Model hyper-parameters")
+		st.markdown('''
+	Model hyper-parameters in machine learning are parameters that control the training process, while model parameters are values that are computed during training and that determine how a neural net handles inputs. Here, on the left side bar
+	we defined some model hyer-parameters you can choose from. 
 
-2. **[Weight decay](https://towardsdatascience.com/this-thing-called-weight-decay-a7cd4bcfccab)** is a common regularization technique that helps models to generalize better. It applies some “discount” to the weight and prevents the weights from growing too large.
+	1. **[Learning rate](https://en.wikipedia.org/wiki/Learning_rate)** usually ranges from [0,1] and controls the learning speed of the model or how fast it's adapted to the problem.
 
-3. **[Batch size]((https://towardsdatascience.com/epoch-vs-iterations-vs-batch-size-4dfb9c7ce9c9))** refers to the number of training examples fed into the network in one iteration. Batch size will affect model convergence rate and this value should also be determined based on the training dataset size.
-''')
+	2. **[Weight decay](https://towardsdatascience.com/this-thing-called-weight-decay-a7cd4bcfccab)** is a common regularization technique that helps models to generalize better. It applies some “discount” to the weight and prevents the weights from growing too large.
 
-	st.subheader("Optimizer")
-	st.markdown('''
-	Optimizer is used to update the model parameters to minimize the loss (objective) function. There are lots of different optimizers. ''')
-	st.markdown('''Here we choose the two popular optimizers widely used in neural network training, namely **[Adam](https://towardsdatascience.com/adam-latest-trends-in-deep-learning-optimization-6be9a291375c)** and **[Stochastic Gradience Descent with Momentum](https://en.wikipedia.org/wiki/Stochastic_gradient_descent)**.
-	There isn’t a specific rule that which optimizer always performs better, so try to select different optimizers and explore the difference by yourself when you view the sections below!
+	3. **[Batch size]((https://towardsdatascience.com/epoch-vs-iterations-vs-batch-size-4dfb9c7ce9c9))** refers to the number of training examples fed into the network in one iteration. Batch size will affect model convergence rate and this value should also be determined based on the training dataset size.
 	''')
 
+		st.subheader("Optimizer")
+		st.markdown('''
+		Optimizer is used to update the model parameters to minimize the loss (objective) function. There are lots of different optimizers. ''')
+		st.markdown('''Here we choose the two popular optimizers widely used in neural network training, namely **[Adam](https://towardsdatascience.com/adam-latest-trends-in-deep-learning-optimization-6be9a291375c)** and **[Stochastic Gradience Descent with Momentum](https://en.wikipedia.org/wiki/Stochastic_gradient_descent)**.
+		There isn’t a specific rule that which optimizer always performs better, so try to select different optimizers and explore the difference by yourself when you view the sections below!
+		''')
 
-	st.subheader("Accuracy & Loss")
-	st.write("The loss (objective) function we used for our model is [cross entropy loss](https://en.wikipedia.org/wiki/Cross_entropy), which is commonly used for classficiation problems like our case. Here we plot the loss for training and validation sets, which reflect how **well** the model is doing in these two sets. Since we always want to minimize the loss/error, a good training process usually has decreasing loss values over steps. \
-	The accuracy metric here indicates the percentage of correct predictions, and measures how accurate the model’s predictions are compared to true labels.")
-	st.write("_**Tips**_")
-	st.write("1. Hover your mouse on the plot to compare the value of accuracy/loss and train/validation over epochs.")
-	st.write("2. If you notice an increase in validation loss, a decrease in validation accuracy or oscillation of loss and accuracy, it’s a bad sign and usually indicates the model is overfitting. **Try to change and tune hyperparameters**!")
+
+		st.subheader("Accuracy & Loss")
+		st.write("The loss (objective) function we used for our model is [cross entropy loss](https://en.wikipedia.org/wiki/Cross_entropy), which is commonly used for classficiation problems like our case. Here we plot the loss for training and validation sets, which reflect how **well** the model is doing in these two sets. Since we always want to minimize the loss/error, a good training process usually has decreasing loss values over steps. \
+		The accuracy metric here indicates the percentage of correct predictions, and measures how accurate the model’s predictions are compared to true labels.")
+		st.write("_**Tips**_")
+		st.write("1. Hover your mouse on the plot to compare the value of accuracy/loss and train/validation over epochs.")
+		st.write("2. If you notice an increase in validation loss, a decrease in validation accuracy or oscillation of loss and accuracy, it’s a bad sign and usually indicates the model is overfitting. **Try to change and tune hyperparameters**!")
+		st.write("")
+		st.write("")
+
 	param_dfs = []
 
 	for model in models:
@@ -723,38 +742,47 @@ we defined some model hyer-parameters you can choose from.
 		with col2:
 			st.write(loss_acc_plot(param_dfs[1]))
 
-	# add description here 
-	st.subheader("Model Paramaters")
-	st.write("The model parameters are usually weights and bias . Our model consists of 4 layers (3 convolutional layers and 1 linear layer), so we visualize the distribution of weights and bias for these 4 layers here using heat maps and marginal histograms. \
-	For a good training process, we should see the model parameters are clustered around zero at the first epoch and are become more **dispersed** over steps, indicating that they are learning different values to coverge to the optimal point! ")
-	st.write("_**Tips**_")
-	st.write("1. Hover over the plot to see the distribution of model parameters in marginal histograms.")
-	st.write("2. If you notice that the distributions of the model parameters are not changing over steps, it’s a bad sign! This usually indicates that the model isn’t learning :( Try different hyperparameters!")
-
+	_, center_emb_col, _ = st.beta_columns([1, 3, 1])
+	with center_emb_col:
+		# add description here 
+		st.subheader("Model Paramaters")
+		st.write("The model parameters are usually weights and bias . Our model consists of 4 layers (3 convolutional layers and 1 linear layer), so we visualize the distribution of weights and bias for these 4 layers here using heat maps and marginal histograms. \
+		For a good training process, we should see the model parameters are clustered around zero at the first epoch and are become more **dispersed** over steps, indicating that they are learning different values to coverge to the optimal point! ")
+		st.write("_**Tips**_")
+		st.write("1. Hover over the plot to see the distribution of model parameters in marginal histograms.")
+		st.write("2. If you notice that the distributions of the model parameters are not changing over steps, it’s a bad sign! This usually indicates that the model isn’t learning :( Try different hyperparameters!")
+		st.write("")
+		st.write("")
 	title = ["**_First Layer_: Convolution layer with kernel size 2**", "**_Second Layer_: Convolution layer with kernel size 3**",
 			 "**_Third Layer_: Convolution layer with kernel size 4**", "**_Fourth Layer_: Fully connected layer (linear layer)**"]
 	if len(models) == 1:
 		middle = params_plot(param_dfs[0], False)
 		for i in range(len(middle)):
-			st.write(title[i])
 			p = middle[i]
 			_, center_col, _ = st.beta_columns([1, 3, 1])
 			with center_col:
+				st.write(title[i])
+				st.write("")
 				st.write(p)
 	elif len(models) == 2:
 		left = params_plot(param_dfs[0])
 		right = params_plot(param_dfs[1])
 		for i in range(len(left)):
-			st.write(title[i])
+			_, center_emb_col, _ = st.beta_columns([1, 3, 1])
+			with center_emb_col:
+				st.write(title[i])
+				st.write("")
+			
 			col1, col2 = st.beta_columns(2)
 			with col1:
 				st.write(left[i])
 			with col2:
 				st.write(right[i])
-
-	st.markdown(
-		"<b><font color='blue'>Now, use the sidebar to navigate to the next section: predicting, to see how you can use your trained models to predict the sentiment of your input sentence.</font></b>",
-		unsafe_allow_html=True)
+	_, center_emb_col, _ = st.beta_columns([1, 3, 1])
+	with center_emb_col:
+		st.markdown(
+			"<b><font color='blue'>Now, use the sidebar to navigate to the next section: predicting, to see how you can use your trained models to predict the sentiment of your input sentence.</font></b>",
+			unsafe_allow_html=True)
 if __name__ == "__main__":
 	st.set_page_config(layout="wide")
 	# word2vec_dict = load_word2vec_dict(word2vec_urls = ['https://github.com/CMU-IDS-2020/fp-good_or_bad/raw/main/word2vec/100d/word2vec_100d_{}.pt'.format(i+1) for i in range(5)], word2vec_dir = "./word2vec")
