@@ -4,7 +4,7 @@ Team Good-or-Bad
 
 **Project URL**: [https://share.streamlit.io/cmu-ids-2020/fp-good_or_bad/main/app.py](https://share.streamlit.io/cmu-ids-2020/fp-good_or_bad/main/app.py)
 
-In this age of social media, gaining an understanding into sentiments can be beneficial and this age has also witnessed a rise of artificial intelligence, which enables a quick capture of the sentiments behind numerous opinions.  However, neural networks are still a “black box” for many people. Current works on visualizing neural networks mainly focus on a certain component and lack user interactions. Given this problem, we aim to build an interactive visualization application, using the task of sentiment analysis as a case study, to help curious machine learning laymen to understand the internal mechanisms of a neural network.
+In this age of social media, gaining an understanding into sentiments can be beneficial and this age has also witnessed a rise of artificial intelligence, which enables a quick capture of the sentiments behind numerous opinions. However, neural networks, one primary tool in the field of artificial intelligence, are still a “black box” for many people. Current works on visualizing neural networks mainly focus on a certain component and lack user interactions. Given this problem, we aim to build an interactive visualization application, using the task of sentiment analysis as a case study, to help curious machine learning laymen to understand the internal mechanisms of a neural network.
 
 ## Introduction
 
