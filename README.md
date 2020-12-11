@@ -52,5 +52,5 @@ To adjust and modify our project after the design review, we decided to use a co
 
 - [x] All code for the project should be in the repo.
 - [x] A 5 minute video demonstration.
-- [ ] Update Readme according to Canvas instructions.
-- [ ] A detailed project report. The contact should submit the video and report as a PDF on Canvas.
+- [x] Update Readme according to Canvas instructions.
+- [x] A detailed project report. The contact should submit the video and report as a PDF on Canvas.
