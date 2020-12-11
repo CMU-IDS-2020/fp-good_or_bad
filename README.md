@@ -21,8 +21,11 @@ In this age of social media, gaining an understanding into sentiments can be ben
 
 ## Work distribution 
 The work was split almost equally between four group members. Tianyi worked on model development, visualizations in the training section and dataset visualization. 
+
 Yutian worked on data preprocessing, trained the model with different hyperparameters, saved intermediate results and worked on parts of the narratives on overview and training sections. 
+
 Hongyuan has been responsible for developing visualizations for text preprocessing process, as well as writing narratives in the Overview, Dataset & Input Preprocessing and Predicting sections of the app. 
+
 Ling is in charge of creating visualization for the word embeddings and constructing the web application. Everyone collaborated together on the project design, app development, bug fixes, video presentation and final report. 
 
 ## Project process
