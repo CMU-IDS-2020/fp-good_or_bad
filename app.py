@@ -153,6 +153,9 @@ def main():
 		st.write("")
 
 		st.title("User Instructions")
+		st.write("Our app would first take into user's input sentences and preprocess into tokens. Tokens are then converted into embedding vectors to pass in to the neural network. See more details in section 'Dataset & Preprocessing'.")
+		st.write("During training, our model would use the target rating to learn the optimal parameters, mainly weights and biases. See more details in section 'Training'.")
+		st.write("During prediction, the same preprocessing process will be applied to the newly input sentence and we'll use the optimal parameters we got from training to map the embedding vectors to the predicted rating. See more details in section 'Predicting'.")
 		st.markdown("<font color='blue'><b>To start using our app:</b></font>", unsafe_allow_html=True)
 		st.write("      1. Use the sidebar on the left to navigate to the next section: **dataset & input preprocessing**.")
 		st.write("      2. Select a specific **dataset** and feel free to **write something emotional**!")
@@ -649,12 +652,14 @@ def run_train(models):
 	1. A **neuron** is a mathematical function that performs mapping and activation. It contains weights and biases, it takes multiple inputs and output a single value.
 
 	2. A **layer** is simply a group of neurons that take in the same input but generate different outputs.
+
+	3. An **epoch** refers to passing the full training dataset into the model for one cycle.
 	
-	3. A **kernel** is a filter that's used to extract the features from a certain window of inputs.
+	4. A **kernel** is a filter that's used to extract the features from a certain window of inputs.
 	
-	4. **Pooling** is downsampling technique used to summarize the features. Two most common pooling methods are average pooling and max pooling.
+	5. **Pooling** is downsampling technique used to summarize the features. Two most common pooling methods are average pooling and max pooling.
 	
-	5. **Dropout** is a popular regularization method used in CNN. It will dropout units with a certain probability. The most commonly used is 0.5.
+	6. **Dropout** is a popular regularization method used in CNN. It will dropout units with a certain probability. The most commonly used is 0.5.
 
 	''')
 	st.write(" ")
