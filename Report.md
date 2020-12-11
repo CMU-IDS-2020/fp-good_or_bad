@@ -27,7 +27,7 @@ Sentiment analysis has been a popular topic nowadays. Lots of papers and visuali
 
 ### Model and Dataset
 
-We referred to this [tutorial](https://github.com/bentrevett/pytorch-sentiment-analysis/blob/master/4%20-%20Convolutional%20Sentiment%20Analysis.ipynb) for the neural network model displayed in our application. Our model has the following architecture:
+We display the input preprocessing, training and predicting processes of one specific neural network architecture to help users undertand sentiment analysis with deep learning. We referred to this [tutorial](https://github.com/bentrevett/pytorch-sentiment-analysis/blob/master/4%20-%20Convolutional%20Sentiment%20Analysis.ipynb) for the neural network model displayed in our application. Our model has the following architecture:
 
 -   3 layers of 1-Dimensional CNN with kernel sizes (2,3,4) for extracting features
 -   Max Pooling Layer for retaining prominent features
